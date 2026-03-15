@@ -25,6 +25,11 @@ Thus:
   - This algebraic closure is FORCED by the dimensions D = 6, d = 4
   - D = 6 is the unique minimal viable dimension for which this holds
 
+Note: The 2026 explicit KK reduction (Dereli & Senikoglu, arXiv:2601.08443)
+confirms that V(phi)=0 at tree level.  The vacuum polynomial x^2+Dx+d=0
+cannot be derived from the tree-level effective potential.  It remains a
+phenomenological ansatz that encodes the dimensional structure D=6, d=4.
+
 All calculations use pure Python math (no numpy/scipy).
 """
 
@@ -89,6 +94,11 @@ def compute_dimensional_polynomial(d=4, n=2):
         sqrt(Delta) = 2*sqrt(5)
         roots = (-6 +/- 2*sqrt(5)) / 2 = -3 +/- sqrt(5)
         Field extension: Q(sqrt(5)) -- the golden ratio field.
+
+    Note: The 2026 explicit KK reduction (arXiv:2601.08443) confirms
+    V(phi)=0 at tree level, so this polynomial is a phenomenological
+    ansatz encoding the dimensional structure, not a dynamical equation
+    derived from the effective potential.
 
     Parameters
     ----------
