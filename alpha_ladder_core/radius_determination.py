@@ -243,6 +243,65 @@ def catalog_radius_mechanisms():
                 "UV completion, making predictions unreliable."
             ),
         },
+        {
+            "name": "Coleman-Weinberg from anomaly-constrained matter",
+            "description": (
+                "1-loop Coleman-Weinberg potential from KK towers of "
+                "anomaly-constrained matter (hypers + vectors from E8xE8 "
+                "or SO(32)).  The CW sum contains log(a_0) factors that "
+                "are qualitatively new compared to tree-level power laws."
+            ),
+            "physics_input": "Anomaly-free gauge group (E8xE8, SO(32), etc.)",
+            "status": "computed",
+            "computed": True,
+            "result_summary": (
+                "The CW potential is suppressed by 1/(64*pi^2) relative to "
+                "the tree-level flux potential.  Despite large multiplicities "
+                "(740 hypers + 496 vectors for E8xE8), the loop factor makes "
+                "V_CW subdominant at all a_0.  The monotonic flux behavior "
+                "dominates and no minimum is found.  See radius_fixing module."
+            ),
+        },
+        {
+            "name": "Warped S^2 compactification",
+            "description": (
+                "Warp ansatz ds^2 = e^{2A(theta)} g_{mu nu} dx^mu dx^nu "
+                "+ a_0^2 d_Omega_2^2 with A(theta) = epsilon*cos(theta).  "
+                "The gradient energy (nabla A)^2 and curvature modification "
+                "both scale as a_0^{-2}."
+            ),
+            "physics_input": "Warp amplitude epsilon",
+            "status": "computed",
+            "computed": True,
+            "result_summary": (
+                "The warp gradient energy and curvature modification both "
+                "scale as a_0^{-2}, which is one power slower than the "
+                "a_0^{-4} flux potential.  However, both terms are still "
+                "monotonically decreasing in a_0.  No minimum is found for "
+                "any epsilon in [0.01, 1.0].  See radius_fixing module."
+            ),
+        },
+        {
+            "name": "Orbifold S^2/Z_2 with brane tension",
+            "description": (
+                "Z_2 orbifold of S^2 (antipodal identification) projects "
+                "out odd-l KK modes and introduces 2 fixed points that "
+                "support codimension-2 branes with tension T_0.  The brane "
+                "potential V_brane = 2*T_0/a_0^2 scales as a_0^{-2}, "
+                "competing with the a_0^{-4} Casimir+flux terms."
+            ),
+            "physics_input": "Brane tension T_0 at orbifold fixed points",
+            "status": "computed",
+            "computed": True,
+            "result_summary": (
+                "Best candidate mechanism.  The a_0^{-2} brane tension "
+                "competes with a_0^{-4} Casimir+flux at different scales.  "
+                "Whether a minimum exists depends on the brane tension T_0 "
+                "exceeding a critical value T_0*.  If successful, a_0 is "
+                "fixed but depends on T_0 (a new parameter).  "
+                "See radius_fixing module."
+            ),
+        },
     ]
 
     any_computed = any(m["computed"] for m in mechanisms)

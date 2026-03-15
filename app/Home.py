@@ -60,6 +60,7 @@ pages = {
         _page("19_Chameleon_Screening.py", "Chameleon Screening"),
         _page("20_Dark_Sector_Phenomenology.py", "Dark Sector Phenomenology"),
         _page("22_Radius_Determination.py", "Radius Determination"),
+        _page("38_Radius_Fixing.py", "Radius Fixing"),
         _page("23_Anomaly_Cancellation.py", "Anomaly Cancellation"),
         _page("24_Cosmological_Constant.py", "Cosmological Constant"),
     ],

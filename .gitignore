@@ -1,3 +1,6 @@
+# Preprint
+preprint/
+
 __pycache__/
 *.pyc
 *.pyo

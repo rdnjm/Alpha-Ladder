@@ -51,6 +51,28 @@ st.markdown(
         margin: 0.4rem 0;
         border-radius: 0 8px 8px 0;
     }
+    .wrap-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    .wrap-table th {
+        background-color: #2e3440;
+        color: #e0e0e0;
+        padding: 8px 12px;
+        text-align: left;
+        font-size: 0.85rem;
+    }
+    .wrap-table td {
+        padding: 8px 12px;
+        border-top: 1px solid #2e3440;
+        word-wrap: break-word;
+        white-space: normal;
+        font-size: 0.85rem;
+        color: #d8dee9;
+    }
+    .wrap-table tr:hover {
+        background-color: #1e2230;
+    }
     </style>
     """,
     unsafe_allow_html=True,
@@ -220,13 +242,13 @@ if summary:
             "Approach": m["name"],
             "Applicable Here": "Yes" if m["applicable_here"] else "No",
             "Resolves Problem": "Yes" if m["resolves_problem"] else "No",
-            "Reason": m["reason"][:120] + "..." if len(m["reason"]) > 120 else m["reason"],
+            "Reason": m["reason"],
         })
 
-    st.dataframe(
-        pd.DataFrame(table_rows),
-        use_container_width=True,
-        hide_index=True,
+    df = pd.DataFrame(table_rows)
+    st.markdown(
+        df.to_html(index=False, classes="wrap-table", escape=False),
+        unsafe_allow_html=True,
     )
 
     st.markdown("")

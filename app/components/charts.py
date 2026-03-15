@@ -2837,3 +2837,244 @@ def k_closed_form_chart(k_data):
     )
 
     return _apply_theme(fig)
+
+
+# ---------------------------------------------------------------------------
+# Chart: Coleman-Weinberg + Flux Potential vs Radius
+# ---------------------------------------------------------------------------
+def cw_potential_chart(scan_data):
+    """Line chart of V_CW, V_flux_min, and V_total vs a_0.
+
+    Parameters
+    ----------
+    scan_data : dict
+        Keys: a_0_values (list), V_cw (list), V_flux_min (list), V_total (list).
+
+    Returns
+    -------
+    plotly.graph_objects.Figure
+    """
+    if not scan_data or not scan_data.get("a_0_values"):
+        fig = go.Figure()
+        fig.add_annotation(text="No data available", showarrow=False,
+                           xref="paper", yref="paper", x=0.5, y=0.5)
+        return _apply_theme(fig)
+
+    a0 = scan_data["a_0_values"]
+    V_cw = scan_data["V_cw"]
+    V_flux = scan_data["V_flux_min"]
+    V_total = scan_data["V_total"]
+
+    fig = go.Figure()
+
+    fig.add_trace(go.Scatter(
+        x=a0, y=V_cw,
+        mode="lines",
+        line=dict(color=_COLOR_DEFAULT, width=2, dash="dash"),
+        name="V_CW",
+        hovertemplate="a_0 = %{x:.4e}<br>V_CW = %{y:.4e}<extra></extra>",
+    ))
+
+    fig.add_trace(go.Scatter(
+        x=a0, y=V_flux,
+        mode="lines",
+        line=dict(color=_COLOR_HIGHLIGHT_21, width=2, dash="dot"),
+        name="V_flux_min",
+        hovertemplate="a_0 = %{x:.4e}<br>V_flux = %{y:.4e}<extra></extra>",
+    ))
+
+    fig.add_trace(go.Scatter(
+        x=a0, y=V_total,
+        mode="lines",
+        line=dict(color=_COLOR_GREEN, width=3),
+        name="V_total",
+        hovertemplate="a_0 = %{x:.4e}<br>V_total = %{y:.4e}<extra></extra>",
+    ))
+
+    # Mark minimum of V_total if it exists (not at boundary)
+    if len(V_total) > 2:
+        min_idx = min(range(len(V_total)), key=lambda i: V_total[i])
+        if 0 < min_idx < len(V_total) - 1:
+            fig.add_trace(go.Scatter(
+                x=[a0[min_idx]],
+                y=[V_total[min_idx]],
+                mode="markers",
+                marker=dict(
+                    color=_COLOR_RED, size=14,
+                    symbol="star", line=dict(color="#ffffff", width=2),
+                ),
+                name="Minimum",
+                hovertemplate=(
+                    f"a_0 = {a0[min_idx]:.4e}<br>"
+                    f"V_min = {V_total[min_idx]:.4e}<extra></extra>"
+                ),
+            ))
+
+    fig.add_hline(y=0, line_dash="solid", line_color="#4c566a", line_width=1)
+
+    fig.update_layout(
+        title="Coleman-Weinberg + Flux Potential vs Radius",
+        xaxis_title="a_0 (Planck units)",
+        yaxis_title="Effective Potential (Planck units)",
+        xaxis=dict(type="log"),
+        height=400,
+        showlegend=True,
+        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
+    )
+
+    return _apply_theme(fig)
+
+
+# ---------------------------------------------------------------------------
+# Chart: Warped S^2 Potential vs Radius
+# ---------------------------------------------------------------------------
+def warped_potential_chart(warp_data):
+    """Line chart of V_total(a_0) for different warp parameters epsilon.
+
+    Parameters
+    ----------
+    warp_data : dict
+        Keys: a_0_values (list), epsilon_values (list),
+        V_total_by_epsilon (dict mapping epsilon -> list of V values).
+
+    Returns
+    -------
+    plotly.graph_objects.Figure
+    """
+    if not warp_data or not warp_data.get("a_0_values"):
+        fig = go.Figure()
+        fig.add_annotation(text="No data available", showarrow=False,
+                           xref="paper", yref="paper", x=0.5, y=0.5)
+        return _apply_theme(fig)
+
+    a0 = warp_data["a_0_values"]
+    epsilon_values = warp_data.get("epsilon_values", [])
+    V_by_eps = warp_data.get("V_total_by_epsilon", {})
+
+    _PALETTE = [
+        _COLOR_DEFAULT, _COLOR_HIGHLIGHT_21, _COLOR_GREEN,
+        _COLOR_HIGHLIGHT_10, _COLOR_RED,
+        "#38bdf8", "#fb923c", "#a3e635", "#e879f9", "#fbbf24",
+    ]
+
+    fig = go.Figure()
+
+    for i, eps in enumerate(epsilon_values):
+        key = eps if eps in V_by_eps else str(eps)
+        V_vals = V_by_eps.get(key, V_by_eps.get(eps, []))
+        if not V_vals:
+            continue
+        color = _PALETTE[i % len(_PALETTE)]
+        fig.add_trace(go.Scatter(
+            x=a0, y=V_vals,
+            mode="lines",
+            line=dict(color=color, width=2),
+            name=f"eps = {eps}",
+            hovertemplate=f"eps = {eps}<br>" + "a_0 = %{x:.4e}<br>V = %{y:.4e}<extra></extra>",
+        ))
+
+    fig.add_hline(y=0, line_dash="solid", line_color="#4c566a", line_width=1)
+
+    fig.update_layout(
+        title="Warped S^2 Potential vs Radius",
+        xaxis_title="a_0 (Planck units)",
+        yaxis_title="V_total (Planck units)",
+        xaxis=dict(type="log"),
+        height=400,
+        showlegend=True,
+        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
+    )
+
+    return _apply_theme(fig)
+
+
+# ---------------------------------------------------------------------------
+# Chart: Orbifold S^2/Z_2 Potential vs Radius
+# ---------------------------------------------------------------------------
+def orbifold_potential_chart(orbifold_data):
+    """Line chart of V_casimir, V_brane, and V_total for the orbifold mechanism.
+
+    Parameters
+    ----------
+    orbifold_data : dict
+        Keys: a_0_values (list), V_casimir (list), V_brane (list),
+        V_total (list), T_0 (float).
+
+    Returns
+    -------
+    plotly.graph_objects.Figure
+    """
+    if not orbifold_data or not orbifold_data.get("a_0_values"):
+        fig = go.Figure()
+        fig.add_annotation(text="No data available", showarrow=False,
+                           xref="paper", yref="paper", x=0.5, y=0.5)
+        return _apply_theme(fig)
+
+    a0 = orbifold_data["a_0_values"]
+    V_casimir = orbifold_data["V_casimir"]
+    V_brane = orbifold_data["V_brane"]
+    V_total = orbifold_data["V_total"]
+    T_0 = orbifold_data.get("T_0", None)
+
+    fig = go.Figure()
+
+    fig.add_trace(go.Scatter(
+        x=a0, y=V_casimir,
+        mode="lines",
+        line=dict(color=_COLOR_DEFAULT, width=2, dash="dash"),
+        name="V_casimir",
+        hovertemplate="a_0 = %{x:.4e}<br>V_casimir = %{y:.4e}<extra></extra>",
+    ))
+
+    fig.add_trace(go.Scatter(
+        x=a0, y=V_brane,
+        mode="lines",
+        line=dict(color=_COLOR_HIGHLIGHT_21, width=2, dash="dot"),
+        name="V_brane",
+        hovertemplate="a_0 = %{x:.4e}<br>V_brane = %{y:.4e}<extra></extra>",
+    ))
+
+    fig.add_trace(go.Scatter(
+        x=a0, y=V_total,
+        mode="lines",
+        line=dict(color=_COLOR_GREEN, width=3),
+        name="V_total",
+        hovertemplate="a_0 = %{x:.4e}<br>V_total = %{y:.4e}<extra></extra>",
+    ))
+
+    # Mark minimum of V_total if it exists (not at boundary)
+    if len(V_total) > 2:
+        min_idx = min(range(len(V_total)), key=lambda i: V_total[i])
+        if 0 < min_idx < len(V_total) - 1:
+            fig.add_trace(go.Scatter(
+                x=[a0[min_idx]],
+                y=[V_total[min_idx]],
+                mode="markers",
+                marker=dict(
+                    color=_COLOR_RED, size=14,
+                    symbol="star", line=dict(color="#ffffff", width=2),
+                ),
+                name="Minimum",
+                hovertemplate=(
+                    f"a_0 = {a0[min_idx]:.4e}<br>"
+                    f"V_min = {V_total[min_idx]:.4e}<extra></extra>"
+                ),
+            ))
+
+    fig.add_hline(y=0, line_dash="solid", line_color="#4c566a", line_width=1)
+
+    title = "Orbifold S^2/Z_2 Potential vs Radius"
+    if T_0 is not None:
+        title += f" (T_0 = {T_0:.4e})"
+
+    fig.update_layout(
+        title=title,
+        xaxis_title="a_0 (Planck units)",
+        yaxis_title="Effective Potential (Planck units)",
+        xaxis=dict(type="log"),
+        height=400,
+        showlegend=True,
+        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
+    )
+
+    return _apply_theme(fig)
