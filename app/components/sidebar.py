@@ -26,7 +26,7 @@ except ImportError:
 
     def available_editions():
         """Stub: return placeholder editions until the core module is ready."""
-        return ["CODATA 2018", "CODATA 2014"]
+        return ["CODATA 2022", "CODATA 2018", "CODATA 2014"]
 
     def get_constants(edition):
         """Stub: return None; pages must guard against this."""

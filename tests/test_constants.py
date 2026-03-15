@@ -26,8 +26,8 @@ class TestAvailableEditions(unittest.TestCase):
         self.assertIn("CODATA 2014", editions)
         self.assertIn("CODATA 2018", editions)
 
-    def test_default_edition_is_2014(self):
-        self.assertEqual(DEFAULT_EDITION, "CODATA 2014")
+    def test_default_edition_is_2022(self):
+        self.assertEqual(DEFAULT_EDITION, "CODATA 2022")
 
 
 class TestGetConstantsLoads(unittest.TestCase):

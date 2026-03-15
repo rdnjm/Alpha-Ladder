@@ -67,12 +67,36 @@ _CODATA_2018_PHYS["alpha_g"] = (
     / (_CODATA_2018_PHYS["hbar"] * _CODATA_2018_PHYS["c"])
 )
 
+_CODATA_2022_PHYS = {
+    "alpha": Decimal('0.0072973525643'),
+    "m_e": Decimal('9.1093837139e-31'),
+    "hbar": Decimal('1.054571817e-34'),       # exact (2019 SI)
+    "c": Decimal('299792458'),                 # exact
+    "G": Decimal('6.67430e-11'),
+    "m_p": Decimal('1.67262192595e-27'),
+    "m_mu": Decimal('1.883531627e-28'),
+    "k_B": Decimal('1.380649e-23'),            # exact (2019 SI)
+    "e_charge": Decimal('1.602176634e-19'),    # exact (2019 SI)
+    "epsilon_0": Decimal('8.8541878128e-12'),
+    "lambda_bar_c": Decimal('3.8615926764e-13'),
+    "a_0": Decimal('5.2917721067e-11'),
+    "r_e_nist": Decimal('2.8179403227e-15'),
+}
+
+# Compute alpha_g from G for CODATA 2022:  alpha_g = G * m_e^2 / (hbar * c)
+_CODATA_2022_PHYS["alpha_g"] = (
+    _CODATA_2022_PHYS["G"]
+    * _CODATA_2022_PHYS["m_e"] ** 2
+    / (_CODATA_2022_PHYS["hbar"] * _CODATA_2022_PHYS["c"])
+)
+
 CODATA_EDITIONS = {
     "CODATA 2014": _CODATA_2014_PHYS,
     "CODATA 2018": _CODATA_2018_PHYS,
+    "CODATA 2022": _CODATA_2022_PHYS,
 }
 
-DEFAULT_EDITION = "CODATA 2014"
+DEFAULT_EDITION = "CODATA 2022"
 
 
 def available_editions():
