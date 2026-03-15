@@ -634,13 +634,14 @@ with st.expander("F. Matter Loop Corrections", expanded=True):
             # Build table data
             table_rows = []
             for r in results:
+                cas = r.get("casimir", {})
                 table_rows.append({
                     "Gauge Group": r.get("group", ""),
-                    "n_scalars": r.get("n_scalars", 0),
-                    "n_fermions": r.get("n_fermions", 0),
-                    "n_vectors": r.get("n_vectors", 0),
-                    "A_total": f"{r.get('A_total', 0):.6f}",
-                    "Sign Flipped": "Yes" if r.get("sign_flipped", False) else "No",
+                    "n_scalars": r.get("n_scalars_total", 0),
+                    "n_fermions": r.get("n_fermions_total", 0),
+                    "n_vectors": r.get("n_vectors_total", 0),
+                    "A_total": f"{cas.get('A_total', 0):.6f}",
+                    "Sign Flipped": "Yes" if cas.get("sign_flipped", False) else "No",
                 })
 
             st.table(table_rows)

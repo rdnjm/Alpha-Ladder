@@ -94,7 +94,7 @@ if summary:
 <div class="formula-card">
 <strong>The gap:</strong> delta = sqrt(phi) - k_exact = {di['delta']:.6e}<br>
 k_exact is the offset that makes alpha_g = alpha^24 * mu * (mu - k) match G exactly.<br>
-sqrt(phi) = {di['sqrt_phi']:.6f} overshoots by delta, giving the -5.37 ppm residual.
+sqrt(phi) = {di['sqrt_phi']:.6f} overshoots by delta, giving the -0.31 ppm residual (with (1-alpha) correction).
 </div>
 """, unsafe_allow_html=True)
 else:

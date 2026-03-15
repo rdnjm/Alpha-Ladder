@@ -3,6 +3,8 @@ __pycache__/
 *.pyo
 .pytest_cache/
 .claude/
+.cleo/
+.cleo/**
 *.egg-info/
 dist/
 build/

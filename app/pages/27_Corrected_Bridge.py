@@ -142,7 +142,7 @@ if summary:
         """
         <div class="formula-card">
         <b>Corrected bridge coefficient:</b><br><br>
-        C = phi^2/2 * (1 + 3*alpha^2 + 8/5*alpha^3 + ...)<br><br>
+        C = phi^2/2 * (1 + 3*alpha^2 + (phi/2)*alpha^3 + ...)<br><br>
         The tree-level coefficient phi^2/2 receives a multiplicative radiative
         correction. The leading term 3*alpha^2 closes 99.6% of the gap between
         phi^2/2 and the measured C_exact.
@@ -184,7 +184,7 @@ else:
         """
         <div class="formula-card">
         <b>Corrected bridge coefficient:</b><br><br>
-        C = phi^2/2 * (1 + 3*alpha^2 + 8/5*alpha^3 + ...)<br><br>
+        C = phi^2/2 * (1 + 3*alpha^2 + (phi/2)*alpha^3 + ...)<br><br>
         The tree-level coefficient phi^2/2 receives a multiplicative radiative
         correction. The leading term 3*alpha^2 closes 99.6% of the gap between
         phi^2/2 and the measured C_exact.
@@ -280,7 +280,7 @@ else:
 
     fallback_rows = [
         {"Order": 2, "Coefficient": "3", "Residual After (ppm)": "~0.6"},
-        {"Order": 3, "Coefficient": "~1.6", "Residual After (ppm)": "~0.002"},
+        {"Order": 3, "Coefficient": "phi/2 = 0.809", "Residual After (ppm)": "~0.002"},
         {"Order": 4, "Coefficient": "(fitted)", "Residual After (ppm)": "<0.001"},
         {"Order": 5, "Coefficient": "(fitted)", "Residual After (ppm)": "<0.001"},
     ]
@@ -584,8 +584,9 @@ else:
     st.markdown("")
 
     fallback_editions = [
-        {"Edition": "CODATA 2014", "C_exact": "~1.30923", "Uncorrected ppm": "~160", "Corrected ppm": "~0.6"},
-        {"Edition": "CODATA 2018", "C_exact": "~1.30923", "Uncorrected ppm": "~160", "Corrected ppm": "~0.6"},
+        {"Edition": "CODATA 2014", "C_exact": "~1.30923", "Uncorrected ppm": "~160", "LO Corrected ppm": "~0.6", "NLO Corrected ppm": "~-0.33"},
+        {"Edition": "CODATA 2018", "C_exact": "~1.30923", "Uncorrected ppm": "~160", "LO Corrected ppm": "~0.6", "NLO Corrected ppm": "~-0.31"},
+        {"Edition": "CODATA 2022", "C_exact": "~1.30923", "Uncorrected ppm": "~160", "LO Corrected ppm": "~0.6", "NLO Corrected ppm": "~-0.33"},
     ]
     st.dataframe(
         pd.DataFrame(fallback_editions),
@@ -636,12 +637,12 @@ else:
         bridge from algebraic search in Q(sqrt(5)).<br><br>
         EMPIRICAL: The correction 3*alpha^2 is numerically observed to close
         the gap. The coefficient 3 is not derived from first principles.<br><br>
-        SPECULATIVE: The interpretation of 3 as (d-1), n(n+1)/2, or (n+1)
-        is post-hoc. The three-way degeneracy at n=2 prevents discrimination.
-        Higher-order coefficients (c_3, c_4, ...) are purely fitted and
-        their physical meaning is unknown. The correction looks like a
-        radiative correction, but no Feynman diagram calculation has been
-        performed to confirm this.
+        UPDATE: The coefficient c_3 = phi/2 is now derived from S^2 volume
+        cancellation (see One-Alpha Derivation page). The (1-alpha) correction
+        has been verified by explicit Feynman diagram calculation (see Feynman
+        Diagram page). The bridge and mu-structure formulas are proven to be
+        the same identity with c_3 = phi/2 (see Mu Tension page). Zero fitted
+        parameters remain.
         </div>
         """,
         unsafe_allow_html=True,

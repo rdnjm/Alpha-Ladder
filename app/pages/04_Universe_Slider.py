@@ -163,7 +163,7 @@ if _core_available and constants is not None:
         st.metric(
             "G (alpha^24 * mu^2)",
             fmt_decimal(physics["G_hierarchy"], sig_figs=6),
-            help="G from alpha^24 * mu^2 (zero free parameters, 688 ppm).",
+            help="G from alpha^24 * mu^2 (zero free parameters, 688 ppm). Refined: mu*(mu-sqrt(phi)*(1-alpha)) gives -0.31 ppm.",
         )
 
     with col3:

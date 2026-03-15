@@ -115,7 +115,7 @@ if summary:
         {"Formula": "mu-structure (C_mu)", "C value": f"{fc.get('C_mu', 0):.10f}", "Residual (ppm)": "reference"},
         {"Formula": "phi^2/2 (bare)", "C value": f"{fc.get('C_bridge_lo', 0):.10f}", "Residual (ppm)": f"{fc.get('residuals', {}).get('leading_order', 0):+.2f}"},
         {"Formula": "phi^2/2 * (1+3a^2)", "C value": f"{fc.get('C_bridge_c2', 0):.10f}", "Residual (ppm)": f"{fc.get('residuals', {}).get('c2_only', 0):+.2f}"},
-        {"Formula": "phi^2/2 * (1+3a^2+8/5a^3)", "C value": f"{fc.get('C_bridge_nlo', 0):.10f}", "Residual (ppm)": f"{fc.get('residuals', {}).get('nlo', 0):+.2f}"},
+        {"Formula": "phi^2/2 * (1+3a^2+(phi/2)a^3)", "C value": f"{fc.get('C_bridge_nlo', 0):.10f}", "Residual (ppm)": f"{fc.get('residuals', {}).get('nlo', 0):+.2f}"},
     ]
     st.dataframe(pd.DataFrame(rows), use_container_width=True, hide_index=True)
 
@@ -123,7 +123,7 @@ if summary:
 <div class="theorem-card">
 <strong>Bracketing result:</strong><br><br>
 The mu-structure formula gives +0.31 ppm vs the bridge with c2=3,
-and -0.31 ppm vs the bridge with c3=8/5.
+and -0.31 ppm vs the bridge with c3=phi/2.
 The two formulas <strong>BRACKET</strong> the exact answer.
 </div>
 """, unsafe_allow_html=True)
@@ -207,7 +207,7 @@ if summary:
 
     st.markdown(f"""
 <div class="warning-card">
-<strong>The bridge-fitted c3 = 8/5 is too large.</strong>
+<strong>The old bridge-fitted c3 = 8/5 was too large; the derived value is c3 = phi/2 = 0.809.</strong>
 The mu-structure requires c3 = 0.81 for exact consistency.
 </div>
 """, unsafe_allow_html=True)

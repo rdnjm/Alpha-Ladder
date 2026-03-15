@@ -277,7 +277,7 @@ with st.expander("**C. Screening Amplitude Discrepancy**", expanded=True):
         "IF the dilaton is light (Compton wavelength &gt; 0.1 mm), the tree-level "
         "coupling is 3854x too strong. IF the dilaton is heavy (wavelength &lt; 0.1 mm), "
         "no discrepancy exists -- the Yukawa force is undetectable at all lab scales, "
-        "and the 160 ppm G excess is within the 530 ppm experimental scatter. "
+        "and the sub-ppm G residual (corrected bridge) is well within experimental scatter. "
         "The dilaton mass origin remains an open problem."
         "</div>",
         unsafe_allow_html=True,

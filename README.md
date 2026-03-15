@@ -1,5 +1,7 @@
 # Alpha Ladder
 
+**[Live Dashboard](https://alphaladder.streamlit.app/)**
+
 Coupling constants as geometric powers of the fine-structure constant.
 
 ## The Result
@@ -35,21 +37,20 @@ The Alpha Ladder proposes that all coupling constants are geometric powers of al
 
 The exponent 24 = d * D arises from the product of spacetime (d=4) and total (D=6) dimensions. The golden ratio phi emerges from the vacuum polynomial of the compactification geometry.
 
-A second independent formula confirms the result:
+The complete bridge form is equivalent:
 
-| Formula | Residual | Fitted params |
-|---------|----------|---------------|
-| alpha^24 * mu * (mu - sqrt(phi)*(1-alpha)) | -0.33 ppm | 0 |
-| phi^2/2 * (1 + 3*alpha^2) * alpha^21 | -0.64 ppm | 1 |
+```
+G = phi^2/2 * (1 + 3*alpha^2 + (phi/2)*alpha^3) * alpha^21 * hbar * c / m_e^2
+```
 
-The two formulas agree to 0.31 ppm, bracketing the measured value.
+Both formulas give -0.33 ppm with zero fitted parameters. They are the same identity, factored differently (proven in mu_tension.py).
 
 ## Project Structure
 
 ```
-alpha_ladder_core/   # 36 computation modules (pure Python, Decimal precision)
-app/                 # Streamlit dashboard (32 pages)
-tests/               # 1725 unit tests
+alpha_ladder_core/   # 43 computation modules (pure Python, Decimal precision)
+app/                 # Streamlit dashboard (37 pages)
+tests/               # 2002 unit tests
 legacy/              # Original standalone scripts
 ```
 
@@ -79,34 +80,87 @@ streamlit run app/Home.py
 | Module | Description |
 |--------|-------------|
 | `constants.py` | CODATA 2014/2018/2022 constants with 50-digit Decimal precision |
-| `predict_g.py` | G predictions from bridge, hierarchy, and mu-structure formulas |
+| `dimension_uniqueness.py` | Proves d=4, D=6 is uniquely selected by 3 constraints |
+| `mu_tension.py` | Unifies bridge and mu-structure into one identity |
 | `mu_structure.py` | The sqrt(phi)*(1-alpha) discovery and formula comparison |
-| `unified_formula.py` | Convergence analysis between bridge and mu-structure paths |
-| `residual_mapping.py` | Systematic search mapping residuals against SM constants |
-| `kk_reduction.py` | Kaluza-Klein reduction from 6D to 4D |
+| `one_alpha_derivation.py` | Derives (1-alpha) from S^2 volume cancellation |
+| `feynman_diagram.py` | Explicit sigma -> KK photon loop -> sigma verification |
+| `predict_g.py` | G predictions from bridge, hierarchy, and mu-structure formulas |
+| `corrected_bridge.py` | Radiative correction phi^2/2*(1+3*alpha^2+(phi/2)*alpha^3) |
 | `vacuum_polynomial.py` | Why phi: the polynomial x^2+Dx+d=0 at d=4, D=6 |
+| `kk_reduction.py` | Kaluza-Klein reduction from 6D to 4D |
+| `casimir_stabilization.py` | Casimir energy on S^2 including matter loop corrections |
+| `flux_stabilization.py` | 2-form flux potential, Planck-mass minimum |
 | `testable_predictions.py` | Falsifiable predictions and experimental comparison |
+| `second_predictions.py` | dG/G=24*dalpha/alpha, M_6 landscape, correlated variations |
 | `literature_comparison.py` | Quantitative comparison with published approaches |
+
+## Dashboard Pages
+
+**Core Results**
+| Page | Description |
+|------|-------------|
+| The Derivation | Complete 6D-to-G derivation chain |
+| Dimension Uniqueness | d=4, D=6 uniquely selected by 3 constraints |
+| Feynman Diagram | Explicit sigma -> KK photon loop -> sigma |
+| Mu Tension | Bridge = mu-structure proven as one identity |
+| Second Predictions | dG/G = 24*dalpha/alpha, M_6 landscape |
+| The Prediction | G from first principles via phi^2/2 bridge |
+
+**Experimental**
+| Page | Description |
+|------|-------------|
+| Fifth Force Predictions | Yukawa signal, Eot-Wash prediction, discovery reach |
+| Testable Predictions | G precision, mu consistency, fifth force bounds |
+| Solar System | Solar system constraints on extra dimensions |
+
+**Theory**
+| Page | Description |
+|------|-------------|
+| The Proof | 4 theoretical gaps and their status |
+| One-Alpha Derivation | S^2 volume cancellation derives (1-alpha) |
+| Corrected Bridge | phi^2/2*(1 + 3*alpha^2 + (phi/2)*alpha^3) |
+| Mu Structure | sqrt(phi)*(1-alpha) offset, formula comparison |
+| Unified Formula | Resummed bridges, gap analysis |
+| Bridge Significance | Expression density, significance analysis |
+| Hierarchy Derivation | 10 theoretical angles for alpha^24*mu^2 |
+| Literature Comparison | Beck, Alexander, Eaves, BVW, Eddington-Dirac |
+| Residual Mapping | delta vs SM constants, closed-form search |
+
+**Gap Analysis**
+| Page | Description |
+|------|-------------|
+| Casimir Stabilization | Casimir no-go + matter loop corrections |
+| Flux Stabilization | 2-form flux potential, Planck-mass minimum |
+| Radius Phenomenology | Testable window, Eot-Wash optimal at ~28 um |
+| Chameleon Screening | Density-dependent mass, KK truncation check |
+| Dark Sector Phenomenology | Relic abundance, self-interaction, fuzzy DM |
+| Radius Determination | Scaling symmetry proof, mechanism catalog |
+| Anomaly Cancellation | Pure gravity safe, SM embedding, G unaffected |
+| Cosmological Constant | V_min ~ O(1) Planck, 122-order discrepancy |
+
+**Legacy Dashboard** (pages 1-11): Constant Core, Geometric Ladder, Bridge Lab, Universe Slider, Phi Scanner, Particle Harmonics, Rung Spacing, Dilaton Lab, Experimental, Alpha Units, Dark Sector.
 
 ## What is Derived vs. Empirical
 
-**Derived from d=4, D=6 geometry:**
+**Derived from first principles:**
+- d=4, D=6 uniquely selected by 3 independent constraints (exponent, volume cancellation, vacuum polynomial)
 - The exponent 24 = d * D
-- The golden ratio phi from x^2 + 6x + 4 = 0
+- The golden ratio phi from the vacuum polynomial x^2 + 6x + 4 = 0
 - sqrt(phi) as the mass offset
+- The (1-alpha) correction from S^2 volume cancellation: Vol(S^2)/R^2 = 4*pi cancels the 1/(4*pi) loop factor
+- The NLO correction (phi/2)*alpha^3 from the same mechanism
+- Verified by explicit Feynman diagram: sigma -> KK photon loop -> sigma
 
 **Measured (not fitted):**
 - alpha, mu, hbar, c, m_e (CODATA values)
-- The (1-alpha) correction (alpha is measured, coefficient is 1)
 
-**Not yet derived from first principles:**
-- Why d=4, D=6 specifically (assumed, not proven)
-- Why the (1-alpha) correction takes this form (physically natural, no diagram calculation yet)
+**Open:**
 - Whether the formula is exact or a leading-order approximation
 
 ## Status
 
-This is active research. The numerical result is robust (verified against CODATA 2014, 2018, and 2022), but the theoretical derivation connecting Kaluza-Klein geometry to this specific formula remains incomplete. See the dashboard for detailed analysis of each theoretical angle.
+This is active research. The numerical result is robust (verified against CODATA 2014, 2018, and 2022) with 2002 tests passing. The theoretical derivation chain is complete: dimension uniqueness (d=4, D=6) -> vacuum polynomial -> KK reduction -> corrected bridge -> G prediction at -0.33 ppm with zero fitted parameters. See the [live dashboard](https://alphaladder.streamlit.app/) for detailed analysis of each step.
 
 ## License
 

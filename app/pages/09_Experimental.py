@@ -265,7 +265,9 @@ with st.expander("Strategy 2: Multiple Paths to \u03b1\u1d33 -- Convergence test
     st.info(
         "All four paths should yield \u03b1_G values consistent with "
         "the ladder exponent. Path D (alpha^24 * mu^2) uses zero free "
-        "parameters. Convergence strengthens the hypothesis; divergence "
+        "parameters (688 ppm). The refined formula alpha^24 * mu * "
+        "(mu - sqrt(phi)*(1-alpha)) gives -0.31 ppm (see Mu Structure page). "
+        "Convergence strengthens the hypothesis; divergence "
         "would falsify it."
     )
 
