@@ -9,7 +9,6 @@ and positions the framework in the literature.
 import streamlit as st
 import math
 
-st.set_page_config(page_title="Solar System | Alpha Ladder", layout="wide")
 
 # ---------------------------------------------------------------------------
 # Custom CSS

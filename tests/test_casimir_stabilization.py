@@ -19,6 +19,10 @@ from alpha_ladder_core.casimir_stabilization import (
     find_casimir_minimum,
     compute_dilaton_mass_casimir,
     summarize_casimir_stabilization,
+    compute_fermion_spectral_zeta_s2,
+    compute_vector_spectral_zeta_s2,
+    compute_matter_casimir_coefficient,
+    scan_anomaly_free_matter_casimir,
 )
 
 
@@ -416,6 +420,102 @@ class TestSummarize(unittest.TestCase):
         """Summary should report no stable minimum."""
         result = summarize_casimir_stabilization()
         self.assertFalse(result.get("has_stable_minimum", True))
+
+
+class TestMatterCasimir(unittest.TestCase):
+    """Tests for matter loop Casimir corrections."""
+
+    def test_fermion_zeta_at_minus_half(self):
+        """Fermion zeta_F(-1/2) = 0 because B_3(1/2) = 0 exactly."""
+        result = compute_fermion_spectral_zeta_s2(s=-0.5)
+        self.assertAlmostEqual(result["zeta_value"], 0.0, delta=1e-10)
+
+    def test_fermion_zeta_at_minus_1(self):
+        """zeta_F(-1) = 4 * zeta_H(-3, 1/2) = 4*(-B_4(1/2)/4) = -7/240."""
+        result = compute_fermion_spectral_zeta_s2(s=-1.0)
+        self.assertTrue(math.isfinite(result["zeta_value"]))
+        expected = -7.0 / 240.0  # -0.029166...
+        self.assertAlmostEqual(result["zeta_value"], expected, delta=1e-6)
+
+    def test_vector_zeta_finite(self):
+        """Vector spectral zeta at s=-0.5 should be finite."""
+        result = compute_vector_spectral_zeta_s2(s=-0.5)
+        self.assertTrue(math.isfinite(result["zeta_value"]))
+
+    def test_vector_zeta_different_from_scalar(self):
+        """Vector zeta at s=-0.5 should differ from scalar zeta."""
+        vec = compute_vector_spectral_zeta_s2(s=-0.5)
+        sca = compute_spectral_zeta_s2(s=-0.5)
+        self.assertNotAlmostEqual(
+            vec["zeta_value"], sca["zeta_value"], places=3
+        )
+
+    def test_matter_casimir_pure_graviton_matches(self):
+        """With zero matter, A_graviton should match the pure graviton result."""
+        casimir = compute_casimir_energy_s2(a_radius=1.0)
+        matter = compute_matter_casimir_coefficient(
+            n_scalars=0, n_fermions=0, n_vectors=0
+        )
+        self.assertAlmostEqual(
+            matter["A_graviton"], casimir["coefficient"], places=8
+        )
+
+    def test_matter_casimir_e8xe8(self):
+        """E8 x E8 matter Casimir returns expected keys."""
+        result = compute_matter_casimir_coefficient(
+            n_scalars=4 * 740, n_fermions=2 * 740 + 2 * 496,
+            n_vectors=496
+        )
+        self.assertIsInstance(result, dict)
+        for key in ("A_total", "A_graviton", "A_matter", "sign_flipped",
+                     "n_scalars", "n_fermions", "n_vectors", "description"):
+            self.assertIn(key, result)
+
+    def test_matter_casimir_so32(self):
+        """SO(32) matter Casimir returns expected keys."""
+        result = compute_matter_casimir_coefficient(
+            n_scalars=4 * 740, n_fermions=2 * 740 + 2 * 496,
+            n_vectors=496
+        )
+        self.assertIsInstance(result, dict)
+        for key in ("A_total", "A_graviton", "A_matter", "sign_flipped"):
+            self.assertIn(key, result)
+
+    def test_matter_casimir_e7xe7(self):
+        """E7 x E7 matter Casimir returns expected keys."""
+        result = compute_matter_casimir_coefficient(
+            n_scalars=4 * 132, n_fermions=2 * 132 + 2 * 266,
+            n_vectors=266
+        )
+        self.assertIsInstance(result, dict)
+        for key in ("A_total", "A_graviton", "A_matter", "sign_flipped"):
+            self.assertIn(key, result)
+
+    def test_hypermultiplet_field_counting(self):
+        """1 hypermultiplet = 4 scalars + 2 fermion dof."""
+        result = compute_matter_casimir_coefficient(
+            n_scalars=4, n_fermions=2, n_vectors=0
+        )
+        self.assertEqual(result["n_scalars"], 4)
+        self.assertEqual(result["n_fermions"], 2)
+
+    def test_vector_multiplet_field_counting(self):
+        """1 vector multiplet = 1 vector + 2 fermion dof."""
+        result = compute_matter_casimir_coefficient(
+            n_scalars=0, n_fermions=2, n_vectors=1
+        )
+        self.assertEqual(result["n_vectors"], 1)
+        self.assertEqual(result["n_fermions"], 2)
+
+    def test_sign_flip_result_documented(self):
+        """scan_anomaly_free_matter_casimir returns 'any_sign_flip' key."""
+        result = scan_anomaly_free_matter_casimir()
+        self.assertIn("any_sign_flip", result)
+
+    def test_summary_includes_matter(self):
+        """summarize_casimir_stabilization returns 'matter_loop_results' key."""
+        result = summarize_casimir_stabilization()
+        self.assertIn("matter_loop_results", result)
 
 
 if __name__ == "__main__":

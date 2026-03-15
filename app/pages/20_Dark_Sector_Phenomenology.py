@@ -10,7 +10,6 @@ import streamlit as st
 import math
 import pandas as pd
 
-st.set_page_config(page_title="Dark Sector | Alpha Ladder", layout="wide")
 
 # ---------------------------------------------------------------------------
 # Custom CSS (matches Pages 16-19)

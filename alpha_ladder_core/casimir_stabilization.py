@@ -32,6 +32,13 @@ All calculations use pure Python math (no numpy/scipy).
 import math
 from decimal import Decimal, getcontext
 
+try:
+    from alpha_ladder_core.anomaly_cancellation import _ANOMALY_FREE_GROUPS
+    _ANOMALY_AVAILABLE = True
+except ImportError:
+    _ANOMALY_AVAILABLE = False
+    _ANOMALY_FREE_GROUPS = {}
+
 getcontext().prec = 50
 
 
@@ -891,6 +898,357 @@ def compute_dilaton_mass_casimir(constants=None):
 
 
 # ---------------------------------------------------------------------------
+# 7a. Fermion spectral zeta on S^2
+# ---------------------------------------------------------------------------
+
+def compute_fermion_spectral_zeta_s2(s, l_max=1000):
+    """
+    Compute the fermion spectral zeta function on S^2.
+
+    Fermion eigenvalues on S^2 are (l + 1/2)^2 for l >= 0, with
+    degeneracy 2(2l + 1).  The spectral zeta function is:
+
+        zeta_F(s) = sum_{l >= 0} 2(2l+1) * [(l+1/2)^2]^{-s}
+                  = 2 * sum_{l >= 0} (2l+1) * (l+1/2)^{-2s}
+                  = 4 * sum_{l >= 0} (l+1/2)^{1-2s}
+                  = 4 * zeta_H(2s-1, 1/2)
+
+    For s = -1/2:
+        zeta_F(-1/2) = 4 * zeta_H(-2, 1/2) = 4 * (-B_3(1/2) / 3)
+
+    B_3(1/2) = (1/2)^3 - 1.5*(1/2)^2 + 0.5*(1/2)
+             = 0.125 - 0.375 + 0.25 = 0   (exactly)
+
+    So zeta_F(-1/2) = 0 for fermions on S^2.
+
+    Parameters
+    ----------
+    s : float -- the exponent
+    l_max : int -- maximum l for partial sums (default 1000)
+
+    Returns
+    -------
+    dict with keys:
+        zeta_value : float
+        s : float
+        method : str
+        description : str
+    """
+    if s > 1.0:
+        # Direct partial sum for convergent regime
+        total = 0.0
+        for l in range(0, l_max + 1):
+            eigenvalue = (l + 0.5) ** 2
+            degeneracy = 2 * (2 * l + 1)
+            total += degeneracy * eigenvalue ** (-s)
+        return {
+            "zeta_value": total,
+            "s": s,
+            "method": "partial_sum",
+            "description": (
+                f"Fermion spectral zeta on S^2 via partial sum with "
+                f"{l_max + 1} terms.  zeta_F({s}) = {total:.10f}."
+            ),
+        }
+
+    # Analytic continuation: zeta_F(s) = 4 * zeta_H(2s - 1, 1/2)
+    hz_arg = 2.0 * s - 1.0
+    n_int = -int(round(hz_arg))
+
+    if n_int >= 0 and abs(hz_arg + n_int) < 1e-12 and n_int + 1 <= 6:
+        # Use Bernoulli polynomial identity: zeta_H(-n, a) = -B_{n+1}(a)/(n+1)
+        hz_val = _hurwitz_zeta_negative_int(n_int, 0.5)
+        zeta_value = 4.0 * hz_val
+        method = "analytic_continuation"
+    elif hz_arg > 1.0:
+        hz_val = _hurwitz_zeta_positive(hz_arg, 0.5, terms=l_max)
+        zeta_value = 4.0 * hz_val
+        method = "partial_sum_hurwitz"
+    else:
+        # Fallback: direct partial sum (non-convergent, for diagnostics)
+        total = 0.0
+        for l in range(0, l_max + 1):
+            eigenvalue = (l + 0.5) ** 2
+            degeneracy = 2 * (2 * l + 1)
+            total += degeneracy * eigenvalue ** (-s)
+        zeta_value = total
+        method = "partial_sum_fallback"
+
+    return {
+        "zeta_value": zeta_value,
+        "s": s,
+        "method": method,
+        "description": (
+            f"Fermion spectral zeta on S^2 via {method}.  "
+            f"zeta_F({s}) = {zeta_value:.10f}.  "
+            f"For s=-1/2, B_3(1/2) = 0 exactly, so zeta_F(-1/2) = 0."
+        ),
+    }
+
+
+# ---------------------------------------------------------------------------
+# 7b. Vector boson spectral zeta on S^2
+# ---------------------------------------------------------------------------
+
+def compute_vector_spectral_zeta_s2(s, l_max=1000):
+    """
+    Compute the vector boson spectral zeta function on S^2.
+
+    Vector eigenvalues on S^2 are l(l+1) - 1 = (l-1)(l+2) for l >= 1,
+    with degeneracy 2(2l+1).  The l=1 mode gives eigenvalue 0 (gauge
+    zero mode) and is excluded from the massive spectrum.
+
+    For Re(s) > 1, compute via direct partial sum from l = 2 to l_max.
+
+    For s = -1/2, use analytic continuation via the substitution
+    u = l + 1/2, giving eigenvalue u^2 - 9/4.  This is expressed in
+    terms of Hurwitz zeta functions.
+
+    Parameters
+    ----------
+    s : float -- the exponent
+    l_max : int -- maximum l for partial sums (default 1000)
+
+    Returns
+    -------
+    dict with keys:
+        zeta_value : float
+        s : float
+        l_max : int
+        method : str
+        description : str
+    """
+    if s > 1.0:
+        # Direct partial sum (convergent for s > 1)
+        total = 0.0
+        for l in range(2, l_max + 1):
+            eigenvalue = (l - 1) * (l + 2)  # = l(l+1) - 2  ... actually l^2+l-2
+            degeneracy = 2 * (2 * l + 1)
+            total += degeneracy * eigenvalue ** (-s)
+        return {
+            "zeta_value": total,
+            "s": s,
+            "l_max": l_max,
+            "method": "partial_sum",
+            "description": (
+                f"Vector spectral zeta on S^2 via partial sum (l=2..{l_max}).  "
+                f"zeta_V({s}) = {total:.10f}."
+            ),
+        }
+
+    # Analytic continuation for s <= 1
+    # Eigenvalue = (l-1)(l+2) = l^2 + l - 2.  Substituting u = l + 1/2:
+    #   l^2 + l - 2 = u^2 - 1/4 - 2 = u^2 - 9/4
+    # Degeneracy 2(2l+1) = 4u.
+    #
+    # zeta_V(s) = sum_{l>=2} 4u * (u^2 - 9/4)^{-s},  u = l+1/2 >= 5/2
+    #
+    # For s = -1/2:
+    #   zeta_V(-1/2) = sum_{l>=2} 4u * (u^2 - 9/4)^{1/2}
+    #
+    # We use binomial expansion: (u^2 - 9/4)^{-s} = u^{-2s} * (1 - 9/(4u^2))^{-s}
+    #   = u^{-2s} * sum_{j>=0} C(-s, j) * (-9/4)^j * u^{-2j}
+    #   = sum_{j>=0} C(-s, j) * (-9/4)^j * u^{-2s-2j}
+    #
+    # Then: zeta_V(s) = 4 * sum_j C(-s,j) * (-9/4)^j * sum_{l>=2} u^{1-2s-2j}
+    #                  = 4 * sum_j C(-s,j) * (-9/4)^j * zeta_H(2s+2j-1, 5/2)
+    #                                                   (shifted to start at u=5/2)
+    # Actually: sum_{l>=2} u^{-alpha} = sum_{k>=0} (k + 5/2)^{-alpha} = zeta_H(alpha, 5/2)
+
+    J = 7  # 8 terms in the binomial expansion
+    a = 2.5  # = 5/2, since u starts at l=2 -> u = 2.5
+    total = 0.0
+
+    for j in range(J + 1):
+        # Coefficient: C(-s, j) * (-9/4)^j
+        c_j = _generalized_binomial(-s, j) * ((-9.0 / 4.0) ** j)
+
+        # Hurwitz zeta argument: 2s + 2j - 1
+        hz_arg = 2.0 * s + 2.0 * j - 1.0
+
+        if hz_arg < 0 or abs(hz_arg - round(hz_arg)) < 1e-12:
+            n_int = -int(round(hz_arg))
+            if n_int >= 0 and n_int + 1 <= 6:
+                hz_val = _hurwitz_zeta_negative_int(n_int, a)
+            else:
+                hz_val = 0.0
+        elif hz_arg > 1.0:
+            hz_val = _hurwitz_zeta_positive(hz_arg, a, terms=500)
+        elif abs(hz_arg - 1.0) < 1e-12:
+            hz_val = float('inf')
+        else:
+            hz_val = 0.0
+
+        total += 4.0 * c_j * hz_val
+
+    return {
+        "zeta_value": total,
+        "s": s,
+        "l_max": l_max,
+        "method": "analytic_continuation",
+        "description": (
+            f"Vector spectral zeta on S^2 via analytic continuation "
+            f"(Hurwitz zeta expansion with {J + 1} terms).  "
+            f"zeta_V({s}) = {total:.10f}.  "
+            f"l=1 gauge zero mode excluded; sum starts from l=2."
+        ),
+    }
+
+
+# ---------------------------------------------------------------------------
+# 7c. Matter Casimir coefficient
+# ---------------------------------------------------------------------------
+
+def compute_matter_casimir_coefficient(n_scalars=0, n_fermions=0,
+                                       n_vectors=0, a_radius=1.0):
+    """
+    Compute the total Casimir coefficient combining all spin species.
+
+    The Casimir energy on S^2 receives contributions from different
+    spin fields with different signs:
+      - Bosonic scalars: +zeta_scalar(-1/2) per degree of freedom
+      - Fermions: -zeta_fermion(-1/2) per degree of freedom
+      - Vectors: +zeta_vector(-1/2) per degree of freedom
+
+    The graviton tower contributes 9 bosonic scalar-type degrees of
+    freedom (the existing pure graviton computation).
+
+    For 6D SUSY multiplets on S^2:
+      - Each hypermultiplet: 4 real scalars + 2 fermion dof
+      - Each vector multiplet: 1 vector + 2 fermion dof (gaugino)
+
+    The caller provides the raw counts (n_scalars, n_fermions, n_vectors)
+    for the matter sector.  The function adds the graviton contribution
+    (9 scalar dof) automatically.
+
+    Total:
+        A_total = [N_grav * zeta_S + n_scalars * zeta_S
+                   - n_fermions * zeta_F + n_vectors * zeta_V]
+                  / (4 * pi * a^4)
+
+    Parameters
+    ----------
+    n_scalars : int -- number of matter scalar dof
+    n_fermions : int -- number of matter fermion dof
+    n_vectors : int -- number of matter vector dof
+    a_radius : float -- radius of S^2 (default 1.0)
+
+    Returns
+    -------
+    dict with keys:
+        A_total : float
+        A_graviton : float
+        A_matter : float
+        sign_flipped : bool
+        n_scalars : int
+        n_fermions : int
+        n_vectors : int
+        description : str
+    """
+    N_grav = 9  # graviton tower scalar-type dof
+
+    zeta_S = compute_spectral_zeta_s2(s=-0.5)["zeta_value"]
+    zeta_F = compute_fermion_spectral_zeta_s2(s=-0.5)["zeta_value"]
+    zeta_V = compute_vector_spectral_zeta_s2(s=-0.5)["zeta_value"]
+
+    prefactor = 1.0 / (4.0 * math.pi * a_radius ** 4)
+
+    A_graviton = N_grav * zeta_S * prefactor
+    A_matter = (n_scalars * zeta_S - n_fermions * zeta_F
+                + n_vectors * zeta_V) * prefactor
+    A_total = A_graviton + A_matter
+
+    # Sign flip: graviton alone gives A < 0; check if matter flips it
+    sign_flipped = (A_total > 0) and (A_graviton < 0)
+
+    return {
+        "A_total": A_total,
+        "A_graviton": A_graviton,
+        "A_matter": A_matter,
+        "sign_flipped": sign_flipped,
+        "n_scalars": n_scalars,
+        "n_fermions": n_fermions,
+        "n_vectors": n_vectors,
+        "description": (
+            f"Total Casimir coefficient A = {A_total:.8e}.  "
+            f"Graviton (9 scalar dof): A_grav = {A_graviton:.8e}.  "
+            f"Matter ({n_scalars}S + {n_fermions}F + {n_vectors}V): "
+            f"A_matter = {A_matter:.8e}.  "
+            f"Sign flipped by matter: {sign_flipped}."
+        ),
+    }
+
+
+# ---------------------------------------------------------------------------
+# 7d. Scan anomaly-free groups for matter Casimir
+# ---------------------------------------------------------------------------
+
+def scan_anomaly_free_matter_casimir():
+    """
+    Loop over anomaly-free gauge groups and compute the matter Casimir
+    coefficient for each.
+
+    For each group in _ANOMALY_FREE_GROUPS that has both n_hyper and
+    n_vector defined (skip groups with n_hyper = None), compute the
+    matter Casimir coefficient using the 6D multiplet field counting:
+      - n_scalars_total = 4 * n_hyper
+      - n_fermions_total = 2 * n_hyper + 2 * n_vector
+      - n_vectors_total = n_vector
+
+    Returns
+    -------
+    dict with keys:
+        results : list of dict -- per-group results
+        any_sign_flip : bool -- whether any group flips the Casimir sign
+        description : str
+    """
+    results = []
+    any_sign_flip = False
+
+    for key, data in _ANOMALY_FREE_GROUPS.items():
+        n_hyper = data.get("n_hyper")
+        n_vector = data.get("n_vector")
+
+        if n_hyper is None or n_vector is None:
+            continue
+
+        # 6D multiplet field counting on S^2
+        n_scalars_total = 4 * n_hyper
+        n_fermions_total = 2 * n_hyper + 2 * n_vector
+        n_vectors_total = n_vector
+
+        casimir = compute_matter_casimir_coefficient(
+            n_scalars=n_scalars_total,
+            n_fermions=n_fermions_total,
+            n_vectors=n_vectors_total,
+        )
+
+        entry = {
+            "group": data["group"],
+            "key": key,
+            "n_hyper": n_hyper,
+            "n_vector": n_vector,
+            "n_scalars_total": n_scalars_total,
+            "n_fermions_total": n_fermions_total,
+            "n_vectors_total": n_vectors_total,
+            "casimir": casimir,
+        }
+        results.append(entry)
+
+        if casimir["sign_flipped"]:
+            any_sign_flip = True
+
+    return {
+        "results": results,
+        "any_sign_flip": any_sign_flip,
+        "description": (
+            f"Scanned {len(results)} anomaly-free groups for matter Casimir.  "
+            f"Sign flip found: {any_sign_flip}."
+        ),
+    }
+
+
+# ---------------------------------------------------------------------------
 # 7. Summary / dashboard entry point
 # ---------------------------------------------------------------------------
 
@@ -925,6 +1283,14 @@ def summarize_casimir_stabilization(constants=None):
     potential = compute_effective_potential()
     minimum = find_casimir_minimum()
     mass = compute_dilaton_mass_casimir()
+
+    # Matter loop Casimir corrections
+    matter_loop_results = None
+    if _ANOMALY_AVAILABLE:
+        try:
+            matter_loop_results = scan_anomaly_free_matter_casimir()
+        except Exception:
+            pass
 
     # Overall assessment
     zeta_negative = zeta["zeta_value"] < 0
@@ -998,4 +1364,5 @@ def summarize_casimir_stabilization(constants=None):
         "zeta_s2_negative": zeta_negative,
         "casimir_coefficient": casimir["coefficient"],
         "has_stable_minimum": has_minimum,
+        "matter_loop_results": matter_loop_results,
     }

@@ -8,7 +8,6 @@ the 21 connection, and summary metrics.
 
 import streamlit as st
 
-st.set_page_config(page_title="Phi Scanner | Alpha Ladder", layout="wide")
 
 # ---------------------------------------------------------------------------
 # Custom CSS

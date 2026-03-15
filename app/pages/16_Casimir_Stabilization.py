@@ -8,7 +8,6 @@ as a candidate mechanism for volume modulus stabilization.
 import streamlit as st
 import math
 
-st.set_page_config(page_title="Casimir Stabilization | Alpha Ladder", layout="wide")
 
 # ---------------------------------------------------------------------------
 # Custom CSS (matches Page 14 + warning-card for negative results)
@@ -84,6 +83,10 @@ try:
         find_casimir_minimum,
         compute_dilaton_mass_casimir,
         summarize_casimir_stabilization,
+        compute_fermion_spectral_zeta_s2,
+        compute_vector_spectral_zeta_s2,
+        compute_matter_casimir_coefficient,
+        scan_anomaly_free_matter_casimir,
     )
     _core_available = True
 except ImportError:
@@ -127,6 +130,13 @@ if _core_available:
         pass
     try:
         _summary = summarize_casimir_stabilization()
+    except Exception:
+        pass
+
+_matter_scan = None
+if _core_available:
+    try:
+        _matter_scan = scan_anomaly_free_matter_casimir()
     except Exception:
         pass
 
@@ -588,6 +598,98 @@ with st.expander("E. Impact on Open Problems", expanded=True):
         """,
         unsafe_allow_html=True,
     )
+
+# ---------------------------------------------------------------------------
+# Section F: Matter Loop Corrections
+# ---------------------------------------------------------------------------
+with st.expander("F. Matter Loop Corrections", expanded=True):
+
+    st.markdown(
+        """
+        <div class="step-card">
+        <b>Can matter fields flip the Casimir sign?</b><br><br>
+        The pure graviton tower gives a negative Casimir coefficient
+        (&zeta;<sub>S&sup2;</sub>(&minus;1/2) &lt; 0). Fermions contribute
+        with <em>opposite sign</em> to the Casimir energy. If the anomaly-free
+        matter content includes enough fermionic degrees of freedom, the total
+        coefficient A could flip positive, enabling stabilization.<br><br>
+        <b>Key result:</b> The fermion spectral zeta &zeta;<sub>F</sub>(&minus;1/2) = 0
+        exactly (because B<sub>3</sub>(1/2) = 0), so individual fermion species
+        contribute <em>zero</em> at leading order. The sign flip depends entirely
+        on the vector boson spectrum.
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    st.markdown("")
+
+    if _core_available and _matter_scan:
+        results = _matter_scan.get("results", [])
+        any_flip = _matter_scan.get("any_sign_flip", False)
+
+        if results:
+            st.markdown("#### Anomaly-Free Gauge Groups")
+
+            # Build table data
+            table_rows = []
+            for r in results:
+                table_rows.append({
+                    "Gauge Group": r.get("group", ""),
+                    "n_scalars": r.get("n_scalars", 0),
+                    "n_fermions": r.get("n_fermions", 0),
+                    "n_vectors": r.get("n_vectors", 0),
+                    "A_total": f"{r.get('A_total', 0):.6f}",
+                    "Sign Flipped": "Yes" if r.get("sign_flipped", False) else "No",
+                })
+
+            st.table(table_rows)
+
+            st.markdown("")
+
+        # Assessment card
+        if any_flip:
+            st.markdown(
+                """
+                <div class="theorem-card">
+                <b>Result:</b> At least one anomaly-free gauge group produces
+                a positive total Casimir coefficient. Matter loop corrections
+                CAN flip the sign, opening the door to Casimir stabilization
+                with the full matter content.
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+        else:
+            st.markdown(
+                """
+                <div class="warning-card">
+                <b>Result:</b> No anomaly-free gauge group flips the sign of
+                the total Casimir coefficient. The fermion spectral zeta
+                vanishes at s = &minus;1/2 (B<sub>3</sub>(1/2) = 0 exactly),
+                so fermions contribute zero at leading order. The vector boson
+                contribution alone is insufficient to overcome the negative
+                graviton Casimir energy.<br><br>
+                <b>The Casimir no-go persists even with full matter content.</b>
+                Stabilization requires flux contributions (Page 17) or
+                non-perturbative effects.
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+    else:
+        st.markdown(
+            """
+            <div class="step-card">
+            <b>Matter loop computation not available.</b><br>
+            The matter Casimir correction requires the anomaly cancellation
+            module. Run the full pipeline to see results.
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+    st.markdown("")
 
 # ---------------------------------------------------------------------------
 # Footer

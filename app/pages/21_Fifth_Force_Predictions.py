@@ -10,7 +10,6 @@ radius), which sets the Yukawa range lambda.
 import streamlit as st
 import pandas as pd
 
-st.set_page_config(page_title="Fifth Force Predictions | Alpha Ladder", layout="wide")
 
 # ---------------------------------------------------------------------------
 # Custom CSS (matches Pages 16-20)

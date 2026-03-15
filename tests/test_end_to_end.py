@@ -44,6 +44,14 @@ from alpha_ladder_core.predict_g import (
     get_G_measurements,
     summarize_predictions,
 )
+from alpha_ladder_core.dimension_uniqueness import (
+    prove_uniqueness,
+    predict_G_unified,
+    predict_mu_unified,
+    compute_complete_formula,
+)
+from alpha_ladder_core.feynman_diagram import verify_diagram_consistency
+from alpha_ladder_core.mu_tension import verify_unification
 
 
 class TestDerivationChain(unittest.TestCase):
@@ -366,6 +374,158 @@ class TestDerivationChain(unittest.TestCase):
         G2 = predict_G(candidates_2["φ²/2"], c)
 
         self.assertEqual(G1, G2)
+
+
+class TestUnifiedDerivationChain(unittest.TestCase):
+    """Unified derivation chain: dimension uniqueness -> feynman diagram ->
+    mu tension -> unified G prediction with zero fitted parameters."""
+
+    def setUp(self):
+        self.c = get_constants("CODATA 2018")
+
+    # ------------------------------------------------------------------
+    # Individual steps
+    # ------------------------------------------------------------------
+
+    def test_dimension_uniqueness(self):
+        """prove_uniqueness selects d=4, n=2, D=6 as the unique pair."""
+        result = prove_uniqueness(self.c)
+        self.assertTrue(result["unique"])
+        self.assertEqual(result["unique_pair"]["d"], 4)
+        self.assertEqual(result["unique_pair"]["n"], 2)
+        self.assertEqual(result["unique_pair"]["D"], 6)
+
+    def test_feynman_diagram_consistency(self):
+        """Feynman diagram (sigma -> KK photon loop -> sigma) is consistent."""
+        result = verify_diagram_consistency(self.c)
+        self.assertTrue(result["consistent"])
+
+    def test_mu_tension_unification(self):
+        """Bridge and mu-structure formulas are unified."""
+        result = verify_unification(self.c)
+        self.assertTrue(result["unified"])
+
+    def test_mu_prediction_sub_ppm(self):
+        """Unified mu prediction residual is sub-ppm."""
+        result = predict_mu_unified(self.c)
+        self.assertLess(abs(result["residual_ppm"]), 1.0)
+
+    def test_G_prediction_sub_5ppm(self):
+        """Unified G prediction residual is within 5 ppm."""
+        result = predict_G_unified(self.c)
+        self.assertLess(abs(result["residual_unified_ppm"]), 5)
+
+    def test_two_formulas_agree(self):
+        """Unified and mu-structure G predictions agree within 0.1 ppm."""
+        result = predict_G_unified(self.c)
+        self.assertLess(result["difference_ppm"], 0.1)
+
+    def test_complete_formula_zero_params(self):
+        """Complete formula has zero fitted parameters."""
+        result = compute_complete_formula(self.c)
+        self.assertEqual(result["n_fitted_params"], 0)
+
+    # ------------------------------------------------------------------
+    # Full chain
+    # ------------------------------------------------------------------
+
+    def test_full_unified_chain(self):
+        """Complete unified chain with CODATA 2018: G within 5 ppm."""
+        c = self.c
+
+        # Step 1: Dimension uniqueness selects d=4, D=6
+        uniq = prove_uniqueness(c)
+        self.assertTrue(uniq["unique"])
+
+        # Step 2: Feynman diagram is consistent
+        diag = verify_diagram_consistency(c)
+        self.assertTrue(diag["consistent"])
+
+        # Step 3: Bridge and mu-structure unify
+        unif = verify_unification(c)
+        self.assertTrue(unif["unified"])
+
+        # Step 4: Mu prediction sub-ppm
+        mu_pred = predict_mu_unified(c)
+        self.assertLess(abs(mu_pred["residual_ppm"]), 1.0)
+
+        # Step 5: G prediction within 5 ppm of CODATA
+        g_pred = predict_G_unified(c)
+        self.assertLess(abs(g_pred["residual_unified_ppm"]), 5)
+
+        # Step 6: Zero fitted parameters
+        formula = compute_complete_formula(c)
+        self.assertEqual(formula["n_fitted_params"], 0)
+
+        # Final check: G is close to CODATA value
+        G_codata = float(c.G)
+        rel_error_ppm = abs(float(g_pred["G_unified"]) - G_codata) / G_codata * 1e6
+        self.assertLess(rel_error_ppm, 5, f"G unified error {rel_error_ppm:.2f} ppm exceeds 5 ppm")
+
+    def test_full_unified_chain_codata_2014(self):
+        """Complete unified chain with CODATA 2014."""
+        c = get_constants("CODATA 2014")
+
+        uniq = prove_uniqueness(c)
+        self.assertTrue(uniq["unique"])
+
+        diag = verify_diagram_consistency(c)
+        self.assertTrue(diag["consistent"])
+
+        unif = verify_unification(c)
+        self.assertTrue(unif["unified"])
+
+        mu_pred = predict_mu_unified(c)
+        self.assertLess(abs(mu_pred["residual_ppm"]), 1.0)
+
+        g_pred = predict_G_unified(c)
+        # CODATA 2014 G differs more from prediction (~33 ppm)
+        self.assertLess(abs(g_pred["residual_unified_ppm"]), 50)
+
+        formula = compute_complete_formula(c)
+        self.assertEqual(formula["n_fitted_params"], 0)
+
+        G_codata = float(c.G)
+        rel_error_ppm = abs(float(g_pred["G_unified"]) - G_codata) / G_codata * 1e6
+        self.assertLess(rel_error_ppm, 50, f"G unified error {rel_error_ppm:.2f} ppm exceeds 50 ppm")
+
+    def test_chain_deterministic(self):
+        """Running predict_G_unified twice produces identical results."""
+        c = self.c
+
+        result_1 = predict_G_unified(c)
+        result_2 = predict_G_unified(c)
+
+        self.assertEqual(result_1["G_unified"], result_2["G_unified"])
+        self.assertEqual(result_1["residual_unified_ppm"], result_2["residual_unified_ppm"])
+
+    def test_old_and_new_chains_consistent(self):
+        """Old bridge G and new unified G differ by correction factor F.
+
+        F = 1 + 3*alpha^2 + (phi/2)*alpha^3, so G_new/G_old ~ F within 0.1%.
+        """
+        c = self.c
+        alpha = float(c.alpha)
+        phi = float(c.phi)
+
+        # New unified G
+        formula = compute_complete_formula(c)
+        G_new = float(formula["G_predicted"])
+
+        # Old bridge G using phi^2/2
+        candidates = get_bridge_candidates(c)
+        G_old = float(predict_G(candidates["φ²/2"], c))
+
+        # Expected correction factor
+        F = 1 + 3 * alpha ** 2 + (phi / 2) * alpha ** 3
+
+        ratio = G_new / G_old
+        rel_diff = abs(ratio - F) / F
+        self.assertLess(
+            rel_diff,
+            1e-3,
+            f"G_new/G_old = {ratio:.10f}, expected F = {F:.10f}, diff = {rel_diff:.2e}",
+        )
 
 
 if __name__ == "__main__":

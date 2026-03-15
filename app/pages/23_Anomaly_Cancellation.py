@@ -8,7 +8,6 @@ The G prediction is UNAFFECTED by anomaly constraints.
 import streamlit as st
 import pandas as pd
 
-st.set_page_config(page_title="Anomaly Cancellation | Alpha Ladder", layout="wide")
 
 # ---------------------------------------------------------------------------
 # Custom CSS (matches Pages 16-22)

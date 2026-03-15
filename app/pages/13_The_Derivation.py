@@ -11,7 +11,6 @@ import streamlit as st
 import math
 import pandas as pd
 
-st.set_page_config(page_title="The Derivation | Alpha Ladder", layout="wide")
 
 # ---------------------------------------------------------------------------
 # Custom CSS

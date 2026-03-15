@@ -1,7 +1,7 @@
 """
 Shared sidebar component for the Alpha Ladder dashboard.
 
-Renders the CODATA edition selector and the 4 Pillars status panel.
+Renders the CODATA edition selector, global CSS, and PDF export.
 All pages should call render_sidebar() to get the active constants namespace.
 """
 
@@ -31,53 +31,6 @@ except ImportError:
     def get_constants(edition):
         """Stub: return None; pages must guard against this."""
         return None
-
-
-# ---------------------------------------------------------------------------
-# Pillar definitions
-# ---------------------------------------------------------------------------
-_PILLARS = [
-    {
-        "number": 1,
-        "title": "Geometric Ladder",
-        "description": "αⁿ structure verified",
-        "icon_done": "check",
-        "icon_pending": "hourglass_flowing_sand",
-    },
-    {
-        "number": 2,
-        "title": "The Bridge",
-        "description": "α_G = C · α²¹",
-        "icon_done": "check",
-        "icon_pending": "hourglass_flowing_sand",
-    },
-    {
-        "number": 3,
-        "title": "The Dark Sector",
-        "description": "α¹⁰ candidate",
-        "icon_done": "check",
-        "icon_pending": "hourglass_flowing_sand",
-    },
-    {
-        "number": 4,
-        "title": "The Prediction",
-        "description": "G from first principles",
-        "icon_done": "check",
-        "icon_pending": "hourglass_flowing_sand",
-    },
-]
-
-
-def _pillar_status(pillar_number):
-    """Determine whether a pillar should show as verified or pending.
-
-    Currently pillars 1 and 2 are considered verified (the geometric
-    ladder and bridge coefficient are computed); pillars 3 and 4 are
-    still pending further analysis.
-
-    Returns True (verified) or False (pending).
-    """
-    return pillar_number in (1, 2, 3, 4)
 
 
 _GLOBAL_CSS = """
@@ -212,25 +165,6 @@ def render_sidebar():
             index=default_idx,
             key="codata_edition",
         )
-
-        st.divider()
-
-        # -- 4 Pillars status panel --
-        st.subheader("4 Pillars")
-
-        for pillar in _PILLARS:
-            verified = _pillar_status(pillar["number"])
-            if verified:
-                status_icon = ":white_check_mark:"
-                status_label = "Verified"
-            else:
-                status_icon = ":hourglass_flowing_sand:"
-                status_label = "Pending"
-
-            st.markdown(
-                f"**{status_icon} Pillar {pillar['number']}: {pillar['title']}**"
-            )
-            st.caption(f"{pillar['description']} -- {status_label}")
 
         st.divider()
 

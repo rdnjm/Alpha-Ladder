@@ -8,7 +8,6 @@ mathematical expressions.
 
 import streamlit as st
 
-st.set_page_config(page_title="Bridge Significance | Alpha Ladder", layout="wide")
 
 # ---------------------------------------------------------------------------
 # Custom CSS (matches Pages 16-24)

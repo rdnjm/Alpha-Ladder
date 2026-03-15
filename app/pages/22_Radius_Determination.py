@@ -8,7 +8,6 @@ of the 6D EH+GB action for n=2) and catalogs mechanisms that could fix it.
 import streamlit as st
 import pandas as pd
 
-st.set_page_config(page_title="Radius Determination | Alpha Ladder", layout="wide")
 
 # ---------------------------------------------------------------------------
 # Custom CSS (matches Pages 16-21)

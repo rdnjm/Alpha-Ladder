@@ -8,7 +8,6 @@ irrational spacings, and continuous optimization.
 import streamlit as st
 import math
 
-st.set_page_config(page_title="Rung Spacing | Alpha Ladder", layout="wide")
 
 # ---------------------------------------------------------------------------
 # Custom CSS

@@ -9,7 +9,6 @@ This page explores 10 theoretical angles for why this formula holds.
 import streamlit as st
 import pandas as pd
 
-st.set_page_config(page_title="Hierarchy Derivation | Alpha Ladder", layout="wide")
 
 # ---------------------------------------------------------------------------
 # Custom CSS (matches Pages 16-25)

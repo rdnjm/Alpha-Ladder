@@ -12,7 +12,6 @@ from decimal import Decimal, getcontext
 
 getcontext().prec = 50
 
-st.set_page_config(page_title="Bridge Lab | Alpha Ladder", layout="wide")
 
 # ---------------------------------------------------------------------------
 # Custom CSS

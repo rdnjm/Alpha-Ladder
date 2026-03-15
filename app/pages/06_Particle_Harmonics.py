@@ -7,7 +7,6 @@ Shows mass spectrum table, number line visualization, and summary statistics.
 
 import streamlit as st
 
-st.set_page_config(page_title="Particle Harmonics | Alpha Ladder", layout="wide")
 
 # ---------------------------------------------------------------------------
 # Custom CSS
