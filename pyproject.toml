@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "alpha-ladder"
+version = "0.1.0"
+description = "Alpha Ladder: Coupling Constants as Geometric Powers of the Fine-Structure Constant"
+requires-python = ">=3.10"
+dependencies = [
+    "streamlit>=1.30.0",
+    "plotly>=5.18.0",
+    "pandas>=2.0.0",
+    "numpy>=1.24.0",
+    "fpdf2>=2.7.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[tool.setuptools.packages.find]
+include = ["alpha_ladder_core*"]
