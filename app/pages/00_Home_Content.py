@@ -189,46 +189,6 @@ with nav_col2:
     )
 
 # ---------------------------------------------------------------------------
-# Export
-# ---------------------------------------------------------------------------
-st.subheader("Export")
-
-st.markdown(
-    """
-    <div class="nav-hint">
-    <b>Download Report</b><br>
-    Generate a PDF containing key results from all dashboard pages.
-    </div>
-    """,
-    unsafe_allow_html=True,
-)
-
-st.markdown("")
-
-_pdf_available = False
-try:
-    from app.components.pdf_export import generate_pdf  # noqa: E402
-    _pdf_available = True
-except ImportError:
-    pass
-
-if _pdf_available:
-    if st.button("Generate PDF Report"):
-        with st.spinner("Generating PDF..."):
-            try:
-                pdf_bytes = generate_pdf(constants=constants)
-                st.download_button(
-                    label="Download PDF",
-                    data=pdf_bytes,
-                    file_name="alpha_ladder_report.pdf",
-                    mime="application/pdf",
-                )
-            except Exception as exc:
-                st.error(f"PDF generation failed: {exc}")
-else:
-    st.info("PDF export requires fpdf2: pip install fpdf2")
-
-# ---------------------------------------------------------------------------
 # Footer
 # ---------------------------------------------------------------------------
 st.divider()

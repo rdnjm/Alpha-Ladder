@@ -167,38 +167,6 @@ def render_sidebar():
         )
 
         st.divider()
-
-        # -- PDF Export --
-        _pdf_ok = False
-        try:
-            from app.components.pdf_export import generate_pdf as _gen_pdf
-            _pdf_ok = True
-        except ImportError:
-            try:
-                import importlib
-                _mod = importlib.import_module("app.components.pdf_export")
-                _gen_pdf = _mod.generate_pdf
-                _pdf_ok = True
-            except (ImportError, AttributeError):
-                pass
-
-        if _pdf_ok:
-            _c = get_constants(selected_edition)
-            if st.button("Download PDF Report", key="sidebar_pdf_btn"):
-                with st.spinner("Generating..."):
-                    try:
-                        _pdf_bytes = _gen_pdf(constants=_c)
-                        st.download_button(
-                            label="Save PDF",
-                            data=_pdf_bytes,
-                            file_name="alpha_ladder_report.pdf",
-                            mime="application/pdf",
-                            key="sidebar_pdf_dl",
-                        )
-                    except Exception as _exc:
-                        st.error(f"PDF failed: {_exc}")
-
-        st.divider()
         st.caption("Alpha Ladder Research Dashboard")
 
     # -- Fetch and return constants for the selected edition --
