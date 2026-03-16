@@ -3,10 +3,9 @@ Tests for alpha_ladder_core/oneloop_g_correction.py
 
 Comprehensive test suite for one-loop quantum corrections to Newton's constant G
 from Kaluza-Klein towers on S^2. The key physics result verified here is that
-the spectral zeta function at s=-1 is zero (or very close), because the
-weighted sum sum_{l=1}^{L} (2l+1)*l*(l+1) is an exact polynomial in L with no
-constant term. This means naive zeta regularization does NOT produce the
-desired 3*alpha^2 correction to G.
+the spectral zeta function at s=-1 is -17/480 (via Hurwitz zeta analytic
+continuation), which is nonzero but negative.  The one-loop KK correction has
+the wrong sign to explain c_2 = 3.
 """
 
 import math
@@ -115,18 +114,36 @@ class TestComputeSpectralZetaS2(unittest.TestCase):
         result = compute_spectral_zeta_s2(2.0, l_max=100)
         self.assertEqual(result["method"], "direct")
 
-    def test_s_minus_1_close_to_zero(self):
+    def test_s_minus_1_is_minus_17_over_480(self):
         """
-        The key physics result: zeta(-1) on S^2 should be 0 or very close.
+        The key physics result: zeta_{S^2}(-1) = -17/480.
 
-        The weighted sum sum_{l=1}^{L} (2l+1)*[l(l+1)]^s at s=-1 is
-        sum (2l+1)/(l(l+1)) which telescopes... BUT the full sum
-        sum (2l+1)*l*(l+1) = L(L+1)^2(L+2)/2 is an exact polynomial,
-        so its analytic continuation (zeta regularization) at s=-1
-        should give approximately zero.
+        This is computed via Hurwitz zeta analytic continuation using
+        the substitution u = l+1/2 and Bernoulli polynomial evaluation.
+        The previous polynomial subtraction method incorrectly gave 0.
         """
         result = compute_spectral_zeta_s2(-1.0, l_max=10000)
-        self.assertAlmostEqual(result["value"], 0.0, delta=1e-6)
+        expected = -17.0 / 480.0
+        self.assertAlmostEqual(result["value"], expected, delta=1e-10)
+
+    def test_zeta_minus1_is_minus_17_over_480(self):
+        """
+        Dedicated test verifying the exact value zeta_{S^2}(-1) = -17/480.
+
+        The Hurwitz expansion for s=-1 has only two nonzero terms (j=0,1)
+        because C(1, j) = 0 for j >= 2.  The result is:
+          2 * [zeta_H(-3, 3/2) + (-1/4) * zeta_H(-1, 3/2)]
+          = 2 * [-B_4(3/2)/4 + (-1/4)*(-B_2(3/2)/2)]
+          = 2 * [-127/960 + 11/96]
+          = 2 * (-17/960)
+          = -17/480
+        """
+        result = compute_spectral_zeta_s2(-1.0, l_max=10000)
+        # Check exact rational value
+        exact = -17.0 / 480.0
+        self.assertAlmostEqual(result["value"], exact, places=12)
+        # Verify method is analytic continuation
+        self.assertEqual(result["method"], "analytic_continuation")
 
     def test_l_max_used_matches_input(self):
         result = compute_spectral_zeta_s2(2.0, l_max=500)
@@ -154,6 +171,19 @@ class TestComputeOneloopCorrection(unittest.TestCase):
     def test_finite_part_not_none(self):
         result = compute_oneloop_correction(1.0, l_max=50)
         self.assertIsNotNone(result["finite_part"])
+
+    def test_finite_part_is_minus_17_over_480(self):
+        """The finite part should be zeta_{S^2}(-1) = -17/480."""
+        result = compute_oneloop_correction(1.0, l_max=50)
+        expected = -17.0 / 480.0
+        self.assertAlmostEqual(result["finite_part"], expected, places=12)
+
+    def test_total_correction_nonzero(self):
+        """Total delta(G)/G should be nonzero (negative)."""
+        result = compute_oneloop_correction(1.0, l_max=50)
+        self.assertNotAlmostEqual(result["total_delta_G_over_G"], 0.0,
+                                  places=10)
+        self.assertLess(result["total_delta_G_over_G"], 0.0)
 
     def test_sector_contributions_keys(self):
         """sector_contributions should have scalar, vector, tensor."""
@@ -227,11 +257,12 @@ class TestAnalyzeSO3Contribution(unittest.TestCase):
         result = analyze_so3_contribution()
         self.assertEqual(result["n_vector_fields"], 3)
 
-    def test_spectral_zeta_minus_1_close_to_zero(self):
-        """Spectral zeta at s=-1 should be close to 0."""
+    def test_spectral_zeta_minus_1_is_minus_17_over_480(self):
+        """Spectral zeta at s=-1 should be -17/480."""
         result = analyze_so3_contribution()
-        self.assertAlmostEqual(result["spectral_zeta_minus_1"], 0.0,
-                               delta=1e-6)
+        expected = -17.0 / 480.0
+        self.assertAlmostEqual(result["spectral_zeta_minus_1"], expected,
+                               delta=1e-10)
 
     def test_vector_coefficient_present(self):
         result = analyze_so3_contribution()
@@ -255,7 +286,8 @@ class TestSummarizeOneloop(unittest.TestCase):
         result = summarize_oneloop_calculation()
         for key in ("spectrum", "spectral_zeta", "so3_contribution",
                      "spin_scan", "total_correction", "matches_3_alpha_sq",
-                     "honest_assessment"):
+                     "honest_assessment", "zeta_s2_minus1",
+                     "correction_sign", "correction_magnitude"):
             self.assertIn(key, result, f"Missing key: {key}")
 
     def test_honest_assessment_nonempty(self):
@@ -282,17 +314,40 @@ class TestSummarizeOneloop(unittest.TestCase):
         result = summarize_oneloop_calculation()
         self.assertIsInstance(result["total_correction"], (int, float))
 
+    def test_total_correction_is_nonzero(self):
+        """Total correction should be nonzero (negative) now."""
+        result = summarize_oneloop_calculation()
+        self.assertNotAlmostEqual(result["total_correction"], 0.0, places=10)
+        self.assertLess(result["total_correction"], 0.0)
+
+    def test_zeta_s2_minus1_field(self):
+        """Summary should contain zeta_s2_minus1 = -17/480."""
+        result = summarize_oneloop_calculation()
+        expected = -17.0 / 480.0
+        self.assertAlmostEqual(result["zeta_s2_minus1"], expected, places=12)
+
+    def test_correction_sign_negative(self):
+        """Correction sign should be negative."""
+        result = summarize_oneloop_calculation()
+        self.assertEqual(result["correction_sign"], "negative")
+
+    def test_correction_magnitude(self):
+        """Correction magnitude should be abs(-17/480 / (16*pi^2))."""
+        result = summarize_oneloop_calculation()
+        expected = abs(-17.0 / 480.0 / (16.0 * math.pi ** 2))
+        self.assertAlmostEqual(result["correction_magnitude"], expected,
+                               delta=1e-10)
+
 
 class TestPolynomialSumFormula(unittest.TestCase):
     """
-    Verify the exact polynomial identity that drives the key physics result.
+    Verify the exact polynomial identity for the partial sum.
 
     sum_{l=1}^{L} (2l+1)*l*(l+1) = L*(L+1)^2*(L+2)/2
 
-    This is a degree-4 polynomial in L with no constant term, which means
-    the zeta-regularized value (analytic continuation to L -> infinity)
-    should give zero, making naive one-loop zeta regularization unable
-    to produce a nonzero 3*alpha^2 correction.
+    This identity is exact, but the polynomial subtraction method of
+    analytic continuation is incorrect.  The proper Hurwitz zeta analytic
+    continuation gives zeta_{S^2}(-1) = -17/480, not zero.
     """
 
     def test_polynomial_identity_small(self):

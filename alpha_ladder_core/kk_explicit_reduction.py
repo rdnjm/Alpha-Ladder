@@ -197,7 +197,9 @@ def verify_tree_level_potential():
         "no phi dependence.  The GB term is topological in 2D, contributing "
         f"a constant {gb_contribution_value:.6f}.  "
         "Therefore V(phi) = 0 and the vacuum polynomial x^2+Dx+d=0 must "
-        "have a different origin (phenomenological ansatz or loop-level)."
+        "have a different origin (phenomenological ansatz or loop-level).  "
+        "At one loop, the KK spectral zeta zeta_{S^2}(-1) = -17/480 is "
+        "nonzero but negative, providing a correction of the wrong sign."
     )
 
     return {
@@ -206,6 +208,7 @@ def verify_tree_level_potential():
         "gb_contribution": gb_description,
         "gb_contribution_value": gb_contribution_value,
         "vacuum_polynomial_derivable": False,
+        "kk_oneloop_zeta_minus1": -17.0 / 480.0,
         "explanation": explanation,
         "description": description,
     }
@@ -341,12 +344,20 @@ def compute_gauge_loop_structure(alpha_val=None, constants=None):
     expected_c2 = 3
     expected_c3 = phi / 2.0
 
+    # The bare KK graviton contribution from the spectral zeta function
+    # zeta_{S^2}(-1) = -17/480 (Hurwitz analytic continuation).
+    # This is nonzero but negative, so it cannot alone produce c_2 = 3.
+    kk_graviton_zeta_m1 = -17.0 / 480.0
+
     status = (
         "The gauge loop structure from the explicit Dereli-Senikoglu "
         "reduction provides a concrete mechanism for the geometric "
         "corrections c_2=3 and c_3=phi/2.  The triple degeneracy "
         "(3 Killing vectors, rank-2 gauge kinetic matrix) naturally "
-        "produces the factor 3.  The full loop integral has not been "
+        "produces the factor 3.  The bare KK graviton contribution "
+        "zeta_{S^2}(-1) = -17/480 is nonzero but negative; additional "
+        "contributions from emergent gauge fields are needed for a "
+        "positive correction.  The full loop integral has not been "
         "computed."
     )
 
@@ -364,6 +375,7 @@ def compute_gauge_loop_structure(alpha_val=None, constants=None):
         "expected_c3_numerical": expected_c3,
         "alpha_val": alpha_val,
         "phi": phi,
+        "kk_graviton_zeta_minus1": kk_graviton_zeta_m1,
         "loop_computed": False,
         "status": status,
     }
