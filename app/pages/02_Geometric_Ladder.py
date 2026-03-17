@@ -18,63 +18,6 @@ getcontext().prec = 50
 
 
 # ---------------------------------------------------------------------------
-# Custom CSS
-# ---------------------------------------------------------------------------
-st.markdown(
-    """
-    <style>
-    .proof-card {
-        background-color: #1a1d23;
-        border: 1px solid #2e3440;
-        border-radius: 8px;
-        padding: 1.2rem;
-        margin: 0.5rem 0;
-    }
-    .formula-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #f59e0b;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    .step-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #60a5fa;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    .theorem-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #34d399;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    .warning-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #f87171;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    .rung-table {
-        font-family: 'Fira Mono', Consolas, monospace;
-        font-size: 1.1rem;
-    }
-    .bridge-card {
-        background-color: #1a1d23;
-        border: 1px solid #2e3440;
-        border-radius: 8px;
-        padding: 1rem;
-        margin: 0.5rem 0;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
-
-# ---------------------------------------------------------------------------
 # Sidebar
 # ---------------------------------------------------------------------------
 import sys
@@ -192,8 +135,8 @@ rungs_data, bridges, alpha_g = _get_ladder_data()
 st.title("Geometric Ladder")
 st.markdown(
     "The alpha ladder maps powers of the fine-structure constant to physical "
-    "scales. Starting from r_e = alpha * lambda_bar_c = alpha^2 * a_0, each "
-    "rung multiplies by 1/alpha (~137) in energy."
+    "scales. Starting from rₑ = α × λ̄_c = α² × a₀, each "
+    "rung multiplies by 1/α (≈137) in energy."
 )
 st.divider()
 
@@ -206,23 +149,23 @@ if rung_map is not None:
     bi = rung_map["base_identity"]
     st.markdown(
         '<div class="formula-card">'
-        "<strong>r_e = alpha * lambda_bar_c = alpha^2 * a_0</strong><br>"
+        "<strong>rₑ = α × λ̄_c = α² × a₀</strong><br>"
         f"Relative error between the two expressions: {bi['relative_error']:.2e}"
         "</div>",
         unsafe_allow_html=True,
     )
     col_a, col_b, col_c = st.columns(3)
-    col_a.metric("a_0 (Bohr radius)", f"{bi['a_0']:.6e} m")
-    col_b.metric("lambda_bar_c (Compton)", f"{bi['lambda_bar_c']:.6e} m")
-    col_c.metric("r_e (classical radius)", f"{bi['r_e_from_compton']:.6e} m")
+    col_a.metric("a₀ (Bohr radius)", f"{bi['a_0']:.6e} m")
+    col_b.metric("λ̄_c (Compton)", f"{bi['lambda_bar_c']:.6e} m")
+    col_c.metric("rₑ (classical radius)", f"{bi['r_e_from_compton']:.6e} m")
 else:
     st.markdown(
         '<div class="formula-card">'
-        "<strong>r_e = alpha * lambda_bar_c = alpha^2 * a_0</strong><br>"
-        "a_0 = 5.29177e-11 m (Bohr radius)<br>"
-        "lambda_bar_c = 3.86159e-13 m (reduced Compton wavelength)<br>"
-        "r_e = 2.81794e-15 m (classical electron radius)<br>"
-        "Each step down by alpha reduces the length by a factor of ~137."
+        "<strong>rₑ = α × λ̄_c = α² × a₀</strong><br>"
+        "a₀ = 5.29177e-11 m (Bohr radius)<br>"
+        "λ̄_c = 3.86159e-13 m (reduced Compton wavelength)<br>"
+        "rₑ = 2.81794e-15 m (classical electron radius)<br>"
+        "Each step down by α reduces the length by a factor of ≈137."
         "</div>",
         unsafe_allow_html=True,
     )
@@ -235,8 +178,8 @@ st.divider()
 st.subheader("B. Physical Rung Map")
 
 st.markdown(
-    "Each rung k corresponds to a length scale alpha^k * a_0 and an energy "
-    "scale E_k = hbar*c / (alpha^k * a_0). The table shows which known "
+    "Each rung k corresponds to a length scale α^k × a₀ and an energy "
+    "scale E_k = ℏc / (α^k × a₀). The table shows which known "
     "physical scales land near each rung."
 )
 
@@ -333,7 +276,7 @@ st.subheader("C. Where Particles Live")
 
 st.markdown(
     "Each Standard Model particle has a mass that corresponds to a "
-    "fractional rung position k = log(m / m_e) / log(1/alpha). "
+    "fractional rung position k = log(m / mₑ) / log(1/α). "
     "Half-integer rungs turn out to be physically significant."
 )
 
@@ -424,7 +367,7 @@ st.subheader("D. Special Scales")
 
 st.markdown(
     "Beyond the Standard Model particles, several landmark energy scales "
-    "also map onto the alpha ladder."
+    "also map onto the α ladder."
 )
 
 if rung_map is not None:
@@ -497,7 +440,7 @@ st.divider()
 # ===================================================================
 # Section E: The Ladder Chart
 # ===================================================================
-st.subheader("E. Alpha^n Ladder (Log Scale)")
+st.subheader("E. αⁿ Ladder (Log Scale)")
 
 fig = ladder_chart(rungs_data)
 st.plotly_chart(fig, use_container_width=True)
@@ -507,10 +450,10 @@ st.divider()
 # ===================================================================
 # Section F: Bridge Candidates
 # ===================================================================
-st.subheader("F. Bridge Candidates: alpha_G = C * alpha^21")
+st.subheader("F. Bridge Candidates: α_G = C × α²¹")
 
 st.markdown(
-    f"**Measured alpha_G** = {fmt_decimal(alpha_g, sig_figs=6)}"
+    f"**Measured α_G** = {fmt_decimal(alpha_g, sig_figs=6)}"
 )
 
 # Experimental G measurements for sigma comparison

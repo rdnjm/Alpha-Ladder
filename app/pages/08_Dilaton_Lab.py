@@ -13,37 +13,6 @@ getcontext().prec = 50
 
 
 # ---------------------------------------------------------------------------
-# Custom CSS
-# ---------------------------------------------------------------------------
-st.markdown(
-    """
-    <style>
-    .decomp-card {
-        background-color: #1a1d23;
-        border: 1px solid #2e3440;
-        border-radius: 8px;
-        padding: 1rem;
-        margin: 0.5rem 0;
-        font-family: 'Fira Mono', Consolas, monospace;
-        font-size: 1.1rem;
-    }
-    .reconcile-box {
-        background-color: #1a1d23;
-        border-left: 4px solid #60a5fa;
-        padding: 1.2rem;
-        border-radius: 0 8px 8px 0;
-        font-family: 'Fira Mono', monospace;
-        font-size: 1.1rem;
-    }
-    .highlight-row {
-        background-color: #1e293b;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
-
-# ---------------------------------------------------------------------------
 # Sidebar
 # ---------------------------------------------------------------------------
 import sys
@@ -185,7 +154,7 @@ st.divider()
 st.subheader("Brans-Dicke Analysis")
 st.markdown(
     "If the bridge coefficient φ²/2 arises from a scalar-tensor theory, "
-    "it implies a specific Brans-Dicke parameter omega."
+    "it implies a specific Brans-Dicke parameter ω."
 )
 
 if _core_available and constants is not None:
@@ -233,9 +202,9 @@ col_bd1, col_bd2 = st.columns(2)
 with col_bd1:
     st.markdown("**Brans-Dicke Parameter**")
     if bd["omega"] is not None:
-        st.metric(label="omega (BD)", value=f"{bd['omega']:.4f}")
+        st.metric(label="ω (BD)", value=f"{bd['omega']:.4f}")
     else:
-        st.metric(label="omega (BD)", value="Undefined")
+        st.metric(label="ω (BD)", value="Undefined")
 
     st.metric(
         label="φ²/2 (bare ratio)",
@@ -244,25 +213,25 @@ with col_bd1:
 
 with col_bd2:
     st.markdown("**Cassini Bound Comparison**")
-    st.metric(label="Cassini lower bound on |omega|", value=f"{bd['cassini_bound']:,}")
+    st.metric(label="Cassini lower bound on |ω|", value=f"{bd['cassini_bound']:,}")
 
     if bd["omega"] is not None:
         st.metric(
-            label="|omega| from ladder",
+            label="|ω| from ladder",
             value=f"{abs(bd['omega']):.4f}",
         )
 
 # Key conclusions
 if bd.get("omega_negative"):
     st.warning(
-        "omega is **negative**, placing this theory outside standard "
-        "Brans-Dicke territory. Negative omega corresponds to a ghost-like "
+        "ω is **negative**, placing this theory outside standard "
+        "Brans-Dicke territory. Negative ω corresponds to a ghost-like "
         "scalar (wrong-sign kinetic term) in the Jordan frame."
     )
 
 if bd.get("omega_excluded_massless"):
     st.error(
-        "For a **massless** dilaton, the Cassini bound requires |omega| > 40,000. "
+        "For a **massless** dilaton, the Cassini bound requires |ω| > 40,000. "
         "The ladder value is far below this threshold. A massless dilaton with "
         "this coupling is **excluded** by Solar System tests."
     )

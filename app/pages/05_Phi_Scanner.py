@@ -10,34 +10,6 @@ import streamlit as st
 
 
 # ---------------------------------------------------------------------------
-# Custom CSS
-# ---------------------------------------------------------------------------
-st.markdown(
-    """
-    <style>
-    .phi-table {
-        font-family: 'Fira Mono', Consolas, monospace;
-        font-size: 1.05rem;
-    }
-    .connection-card {
-        background-color: #1a1d23;
-        border: 1px solid #2e3440;
-        border-radius: 8px;
-        padding: 1rem;
-        margin: 0.5rem 0;
-    }
-    .weinberg-detail {
-        background-color: #1a1d23;
-        border-left: 4px solid #a78bfa;
-        padding: 1rem;
-        border-radius: 0 8px 8px 0;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
-
-# ---------------------------------------------------------------------------
 # Sidebar
 # ---------------------------------------------------------------------------
 import sys

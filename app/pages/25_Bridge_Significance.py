@@ -10,52 +10,6 @@ import streamlit as st
 
 
 # ---------------------------------------------------------------------------
-# Custom CSS (matches Pages 16-24)
-# ---------------------------------------------------------------------------
-st.markdown(
-    """
-    <style>
-    .proof-card {
-        background-color: #1a1d23;
-        border: 1px solid #2e3440;
-        border-radius: 8px;
-        padding: 1.2rem;
-        margin: 0.5rem 0;
-    }
-    .formula-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #f59e0b;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    .theorem-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #34d399;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    .step-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #60a5fa;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    .warning-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #f87171;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
-
-# ---------------------------------------------------------------------------
 # Sidebar
 # ---------------------------------------------------------------------------
 import sys
@@ -99,7 +53,7 @@ if _core_available:
 # ---------------------------------------------------------------------------
 st.title("Bridge Significance")
 st.markdown(
-    "Is phi^2/2 statistically significant, or could any search of 135,816 "
+    "Is φ²/2 statistically significant, or could any search of 135,816 "
     "expressions find a match this good?"
 )
 st.divider()
@@ -131,11 +85,11 @@ if summary:
         )
 else:
     st.info(
-        "The bridge search evaluates ~135,816 mathematical expressions built "
-        "from fundamental constants.  The best match (phi^2/2) has a residual "
-        "of ~160 ppm (uncorrected). With the radiative correction "
-        "(1 + 3*alpha^2 + (phi/2)*alpha^3), the residual drops to -0.33 ppm. "
-        "This page quantifies the significance of the phi^2/2 match."
+        "The bridge search evaluates ≈135,816 mathematical expressions built "
+        "from fundamental constants. The best match (φ²/2) has a residual "
+        "of ≈160 ppm (uncorrected). With the radiative correction "
+        "(1 + 3α² + (φ/2)α³), the residual drops to -0.33 ppm. "
+        "This page quantifies the significance of the φ²/2 match."
     )
 
 st.markdown("")
@@ -193,9 +147,9 @@ else:
         """
         <div class="formula-card">
         <b>Search space (summary):</b><br><br>
-        The three phases together generate ~135,816 candidate expressions.
+        The three phases together generate ≈135,816 candidate expressions.
         These are evaluated and compared against the target coefficient
-        alpha_g / alpha^21.
+        α_g / α²¹.
         </div>
         """,
         unsafe_allow_html=True,
@@ -364,9 +318,9 @@ else:
         """
         <div class="theorem-card">
         <b>Phi connection (summary):</b><br><br>
-        Among all candidate expressions, those involving the golden ratio phi
-        form a privileged subset.  phi^2/2 lives in Q(sqrt(5)), the same
-        algebraic field forced by the vacuum polynomial.  This algebraic link
+        Among all candidate expressions, those involving the golden ratio φ
+        form a privileged subset. φ²/2 lives in Q(√5), the same
+        algebraic field forced by the vacuum polynomial. This algebraic link
         goes beyond the numerical coincidence.
         </div>
         """,
@@ -407,14 +361,14 @@ else:
         """
         <div class="proof-card">
         <b>Honest assessment:</b><br><br>
-        The bridge search evaluated ~135,816 expressions.  The coverage fraction
+        The bridge search evaluated ≈135,816 expressions. The coverage fraction
         quantifies the look-elsewhere effect: the probability that a random target
-        in [0.5, 2.0] would match some expression within 160 ppm.  Note: with
-        the corrected bridge phi^2/2 * (1 + 3*alpha^2 + (phi/2)*alpha^3), the
-        residual is -0.33 ppm -- the significance of phi^2/2 is now backed by a
-        complete derivation chain.  The deeper
-        significance lies in the algebraic connection: phi^2/2 belongs to Q(sqrt(5)),
-        the same field forced by the vacuum polynomial.  This algebraic link cannot
+        in [0.5, 2.0] would match some expression within 160 ppm. Note: with
+        the corrected bridge φ²/2 × (1 + 3α² + (φ/2)α³), the
+        residual is -0.33 ppm -- the significance of φ²/2 is now backed by a
+        complete derivation chain. The deeper
+        significance lies in the algebraic connection: φ²/2 belongs to Q(√5),
+        the same field forced by the vacuum polynomial. This algebraic link cannot
         be captured by the look-elsewhere correction.
         </div>
         """,

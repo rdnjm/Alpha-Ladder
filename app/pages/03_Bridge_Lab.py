@@ -14,34 +14,6 @@ getcontext().prec = 50
 
 
 # ---------------------------------------------------------------------------
-# Custom CSS
-# ---------------------------------------------------------------------------
-st.markdown(
-    """
-    <style>
-    .bridge-lab-target {
-        background-color: #1a1d23;
-        border-left: 4px solid #f59e0b;
-        padding: 1.2rem;
-        border-radius: 0 8px 8px 0;
-        font-family: 'Fira Mono', Consolas, monospace;
-        font-size: 1.1rem;
-    }
-    .best-bridge {
-        background-color: #1a1d23;
-        border: 2px solid #34d399;
-        border-radius: 8px;
-        padding: 1.2rem;
-        margin: 0.5rem 0;
-        font-family: 'Fira Mono', Consolas, monospace;
-        font-size: 1.1rem;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
-
-# ---------------------------------------------------------------------------
 # Sidebar
 # ---------------------------------------------------------------------------
 import sys
@@ -63,7 +35,7 @@ constants = render_sidebar()
 # Header
 # ---------------------------------------------------------------------------
 st.title("Bridge Lab")
-st.markdown("Interactive search for the bridge coefficient linking alpha to gravity.")
+st.markdown("Interactive search for the bridge coefficient linking α to gravity.")
 st.divider()
 
 # ---------------------------------------------------------------------------

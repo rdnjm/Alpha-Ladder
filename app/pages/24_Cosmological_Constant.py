@@ -11,74 +11,6 @@ import pandas as pd
 
 
 # ---------------------------------------------------------------------------
-# Custom CSS (matches Pages 16-23)
-# ---------------------------------------------------------------------------
-st.markdown(
-    """
-    <style>
-    .proof-card {
-        background-color: #1a1d23;
-        border: 1px solid #2e3440;
-        border-radius: 8px;
-        padding: 1.2rem;
-        margin: 0.5rem 0;
-    }
-    .formula-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #f59e0b;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    .theorem-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #34d399;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    .step-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #60a5fa;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    .warning-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #f87171;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    .wrap-table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-    .wrap-table th {
-        background-color: #2e3440;
-        color: #e0e0e0;
-        padding: 8px 12px;
-        text-align: left;
-        font-size: 0.85rem;
-    }
-    .wrap-table td {
-        padding: 8px 12px;
-        border-top: 1px solid #2e3440;
-        word-wrap: break-word;
-        white-space: normal;
-        font-size: 0.85rem;
-        color: #d8dee9;
-    }
-    .wrap-table tr:hover {
-        background-color: #1e2230;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
-
-# ---------------------------------------------------------------------------
 # Sidebar
 # ---------------------------------------------------------------------------
 import sys
@@ -123,7 +55,7 @@ if _core_available:
 st.title("Cosmological Constant")
 st.markdown(
     "The flux-stabilized vacuum energy is O(1) in Planck units. The observed "
-    "Lambda is ~10^{-122}. This ~122-order discrepancy is the universal "
+    "\u039b is ≈10\u207b\u00b9\u00b2\u00b2. This ≈122-order discrepancy is the universal "
     "cosmological constant problem."
 )
 st.divider()
@@ -162,7 +94,7 @@ else:
         """
         <div class="formula-card">
         <b>Vacuum energy:</b><br><br>
-        V_min ~ O(1) M_Pl^4 for flux-stabilized potential with N=1, a_0 = l_Pl.
+        V_min ≈ O(1) M_Pl⁴ for flux-stabilized potential with N=1, a₀ = l_Pl.
         The vacuum energy is at the Planck scale -- not small.
         </div>
         """,
@@ -183,8 +115,8 @@ if summary:
 
     with col_b1:
         st.metric(
-            label="Lambda_obs (Planck)",
-            value="~10^{-122}",
+            label="Λ_obs (Planck)",
+            value="≈10⁻\u00b9\u00b2\u00b2",
         )
 
     with col_b2:
@@ -216,9 +148,9 @@ else:
         """
         <div class="warning-card">
         <b>The 122-order discrepancy:</b><br><br>
-        V_min ~ O(1) M_Pl^4 from flux stabilization.<br>
-        Lambda_obs ~ 2.888 x 10^{-122} M_Pl^4.<br>
-        Ratio: ~10^{122}.<br><br>
+        V_min ≈ O(1) M_Pl⁴ from flux stabilization.<br>
+        Λ_obs ≈ 2.888 × 10⁻\u00b9\u00b2\u00b2 M_Pl⁴.<br>
+        Ratio: ≈10\u00b9\u00b2\u00b2.<br><br>
         This is the worst fine-tuning problem in physics.
         It affects ALL known theories of gravity.
         </div>
@@ -259,7 +191,7 @@ else:
         <div class="step-card">
         <b>Known approaches (all fail):</b><br><br>
         1. SUSY: Not applicable (framework is non-SUSY)<br>
-        2. Anthropic/Landscape: Insufficient vacua (~10, not 10^500)<br>
+        2. Anthropic/Landscape: Insufficient vacua (≈10, not 10⁵⁰⁰)<br>
         3. Sequestering: Requires absent global symmetries<br>
         4. Self-tuning: Blocked by Weinberg no-go (1989)<br>
         5. Unimodular gravity: Shifts but doesn't solve the problem
@@ -307,10 +239,10 @@ else:
         """
         <div class="theorem-card">
         <b>Weinberg's no-go theorem (1989):</b><br><br>
-        No scalar field adjustment mechanism can dynamically relax Lambda
+        No scalar field adjustment mechanism can dynamically relax Λ
         to a small value if: (1) the potential is smooth, (2) the vacuum is
-        Lorentz-invariant, (3) kinetic terms are standard.  All three
-        conditions hold for the dilaton sigma in the Alpha Ladder framework.
+        Lorentz-invariant, (3) kinetic terms are standard. All three
+        conditions hold for the dilaton σ in the Alpha Ladder framework.
         </div>
         """,
         unsafe_allow_html=True,
@@ -367,7 +299,7 @@ else:
         quantum gravity, not any other approach -- has a satisfactory resolution.
         The Alpha Ladder framework joins this universal failure honestly:
         V_min is O(1) Planck, and no mechanism within the framework can
-        reduce it to 10^{-122}.
+        reduce it to 10⁻\u00b9\u00b2\u00b2.
         </div>
         """,
         unsafe_allow_html=True,

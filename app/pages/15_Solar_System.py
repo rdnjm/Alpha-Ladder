@@ -10,44 +10,6 @@ import streamlit as st
 import math
 
 
-# ---------------------------------------------------------------------------
-# Custom CSS
-# ---------------------------------------------------------------------------
-st.markdown(
-    """
-    <style>
-    .solar-card {
-        background-color: #1a1d23;
-        border: 1px solid #2e3440;
-        border-radius: 8px;
-        padding: 1.2rem;
-        margin: 0.5rem 0;
-    }
-    .pass-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #34d399;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    .warn-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #f59e0b;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    .fail-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #f87171;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
 
 # ---------------------------------------------------------------------------
 # Sidebar
@@ -133,12 +95,12 @@ theoretical = summarize_theoretical_status(constants)
 c1, c2, c3, c4 = st.columns(4)
 with c1:
     st.metric(
-        label="gamma_PPN at 1 AU",
+        label="γ PPN at 1 AU",
         value=f"{ppn['gamma_PPN_at_cassini']:.10f}",
     )
 with c2:
     st.metric(
-        label="Cassini bound |gamma-1|",
+        label="Cassini bound |γ-1|",
         value=f"{ppn['cassini_bound']:.1e}",
     )
 with c3:
@@ -173,8 +135,8 @@ with st.expander("**A. PPN Parameters**", expanded=True):
             rows.append({
                 "Location": lm.get("label", key),
                 "Distance (m)": f"{lm['r_meters']:.3e}",
-                "gamma_PPN": f"{lm['gamma_PPN']:.12f}",
-                "|gamma - 1|": f"{lm['gamma_deviation']:.3e}",
+                "γ PPN": f"{lm['gamma_PPN']:.12f}",
+                "|γ - 1|": f"{lm['gamma_deviation']:.3e}",
                 "Passes Cassini": "Yes" if passes else "No",
             })
         df = pd.DataFrame(rows)
@@ -187,7 +149,7 @@ with st.expander("**A. PPN Parameters**", expanded=True):
         st.markdown(
             f'<div class="pass-card">'
             f"<b>Result:</b> The massive dilaton passes the Cassini bound at distances "
-            f"beyond {tr:.3e} m ({tr/AU:.4f} AU). At 1 AU, |gamma - 1| = "
+            f"beyond {tr:.3e} m ({tr/AU:.4f} AU). At 1 AU, |γ - 1| = "
             f"{ppn['gamma_deviation_at_cassini']:.2e}, safely below the Cassini limit of "
             f"{ppn['cassini_bound']:.1e}. The dilaton mass provides "
             f"{min_mass['suppression_factor']:.1f} e-foldings of Yukawa suppression."
@@ -243,13 +205,13 @@ with st.expander("**C. Screening Amplitude Discrepancy**", expanded=True):
         st.plotly_chart(fig, use_container_width=True)
 
     st.markdown(
-        f"**Tree-level prediction:** alpha = 2 beta^2 = {discrepancy['alpha_tree']:.4e}"
+        f"**Tree-level prediction:** α = 2β² = {discrepancy['alpha_tree']:.4e}"
     )
     st.markdown(
-        f"**Empirical value:** alpha = (G_lab - G_vac) / G_vac = {discrepancy['alpha_empirical']:.4e}"
+        f"**Empirical value:** α = (G_lab - G_vac) / G_vac = {discrepancy['alpha_empirical']:.4e}"
     )
     st.markdown(
-        f"**Ratio:** {discrepancy['ratio']:.0f}x (log10 = {discrepancy['log10_ratio']:.2f})"
+        f"**Ratio:** {discrepancy['ratio']:.0f}x (log₁₀ = {discrepancy['log10_ratio']:.2f})"
     )
 
     st.subheader("Possible Resolutions")
@@ -273,9 +235,9 @@ with st.expander("**C. Screening Amplitude Discrepancy**", expanded=True):
     # Amber warning
     st.markdown(
         '<div class="warn-card">'
-        "<b>Status:</b> The ~3800x ratio is a <i>conditional</i> discrepancy. "
-        "IF the dilaton is light (Compton wavelength &gt; 0.1 mm), the tree-level "
-        "coupling is 3854x too strong. IF the dilaton is heavy (wavelength &lt; 0.1 mm), "
+        "<b>Status:</b> The ≈3800x ratio is a <i>conditional</i> discrepancy. "
+        "IF the dilaton is light (Compton wavelength > 0.1 mm), the tree-level "
+     "coupling is 3854× too strong. IF the dilaton is heavy (wavelength &lt; 0.1 mm), "
         "no discrepancy exists -- the Yukawa force is undetectable at all lab scales, "
         "and the sub-ppm G residual (corrected bridge) is well within experimental scatter. "
         "The dilaton mass origin remains an open problem."

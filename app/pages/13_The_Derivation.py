@@ -12,37 +12,6 @@ import math
 import pandas as pd
 
 
-# ---------------------------------------------------------------------------
-# Custom CSS
-# ---------------------------------------------------------------------------
-st.markdown(
-    """
-    <style>
-    .deriv-card {
-        background-color: #1a1d23;
-        border: 1px solid #2e3440;
-        border-radius: 8px;
-        padding: 1.2rem;
-        margin: 0.5rem 0;
-    }
-    .formula-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #f59e0b;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    .takeaway-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #34d399;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
 
 # ---------------------------------------------------------------------------
 # Sidebar

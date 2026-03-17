@@ -9,26 +9,6 @@ import streamlit as st
 
 
 # ---------------------------------------------------------------------------
-# Custom CSS
-# ---------------------------------------------------------------------------
-st.markdown(
-    """
-    <style>
-    .harmonics-summary {
-        background-color: #1a1d23;
-        border: 1px solid #2e3440;
-        border-radius: 8px;
-        padding: 1.2rem;
-        margin: 0.5rem 0;
-        font-family: 'Fira Mono', Consolas, monospace;
-        font-size: 1.1rem;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
-
-# ---------------------------------------------------------------------------
 # Sidebar
 # ---------------------------------------------------------------------------
 import sys
@@ -45,7 +25,7 @@ constants = render_sidebar()
 # Header
 # ---------------------------------------------------------------------------
 st.title("Particle Harmonics")
-st.markdown("Particles plotted on the alpha-rung number line.")
+st.markdown("Particles plotted on the α-rung number line.")
 st.divider()
 
 # ---------------------------------------------------------------------------
@@ -82,7 +62,7 @@ harmonics = compute_harmonics(_constants_arg)
 # ---------------------------------------------------------------------------
 st.subheader("Mass Spectrum Table")
 st.markdown(
-    "All particles with mass, mass ratio to electron, α rung number (n), "
+    "All particles with mass, mass ratio to electron, α-rung number (n), "
     "nearest half-integer, closeness, and match status."
 )
 

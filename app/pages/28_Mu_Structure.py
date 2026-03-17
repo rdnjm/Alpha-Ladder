@@ -5,52 +5,6 @@ import pandas as pd
 
 
 # ---------------------------------------------------------------------------
-# Custom CSS (matches Pages 16-27)
-# ---------------------------------------------------------------------------
-st.markdown(
-    """
-    <style>
-    .proof-card {
-        background-color: #1a1d23;
-        border: 1px solid #2e3440;
-        border-radius: 8px;
-        padding: 1.2rem;
-        margin: 0.5rem 0;
-    }
-    .formula-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #f59e0b;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    .theorem-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #34d399;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    .step-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #60a5fa;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    .warning-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #f87171;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
-
-# ---------------------------------------------------------------------------
 # Sidebar
 # ---------------------------------------------------------------------------
 import sys
@@ -94,7 +48,7 @@ if _core_available:
 # ---------------------------------------------------------------------------
 st.title("Mu Structure")
 st.markdown(
-    "G = alpha^24 * mu * (mu - sqrt(phi)*(1-alpha)) predicts Newton's constant "
+    "G = α²⁴ × μ × (μ - √φ×(1-α)) predicts Newton's constant "
     "to -0.31 ppm with zero fitted parameters."
 )
 st.divider()
@@ -119,14 +73,14 @@ if summary:
     with col_a2:
         imp = mu_s.get("improvement_factor")
         st.metric(
-            label="Improvement vs mu^2",
+            label="Improvement vs μ²",
             value=f"{imp:.0f}x" if imp is not None else "~128x",
         )
 
     with col_a3:
         sqrt_phi_me = mu_s.get("sqrt_phi_m_e_MeV")
         st.metric(
-            label="sqrt(phi) * m_e",
+            label="√φ × mₑ",
             value=f"{sqrt_phi_me:.3f} MeV" if sqrt_phi_me is not None else "~0.650 MeV",
         )
 
@@ -136,9 +90,9 @@ if summary:
         """
         <div class="formula-card">
         <b>Mu-structure formula:</b><br><br>
-        G = alpha^24 * m_p * (m_p - sqrt(phi)*(1-alpha)*m_e) * hbar*c / m_e^4<br><br>
-        Equivalently: alpha_g = alpha^24 * mu * (mu - sqrt(phi)*(1-alpha)),
-        where mu = m_p/m_e and phi = (1 + sqrt(5))/2.
+        G = α²⁴ × mₚ × (mₚ - √φ×(1-α)×mₑ) × ℏc / mₑ⁴<br><br>
+        Equivalently: α_g = α²⁴ × μ × (μ - √φ×(1-α)),
+        where μ = mₚ/mₑ and φ = (1 + √5)/2.
         </div>
         """,
         unsafe_allow_html=True,
@@ -149,7 +103,7 @@ if summary:
     st.markdown(
         """
         <div class="theorem-card">
-        <b>Within CODATA G measurement uncertainty (~22 ppm).</b>
+        <b>Within CODATA G measurement uncertainty (≈22 ppm).</b>
         Zero fitted parameters.
         </div>
         """,
@@ -159,13 +113,13 @@ else:
     col_a1, col_a2, col_a3 = st.columns(3)
 
     with col_a1:
-        st.metric(label="Residual", value="~-0.31 ppm")
+        st.metric(label="Residual", value="≈-0.31 ppm")
 
     with col_a2:
-        st.metric(label="Improvement vs mu^2", value="~128x")
+        st.metric(label="Improvement vs μ²", value="≈128x")
 
     with col_a3:
-        st.metric(label="sqrt(phi) * m_e", value="~0.650 MeV")
+        st.metric(label="√φ × mₑ", value="≈0.650 MeV")
 
     st.markdown("")
 
@@ -173,9 +127,9 @@ else:
         """
         <div class="formula-card">
         <b>Mu-structure formula:</b><br><br>
-        G = alpha^24 * m_p * (m_p - sqrt(phi)*(1-alpha)*m_e) * hbar*c / m_e^4<br><br>
-        Equivalently: alpha_g = alpha^24 * mu * (mu - sqrt(phi)*(1-alpha)),
-        where mu = m_p/m_e and phi = (1 + sqrt(5))/2.
+        G = α²⁴ × mₚ × (mₚ - √φ×(1-α)×mₑ) × ℏc / mₑ⁴<br><br>
+        Equivalently: α_g = α²⁴ × μ × (μ - √φ×(1-α)),
+        where μ = mₚ/mₑ and φ = (1 + √5)/2.
         </div>
         """,
         unsafe_allow_html=True,
@@ -186,7 +140,7 @@ else:
     st.markdown(
         """
         <div class="theorem-card">
-        <b>Within CODATA G measurement uncertainty (~22 ppm).</b>
+        <b>Within CODATA G measurement uncertainty (≈22 ppm).</b>
         Zero fitted parameters.
         </div>
         """,
@@ -210,10 +164,10 @@ if summary:
 
         st.markdown(f"""
 <div class="theorem-card">
-<strong>Refined formula:</strong> alpha_G = alpha^24 * mu * (mu - sqrt(phi) * (1 - alpha))<br><br>
-The (1 - alpha) correction to sqrt(phi) reduces the residual from {refined['bare_residual_ppm']:+.2f} ppm
+<strong>Refined formula:</strong> α_G = α²⁴ × μ × (μ - √φ × (1 - α))<br><br>
+The (1 - α) correction to √φ reduces the residual from {refined['bare_residual_ppm']:+.2f} ppm
 to <strong>{refined['residual_ppm']:+.2f} ppm</strong> with zero fitted parameters.<br><br>
-k = sqrt(phi) * (1 - alpha) = {refined['k_offset']:.8f}<br>
+k = √φ × (1 - α) = {refined['k_offset']:.8f}<br>
 G_predicted = {float(refined['G_predicted']):.11e}
 </div>
 """, unsafe_allow_html=True)
@@ -239,7 +193,7 @@ if summary:
     st.markdown(
         """
         <div class="step-card">
-        <b>Scanning k in alpha^24 * mu * (mu - k):</b>
+        <b>Scanning k in α²⁴ × μ × (μ - k):</b>
         </div>
         """,
         unsafe_allow_html=True,
@@ -277,7 +231,7 @@ else:
     st.markdown(
         """
         <div class="step-card">
-        <b>Scanning k in alpha^24 * mu * (mu - k):</b>
+        <b>Scanning k in α²⁴ × μ × (μ - k):</b>
         </div>
         """,
         unsafe_allow_html=True,
@@ -285,10 +239,10 @@ else:
     st.markdown("")
 
     fallback_offsets = [
-        {"k Label": "0 (pure mu^2)", "k Value": "0", "Residual (ppm)": "~688", "Within Uncertainty": "No"},
-        {"k Label": "1", "k Value": "1", "Residual (ppm)": "~350", "Within Uncertainty": "No"},
-        {"k Label": "sqrt(phi)*(1-alpha)", "k Value": "~1.2627", "Residual (ppm)": "~-0.31", "Within Uncertainty": "Yes"},
-        {"k Label": "phi", "k Value": "~1.6180", "Residual (ppm)": "~-200", "Within Uncertainty": "No"},
+        {"k Label": "0 (pure μ²)", "k Value": "0", "Residual (ppm)": "≈688", "Within Uncertainty": "No"},
+        {"k Label": "1", "k Value": "1", "Residual (ppm)": "≈350", "Within Uncertainty": "No"},
+        {"k Label": "√φ×(1-α)", "k Value": "≈1.2627", "Residual (ppm)": "≈-0.31", "Within Uncertainty": "Yes"},
+        {"k Label": "φ", "k Value": "≈1.6180", "Residual (ppm)": "≈-200", "Within Uncertainty": "No"},
     ]
     st.dataframe(
         pd.DataFrame(fallback_offsets),
@@ -334,14 +288,14 @@ if summary:
     with col_c2:
         sqrt_phi = origin.get("sqrt_phi_value")
         st.metric(
-            label="sqrt(phi)",
-            value=f"{sqrt_phi:.6f}" if sqrt_phi is not None else "~1.272020",
+            label="√φ",
+            value=f"{sqrt_phi:.6f}" if sqrt_phi is not None else "≈1.272020",
         )
 
         sqrt_phi_me = origin.get("sqrt_phi_m_e_MeV")
         st.metric(
-            label="sqrt(phi) * m_e (MeV)",
-            value=f"{sqrt_phi_me:.4f}" if sqrt_phi_me is not None else "~0.6497",
+            label="√φ × mₑ (MeV)",
+            value=f"{sqrt_phi_me:.4f}" if sqrt_phi_me is not None else "≈0.6497",
         )
 
     st.markdown("")
@@ -386,19 +340,19 @@ else:
     col_c1, col_c2 = st.columns(2)
 
     with col_c1:
-        st.metric(label="Vacuum Polynomial Roots", value="x = -3 +/- sqrt(5)")
-        st.metric(label="phi from roots", value="(1 + sqrt(5))/2")
+        st.metric(label="Vacuum Polynomial Roots", value="x = -3 ± √5")
+        st.metric(label="φ from roots", value="(1 + √5)/2")
 
     with col_c2:
-        st.metric(label="sqrt(phi)", value="~1.272020")
-        st.metric(label="sqrt(phi) * m_e (MeV)", value="~0.6497")
+        st.metric(label="√φ", value="≈1.272020")
+        st.metric(label="√φ × mₑ (MeV)", value="≈0.6497")
 
     st.markdown("")
 
     st.markdown(
         """
         <div class="formula-card">
-        <b>Subtracted mass:</b> m_p - sqrt(phi)*m_e ~ 937.929 MeV
+        <b>Subtracted mass:</b> mₚ - √φ×mₑ ≈ 937.929 MeV
         </div>
         """,
         unsafe_allow_html=True,
@@ -406,9 +360,9 @@ else:
     st.markdown("")
 
     fallback_interp = [
-        {"Name": "Vacuum polynomial origin", "Description": "phi emerges from x^2+6x+4=0 discriminant sqrt(5); sqrt(phi) is a natural algebraic object in Q(sqrt(5))", "Plausibility": "Derived"},
-        {"Name": "Mass threshold correction", "Description": "sqrt(phi)*m_e ~ 0.650 MeV may represent a radiative or threshold correction to the proton mass in the hierarchy formula", "Plausibility": "Speculative"},
-        {"Name": "KK mode mixing", "Description": "The offset could arise from Kaluza-Klein mode mixing between the proton mass scale and the electron mass scale on S^2", "Plausibility": "Speculative"},
+        {"Name": "Vacuum polynomial origin", "Description": "φ emerges from x²+6x+4=0 discriminant √5; √φ is a natural algebraic object in Q(√5)", "Plausibility": "Derived"},
+        {"Name": "Mass threshold correction", "Description": "√φ×mₑ ≈ 0.650 MeV may represent a radiative or threshold correction to the proton mass in the hierarchy formula", "Plausibility": "Speculative"},
+        {"Name": "KK mode mixing", "Description": "The offset could arise from Kaluza-Klein mode mixing between the proton mass scale and the electron mass scale on S²", "Plausibility": "Speculative"},
     ]
     st.dataframe(
         pd.DataFrame(fallback_interp),
@@ -491,10 +445,10 @@ else:
     st.markdown("")
 
     fallback_formulas = [
-        {"Formula": "alpha^24 * mu^2", "Residual (ppm)": "~688", "Fitted Params": "0", "Within CODATA": "No"},
-        {"Formula": "alpha^24 * mu * (mu - sqrt(phi)*(1-alpha))", "Residual (ppm)": "~-0.31", "Fitted Params": "0", "Within CODATA": "Yes"},
-        {"Formula": "phi^2/2 * alpha^21 (bridge, uncorrected)", "Residual (ppm)": "~160", "Fitted Params": "0", "Within CODATA": "No"},
-        {"Formula": "phi^2/2 * (1+3*alpha^2) * alpha^21", "Residual (ppm)": "~0.6", "Fitted Params": "1", "Within CODATA": "Yes"},
+        {"Formula": "α²⁴ × μ²", "Residual (ppm)": "≈688", "Fitted Params": "0", "Within CODATA": "No"},
+        {"Formula": "α²⁴ × μ × (μ - √φ×(1-α))", "Residual (ppm)": "≈-0.31", "Fitted Params": "0", "Within CODATA": "Yes"},
+        {"Formula": "φ²/2 × α²¹ (bridge, uncorrected)", "Residual (ppm)": "≈160", "Fitted Params": "0", "Within CODATA": "No"},
+        {"Formula": "φ²/2 × (1+3α²) × α²¹", "Residual (ppm)": "≈0.6", "Fitted Params": "1", "Within CODATA": "Yes"},
     ]
     st.dataframe(
         pd.DataFrame(fallback_formulas),
@@ -507,9 +461,9 @@ else:
     st.markdown(
         """
         <div class="theorem-card">
-        <b>Best zero-parameter formula:</b> alpha^24 * mu * (mu - sqrt(phi)*(1-alpha))<br><br>
-        Residual: ~-0.31 ppm.
-        This is within CODATA G measurement uncertainty (~22 ppm).
+        <b>Best zero-parameter formula:</b> α²⁴ × μ × (μ - √φ×(1-α))<br><br>
+        Residual: ≈-0.31 ppm.
+        This is within CODATA G measurement uncertainty (≈22 ppm).
         </div>
         """,
         unsafe_allow_html=True,
@@ -544,9 +498,9 @@ if summary:
     )
 else:
     fallback_stability = [
-        {"Edition": "CODATA 2014", "G Predicted": "~6.67430e-11", "G Measured": "~6.67408e-11", "Residual (ppm)": "~-0.33", "Within Uncertainty": "Yes"},
-        {"Edition": "CODATA 2018", "G Predicted": "~6.67430e-11", "G Measured": "~6.67430e-11", "Residual (ppm)": "~-0.31", "Within Uncertainty": "Yes"},
-        {"Edition": "CODATA 2022", "G Predicted": "~6.67430e-11", "G Measured": "~6.67430e-11", "Residual (ppm)": "~-0.33", "Within Uncertainty": "Yes"},
+        {"Edition": "CODATA 2014", "G Predicted": "≈6.67430e-11", "G Measured": "≈6.67408e-11", "Residual (ppm)": "≈-0.33", "Within Uncertainty": "Yes"},
+        {"Edition": "CODATA 2018", "G Predicted": "≈6.67430e-11", "G Measured": "≈6.67430e-11", "Residual (ppm)": "≈-0.31", "Within Uncertainty": "Yes"},
+        {"Edition": "CODATA 2022", "G Predicted": "≈6.67430e-11", "G Measured": "≈6.67430e-11", "Residual (ppm)": "≈-0.33", "Within Uncertainty": "Yes"},
     ]
     st.dataframe(
         pd.DataFrame(fallback_stability),
@@ -578,19 +532,19 @@ else:
         """
         <div class="proof-card">
         <b>Honest assessment:</b><br><br>
-        DERIVED: The formula alpha_g = alpha^24 * mu * (mu - sqrt(phi)*(1-alpha)) uses
-        only measured constants (alpha, m_p, m_e) and the golden ratio phi,
+        DERIVED: The formula α_g = α²⁴ × μ × (μ - √φ×(1-α)) uses
+        only measured constants (α, mₚ, mₑ) and the golden ratio φ,
         which itself emerges from the vacuum polynomial x^2 + 6x + 4 = 0.
         There are zero fitted parameters.<br><br>
-        EMPIRICAL: The residual of ~-0.31 ppm (CODATA 2018) is within CODATA G measurement
-        uncertainty (~22 ppm). The improvement over the pure mu^2 hierarchy
-        formula is dramatic. The sqrt(phi)*(1-alpha) offset is the unique value in the
+        EMPIRICAL: The residual of ≈-0.31 ppm (CODATA 2018) is within CODATA G measurement
+        uncertainty (≈22 ppm). The improvement over the pure μ² hierarchy
+        formula is dramatic. The √φ×(1-α) offset is the unique value in the
         algebraic landscape that brings the formula within sub-ppm precision.<br><br>
-        SPECULATIVE: The physical mechanism by which sqrt(phi)*(1-alpha)*m_e enters
+        SPECULATIVE: The physical mechanism by which √φ×(1-α)×mₑ enters
         as a mass offset to the proton mass is not derived from first
         principles. It could represent a threshold correction, KK mode
-        mixing, or a deeper algebraic structure. The (1-alpha) factor
-        is derived from S^2 volume cancellation (see Page 33). Without a
+        mixing, or a deeper algebraic structure. The (1-α) factor
+        is derived from S² volume cancellation (see Page 33). Without a
         full derivation, the formula remains an empirical observation --
         albeit one with zero free parameters and remarkable precision.
         </div>

@@ -12,51 +12,6 @@ import math
 import pandas as pd
 
 
-# ---------------------------------------------------------------------------
-# Custom CSS (matches Pages 16-18)
-# ---------------------------------------------------------------------------
-st.markdown(
-    """
-    <style>
-    .proof-card {
-        background-color: #1a1d23;
-        border: 1px solid #2e3440;
-        border-radius: 8px;
-        padding: 1.2rem;
-        margin: 0.5rem 0;
-    }
-    .formula-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #f59e0b;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    .theorem-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #34d399;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    .step-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #60a5fa;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    .warning-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #f87171;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
 
 # ---------------------------------------------------------------------------
 # Sidebar
@@ -191,9 +146,9 @@ with st.expander("B. KK Truncation Check", expanded=True):
 
                 table_rows.append({
                     "Environment": env.get("label", env.get("name", "?")),
-                    "rho (kg/m^3)": f"{rho_si:.2e}",
-                    "a_eff (m)": fmt_decimal(a_eff, sig_figs=3) if a_eff is not None else "N/A",
-                    "m_phi (eV)": fmt_decimal(m_phi, sig_figs=3) if m_phi is not None else "N/A",
+                    "ρ (kg/m³)": f"{rho_si:.2e}",
+                    "a eff (m)": fmt_decimal(a_eff, sig_figs=3) if a_eff is not None else "N/A",
+                    "m_φ (eV)": fmt_decimal(m_phi, sig_figs=3) if m_phi is not None else "N/A",
                     "KK Valid": "Yes" if kk_valid else "No",
                     "Status": status,
                 })
@@ -325,7 +280,7 @@ with st.expander("D. The meV Regime", expanded=True):
 
         with col_d1:
             st.metric(
-                label="m_phi",
+                label="m_φ",
                 value=fmt_decimal(m_phi_eV, sig_figs=3) + " eV" if m_phi_eV is not None else "N/A",
             )
         with col_d2:

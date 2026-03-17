@@ -11,51 +11,6 @@ import math
 import pandas as pd
 
 
-# ---------------------------------------------------------------------------
-# Custom CSS (matches Page 16)
-# ---------------------------------------------------------------------------
-st.markdown(
-    """
-    <style>
-    .proof-card {
-        background-color: #1a1d23;
-        border: 1px solid #2e3440;
-        border-radius: 8px;
-        padding: 1.2rem;
-        margin: 0.5rem 0;
-    }
-    .formula-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #f59e0b;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    .theorem-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #34d399;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    .step-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #60a5fa;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    .warning-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #f87171;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
 
 # ---------------------------------------------------------------------------
 # Sidebar
@@ -141,9 +96,9 @@ st.divider()
 col_m1, col_m2, col_m3, col_m4 = st.columns(4)
 
 with col_m1:
-    st.metric(label="a\u2080 range", value="l_Pl .. 1 mm")
+    st.metric(label="a₀ range", value="l_Pl .. 1 mm")
 with col_m2:
-    st.metric(label="Testable window", value="10 \u03bcm .. 100 \u03bcm")
+    st.metric(label="Testable window", value="10 μm .. 100 μm")
 with col_m3:
     st.metric(label="Key threshold", value="2 meV")
 with col_m4:
@@ -198,27 +153,27 @@ with st.expander("A. The Scaling Law", expanded=True):
 
     radii_data = [
         {
-            "a_0": "l_Pl (1.6e-35 m)",
-            "m_phi": "M_Pl (1.2e28 eV)",
-            "lambda": "1.6e-35 m",
+            "a₀": "l_Pl (1.6e-35 m)",
+            "m_φ": "M_Pl (1.2e28 eV)",
+            "λ": "1.6e-35 m",
             "Classification": "Invisible",
         },
         {
-            "a_0": "30 um (3e-5 m)",
-            "m_phi": "~7 meV",
-            "lambda": "~30 um",
+            "a₀": "30 μm (3e-5 m)",
+            "m_φ": "≈7 meV",
+            "λ": "≈30 μm",
             "Classification": "Sub-mm testable",
         },
         {
-            "a_0": "0.1 mm (1e-4 m)",
-            "m_phi": "~2 meV",
-            "lambda": "~0.1 mm",
+            "a₀": "0.1 mm (1e-4 m)",
+            "m_φ": "≈2 meV",
+            "λ": "≈0.1 mm",
             "Classification": "Threshold",
         },
         {
-            "a_0": "1 mm (1e-3 m)",
-            "m_phi": "~0.2 meV",
-            "lambda": "~1 mm",
+            "a₀": "1 mm (1e-3 m)",
+            "m_φ": "≈0.2 meV",
+            "λ": "≈1 mm",
             "Classification": "Excluded",
         },
     ]
@@ -349,32 +304,32 @@ with st.expander("D. Experimental Bounds", expanded=True):
         experiments_data = [
             {
                 "Experiment": "Eot-Wash (2020)",
-                "Range": "> 52 um",
-                "Bound on alpha": "< 0.01 at 100 um",
+                "Range": "> 52 μm",
+                "Bound on α": "< 0.01 at 100 μm",
                 "Probes": "Yukawa deviation at sub-mm",
             },
             {
                 "Experiment": "Irvine (2003)",
-                "Range": "> 200 um",
-                "Bound on alpha": "< 1 at 200 um",
+                "Range": "> 200 μm",
+                "Bound on α": "< 1 at 200 μm",
                 "Probes": "Newton's law at sub-mm",
             },
             {
                 "Experiment": "Indiana (2019)",
-                "Range": "> 40 um",
-                "Bound on alpha": "< 10 at 40 um",
+                "Range": "> 40 μm",
+                "Bound on α": "< 10 at 40 μm",
                 "Probes": "Planar geometry ISL test",
             },
             {
                 "Experiment": "Cassini (2003)",
                 "Range": "1 AU",
-                "Bound on alpha": "|gamma-1| < 2.3e-5",
+                "Bound on α": "|γ-1| < 2.3e-5",
                 "Probes": "PPN parameter at solar-system scale",
             },
             {
                 "Experiment": "MICROSCOPE (2022)",
                 "Range": "LEO orbit",
-                "Bound on alpha": "eta < 1e-15",
+                "Bound on α": "η < 1e-15",
                 "Probes": "Equivalence principle violation",
             },
         ]

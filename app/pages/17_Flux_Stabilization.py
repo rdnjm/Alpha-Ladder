@@ -10,51 +10,6 @@ import math
 import pandas as pd
 
 
-# ---------------------------------------------------------------------------
-# Custom CSS (matches Page 16)
-# ---------------------------------------------------------------------------
-st.markdown(
-    """
-    <style>
-    .proof-card {
-        background-color: #1a1d23;
-        border: 1px solid #2e3440;
-        border-radius: 8px;
-        padding: 1.2rem;
-        margin: 0.5rem 0;
-    }
-    .formula-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #f59e0b;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    .theorem-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #34d399;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    .step-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #60a5fa;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    .warning-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #f87171;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
 
 # ---------------------------------------------------------------------------
 # Sidebar
@@ -128,7 +83,7 @@ with col_m1:
 with col_m2:
     st.metric(label="Gap #1 Status", value="Closed")
 with col_m3:
-    st.metric(label="Mechanism", value="F_2 flux on S\u00b2")
+    st.metric(label="Mechanism", value="F₂ flux on S²")
 
 st.markdown("")
 
@@ -238,13 +193,13 @@ with st.expander("B. Stabilized Minimum", expanded=True):
             with col_b1:
                 sigma_0 = _minimum.get("sigma_0")
                 st.metric(
-                    label="sigma_0 (minimum)",
+                    label="σ₀ (minimum)",
                     value=fmt_decimal(sigma_0, sig_figs=6) if sigma_0 is not None else "N/A",
                 )
             with col_b2:
                 V_min = _minimum.get("V_min")
                 st.metric(
-                    label="V_min",
+                    label="V min",
                     value=fmt_decimal(V_min, sig_figs=6) if V_min is not None else "N/A",
                 )
             with col_b3:

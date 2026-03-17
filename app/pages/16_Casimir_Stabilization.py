@@ -9,51 +9,6 @@ import streamlit as st
 import math
 
 
-# ---------------------------------------------------------------------------
-# Custom CSS (matches Page 14 + warning-card for negative results)
-# ---------------------------------------------------------------------------
-st.markdown(
-    """
-    <style>
-    .proof-card {
-        background-color: #1a1d23;
-        border: 1px solid #2e3440;
-        border-radius: 8px;
-        padding: 1.2rem;
-        margin: 0.5rem 0;
-    }
-    .formula-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #f59e0b;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    .theorem-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #34d399;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    .step-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #60a5fa;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    .warning-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #f87171;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
 
 # ---------------------------------------------------------------------------
 # Sidebar
@@ -159,7 +114,7 @@ col_m1, col_m2, col_m3 = st.columns(3)
 
 with col_m1:
     total_modes = _spectrum.get("total_modes", "N/A") if _spectrum else "N/A"
-    st.metric(label="Total KK modes (l <= 20)", value=str(total_modes))
+    st.metric(label="Total KK modes (l ≤ 20)", value=str(total_modes))
 with col_m2:
     st.metric(label="Bosonic dof", value="9")
 with col_m3:
@@ -272,12 +227,12 @@ with st.expander("B. KK Spectrum on S\u00b2", expanded=True):
         col_b1, col_b2, col_b3 = st.columns(3)
         with col_b1:
             l_max = _spectrum.get("l_max", 20)
-            st.metric(label="l_max", value=str(l_max))
+            st.metric(label="l max", value=str(l_max))
         with col_b2:
             total_degen = _spectrum.get("total_degeneracy", "N/A")
             st.metric(label="Total degeneracy", value=str(total_degen))
         with col_b3:
-            st.metric(label="Mass gap (l=1)", value="2 / a\u00b2")
+            st.metric(label="Mass gap (l=1)", value="2 / a₀²")
     else:
         st.markdown(
             """

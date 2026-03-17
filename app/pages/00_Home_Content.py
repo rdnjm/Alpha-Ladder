@@ -15,38 +15,6 @@ from app.components.sidebar import render_sidebar  # noqa: E402
 constants = render_sidebar()
 
 # ---------------------------------------------------------------------------
-# Custom CSS
-# ---------------------------------------------------------------------------
-st.markdown(
-    """
-    <style>
-    .theory-box {
-        background-color: #1a1d23;
-        border-left: 4px solid #60a5fa;
-        padding: 1.2rem;
-        border-radius: 0 8px 8px 0;
-        margin: 1rem 0;
-    }
-    .result-card {
-        background-color: #1a1d23;
-        border-left: 4px solid #34d399;
-        padding: 1.2rem;
-        border-radius: 0 8px 8px 0;
-        margin: 1rem 0;
-    }
-    .nav-hint {
-        background-color: #1e2128;
-        border: 1px solid #3b4252;
-        border-radius: 8px;
-        padding: 1rem;
-        margin: 0.5rem 0;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
-
-# ---------------------------------------------------------------------------
 # Title
 # ---------------------------------------------------------------------------
 st.title("Alpha Ladder Research Dashboard")
@@ -68,7 +36,7 @@ with col1:
 
 with col2:
     st.metric(
-        label="mu residual",
+        label="μ residual",
         value="+0.0004 ppm",
         delta="measurement precision",
         delta_color="normal",
@@ -93,15 +61,15 @@ st.markdown(
     """
     <div class="result-card">
     The <b>Alpha Ladder</b> derives Newton's gravitational constant G
-    from the fine-structure constant alpha, the golden ratio phi,
-    and the proton-to-electron mass ratio mu -- with <b>zero fitted
+    from the fine-structure constant α, the golden ratio φ,
+    and the proton-to-electron mass ratio μ -- with <b>zero fitted
     parameters</b>:<br><br>
-    <center><code>G = (phi^2/2) * (1 + 3*alpha^2 + (phi/2)*alpha^3) * alpha^21 * hbar*c / m_e^2</code></center><br>
+    <center><code>G = (φ²/2) × (1 + 3α² + (φ/2)α³) × α²¹ × ℏc / mₑ²</code></center><br>
     <b>Every component is derived:</b><br>
-    &bull; <b>phi^2/2</b> -- bridge coefficient from the vacuum polynomial x^2 + 6x + 4 = 0<br>
-    &bull; <b>3*alpha^2</b> -- radiative correction, 3 = d-1 = n(n+1)/2 = n+1 at n=2<br>
-    &bull; <b>(phi/2)*alpha^3</b> -- NLO correction from S^2 volume cancellation<br>
-    &bull; <b>alpha^21</b> -- exponent from 6D metric components (d*D - 3 = 21)<br>
+    &bull; <b>φ²/2</b> -- bridge coefficient from the vacuum polynomial x² + 6x + 4 = 0<br>
+    &bull; <b>3α²</b> -- radiative correction, 3 = d-1 = n(n+1)/2 = n+1 at n=2<br>
+    &bull; <b>(φ/2)α³</b> -- NLO correction from S² volume cancellation<br>
+    &bull; <b>α²¹</b> -- exponent from 6D metric components (d×D - 3 = 21)<br>
     &bull; <b>d=4, D=6</b> -- uniquely selected by 3 independent constraints
     </div>
     """,
@@ -120,8 +88,8 @@ with col_a:
         """
         <div class="theory-box">
         <b>Bridge form (corrected):</b><br><br>
-        <code>alpha_G = phi^2/2 * F * alpha^21</code><br><br>
-        where F = 1 + 3*alpha^2 + (phi/2)*alpha^3<br><br>
+        <code>α_G = φ²/2 × F × α²¹</code><br><br>
+        where F = 1 + 3α² + (φ/2)α³<br><br>
         Residual: <b>-0.33 ppm</b> (CODATA 2022)
         </div>
         """,
@@ -133,7 +101,7 @@ with col_b:
         """
         <div class="theory-box">
         <b>Mu-structure form:</b><br><br>
-        <code>alpha_G = alpha^24 * mu * (mu - sqrt(phi)*(1-alpha))</code><br><br>
+        <code>α_G = α²⁴ × μ × (μ - √φ × (1-α))</code><br><br>
         Same prediction, different factorization<br><br>
         Residual: <b>-0.31 ppm</b> (CODATA 2018)
         </div>

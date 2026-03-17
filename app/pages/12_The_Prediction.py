@@ -13,37 +13,6 @@ from decimal import Decimal, getcontext
 getcontext().prec = 50
 
 
-# ---------------------------------------------------------------------------
-# Custom CSS
-# ---------------------------------------------------------------------------
-st.markdown(
-    """
-    <style>
-    .pred-card {
-        background-color: #1a1d23;
-        border: 1px solid #2e3440;
-        border-radius: 8px;
-        padding: 1.2rem;
-        margin: 0.5rem 0;
-    }
-    .formula-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #f59e0b;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    .falsify-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #34d399;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
 
 # ---------------------------------------------------------------------------
 # Sidebar
@@ -175,13 +144,13 @@ col_p1, col_p2, col_p3 = st.columns(3)
 
 with col_p1:
     st.metric(
-        label="G_corrected (predicted)",
+        label="G corrected (predicted)",
         value=fmt_decimal(_G_corrected, sig_figs=6) if _G_corrected else "6.67430e-11",
     )
 
 with col_p2:
     st.metric(
-        label="G_CODATA 2018",
+        label="G CODATA 2018",
         value=fmt_decimal(G_codata, sig_figs=6),
     )
 
@@ -196,7 +165,7 @@ st.markdown(
     """
     <div class="formula-card">
     <b>Complete formula (zero fitted parameters):</b><br>
-    <code>G = phi^2/2 * (1 + 3*alpha^2 + (phi/2)*alpha^3) * alpha^24 * hbar*c / m_e^2</code>
+    <code>G = φ²/2 × (1 + 3α² + (φ/2)α³) × α²⁴ × ℏc / mₑ²</code>
     </div>
     """,
     unsafe_allow_html=True,
@@ -208,9 +177,9 @@ with st.expander("Historical: Uncorrected and Hierarchy Predictions"):
 
     with col_m1:
         st.metric(
-            label="G_vacuum (uncorrected)",
+            label="G vacuum (uncorrected)",
             value=fmt_decimal(G_vacuum, sig_figs=6),
-            help="phi^2/2 * alpha^21 bridge, ~160 ppm low",
+            help="φ²/2 × α²¹ bridge, ~160 ppm low",
         )
 
     with col_m2:
@@ -222,12 +191,12 @@ with st.expander("Historical: Uncorrected and Hierarchy Predictions"):
     with col_m3:
         if G_hierarchy is not None:
             st.metric(
-                label="G_hierarchy (alpha^24 mu^2)",
+                label="G hierarchy (α²⁴μ²)",
                 value=fmt_decimal(G_hierarchy, sig_figs=6),
                 help="Zero free parameters, 688 ppm",
             )
         else:
-            st.metric(label="G_hierarchy", value="~6.67889e-11", help="688 ppm")
+            st.metric(label="G hierarchy", value="~6.67889e-11", help="688 ppm")
 
     with col_m4:
         st.metric(
@@ -281,7 +250,7 @@ with st.expander("Big G Deadlock Visualizer", expanded=True):
                 fig_deadlock.add_vline(
                     x=_G_corrected, line_dash="dash", line_color="#34d399",
                     line_width=2,
-                    annotation_text=f"G_corrected = {_G_corrected:.5e}",
+                    annotation_text=f"G corrected = {_G_corrected:.5e}",
                     annotation_position="bottom right",
                     annotation_font_color="#34d399",
                 )
@@ -305,9 +274,9 @@ with st.expander("Big G Deadlock Visualizer", expanded=True):
             <b>High cluster mean:</b> {high_mean:.5e}<br>
             <b>Low cluster mean:</b> {low_mean:.5e}<br>
             <b>Gap:</b> {cluster_gap_ppm:.1f} ppm<br><br>
-            <b>Uncorrected bridge</b> (gold line): G_vacuum = {G_vacuum:.5e}
-            sits ~160 ppm below CODATA.<br>
-            <b>Corrected formula</b> (green line): G_corrected = {_corr_str}
+            <b>Uncorrected bridge</b> (gold line): G vacuum = {G_vacuum:.5e}
+            sits ≈160 ppm below CODATA.<br>
+            <b>Corrected formula</b> (green line): G corrected = {_corr_str}
             ({_corr_ppm_str} ppm) lands in the middle of the experimental
             scatter, within the measurement spread.
             </div>
@@ -390,7 +359,7 @@ with st.expander("Screening Simulator", expanded=True):
                 fig_profile.add_hline(
                     y=_G_corrected, line_dash="dot", line_color="#34d399",
                     line_width=1.5,
-                    annotation_text=f"G_corrected = {_G_corrected:.5e}",
+                    annotation_text=f"G corrected = {_G_corrected:.5e}",
                     annotation_position="top right",
                     annotation_font_color="#34d399",
                 )
@@ -413,9 +382,9 @@ with st.expander("Screening Simulator", expanded=True):
     with col_sim_info:
         _excess_ppm_at_dist = (G_eff_at_dist - G_vacuum) / G_vacuum * 1e6
 
-        st.metric(label="G_eff at distance", value=fmt_decimal(G_eff_at_dist, sig_figs=6))
-        st.metric(label="Excess over G_vacuum (ppm)", value=f"{_excess_ppm_at_dist:.2f}")
-        st.metric(label="\u03bb_dilaton", value=f"{lambda_dilaton_m:.4f} m")
+        st.metric(label="G eff at distance", value=fmt_decimal(G_eff_at_dist, sig_figs=6))
+        st.metric(label="Excess over G vacuum (ppm)", value=f"{_excess_ppm_at_dist:.2f}")
+        st.metric(label="λ dilaton", value=f"{lambda_dilaton_m:.4f} m")
         st.metric(label="Dilaton mass", value=fmt_decimal(dilaton_mass_eV, sig_figs=3) + " eV")
 
         st.markdown(
@@ -437,7 +406,7 @@ with st.expander("Screening Simulator", expanded=True):
         f"""
         <div class="falsify-card">
         <b>Important context:</b> The screening simulator above uses the
-        <b>uncorrected</b> bridge (phi^2/2, ~160 ppm low) as its baseline.
+        <b>uncorrected</b> bridge (φ²/2, ≈160 ppm low) as its baseline.
         With the corrected formula at <b>{_corr_ppm_str2} ppm</b>, the prediction
         sits within the experimental scatter. Screening is no longer required
         to explain the G excess -- though the distance-dependent profile
@@ -519,9 +488,9 @@ with st.expander("Experiment Comparison", expanded=True):
         f"""
         <div class="falsify-card">
         <b>Corrected Formula vs Experiments</b><br><br>
-        G_corrected = {_corr_val:.6e} (<b>{_corr_ppm_val:+.2f} ppm</b> from CODATA)<br>
-        Within 1 sigma: <b>{_within_1sig}/{_total_exp}</b> |
-        Within 2 sigma: <b>{_within_2sig}/{_total_exp}</b>
+        G corrected = {_corr_val:.6e} (<b>{_corr_ppm_val:+.2f} ppm</b> from CODATA)<br>
+        Within 1σ: <b>{_within_1sig}/{_total_exp}</b> |
+        Within 2σ: <b>{_within_2sig}/{_total_exp}</b>
         </div>
         """,
         unsafe_allow_html=True,
@@ -533,7 +502,7 @@ with st.expander("Experiment Comparison", expanded=True):
             "Experiment": c["experiment"],
             "G_exp": f"{float(c['G_exp']):.5e}",
             "Uncertainty": f"{float(c['G_unc']):.1e}",
-            "Sigma (corrected)": f"{float(c['sigma']):.1f}",
+            "σ (corrected)": f"{float(c['sigma']):.1f}",
             "Direction": "HIGH" if c.get("direction") == "-" else "LOW",
         })
     st.dataframe(pd.DataFrame(df_corr), use_container_width=True, hide_index=True)
@@ -541,7 +510,7 @@ with st.expander("Experiment Comparison", expanded=True):
     st.markdown("")
 
     # --- Historical: Uncorrected comparison ---
-    with st.expander("Historical: Uncorrected Bridge (phi^2/2 only)"):
+    with st.expander("Historical: Uncorrected Bridge (φ²/2 only)"):
         col_bars, col_table = st.columns([1, 1])
 
         with col_bars:
@@ -559,9 +528,9 @@ with st.expander("Experiment Comparison", expanded=True):
             for c in sigma_comparisons:
                 df_data.append({
                     "Experiment": c["experiment"],
-                    "G_exp": f"{float(c['G_exp']):.5e}",
+                    "G exp": f"{float(c['G_exp']):.5e}",
                     "Uncertainty": f"{float(c['G_unc']):.1e}",
-                    "Sigma (uncorrected)": f"{float(c['sigma']):.1f}",
+                    "σ (uncorrected)": f"{float(c['sigma']):.1f}",
                     "Direction": "HIGH" if c.get("direction") == "-" else "LOW",
                 })
             st.dataframe(pd.DataFrame(df_data), use_container_width=True, hide_index=True)
@@ -569,8 +538,8 @@ with st.expander("Experiment Comparison", expanded=True):
         st.markdown(
             f"""
             <div class="formula-card">
-            <b>Context:</b> The uncorrected bridge phi^2/2 gives
-            G_vacuum = {G_pred:.5e} (~160 ppm low). The large sigma values
+            <b>Context:</b> The uncorrected bridge φ²/2 gives
+            G vacuum = {G_pred:.5e} (≈160 ppm low). The large σ values
             above motivated the dilaton screening hypothesis. With the corrected
             formula at -0.33 ppm, the prediction sits within the experimental
             scatter without requiring screening.
@@ -593,7 +562,7 @@ with st.expander("Experiment Comparison", expanded=True):
         source-mass distance, designed to map the distance dependence of G
         with 5 ppm sensitivity.<br><br>
         At -0.33 ppm, the corrected formula predicts G will converge to
-        6.674298 x 10^-11 as measurement precision improves to the ppb level.
+        6.674298 × 10⁻¹¹ as measurement precision improves to the ppb level.
         </div>
         """,
         unsafe_allow_html=True,

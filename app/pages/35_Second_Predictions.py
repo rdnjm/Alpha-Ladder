@@ -9,45 +9,6 @@ import streamlit as st
 import pandas as pd
 
 
-st.markdown("""
-<style>
-.proof-card {
-    background: #1a1a2e;
-    border-radius: 10px;
-    padding: 20px;
-    margin: 10px 0;
-}
-.formula-card {
-    background: #1a1a2e;
-    border-left: 4px solid #f59e0b;
-    border-radius: 10px;
-    padding: 20px;
-    margin: 10px 0;
-}
-.theorem-card {
-    background: #1a1a2e;
-    border-left: 4px solid #34d399;
-    border-radius: 10px;
-    padding: 20px;
-    margin: 10px 0;
-}
-.step-card {
-    background: #1a1a2e;
-    border-left: 4px solid #60a5fa;
-    border-radius: 10px;
-    padding: 20px;
-    margin: 10px 0;
-}
-.warning-card {
-    background: #1a1a2e;
-    border-left: 4px solid #f87171;
-    border-radius: 10px;
-    padding: 20px;
-    margin: 10px 0;
-}
-</style>
-""", unsafe_allow_html=True)
-
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
 from app.components.sidebar import render_sidebar
 
@@ -69,23 +30,23 @@ def _get_summary(_constants):
 
 
 st.title("Second Predictions")
-st.markdown("*Testable predictions beyond G: time variation, M_6 scale, mu tension*")
+st.markdown("*Testable predictions beyond G: time variation, M₆ scale, μ tension*")
 
 summary = _get_summary(constants)
 
 # --- A. Time Variation of G ---
-st.header("A. Time Variation: dG/G = 24 * (dalpha/alpha)")
+st.header("A. Time Variation: dG/G = 24 × (dα/α)")
 
 if summary:
     tv = summary["time_variation"]
     c1, c2 = st.columns(2)
-    c1.metric("A coefficient (alpha)", tv["A_coefficient"])
-    c2.metric("B coefficient (mu)", tv["B_coefficient"])
+    c1.metric("A coefficient (α)", tv["A_coefficient"])
+    c2.metric("B coefficient (μ)", tv["B_coefficient"])
 
     st.markdown(f"""
 <div class="theorem-card">
 <strong>Master formula:</strong><br><br>
-dG/G = {tv['A_coefficient']} * (dalpha/alpha) + {tv['B_coefficient']} * (dmu/mu)
+dG/G = {tv['A_coefficient']} × (dα/α) + {tv['B_coefficient']} × (dμ/μ)
 </div>
 """, unsafe_allow_html=True)
 
@@ -113,13 +74,13 @@ st.header("B. Current Experimental Bounds")
 if summary:
     cb = summary["current_bounds"]
     c1, c2, c3 = st.columns(3)
-    c1.metric("alpha bound (dalpha/alpha)", f"{cb['alpha_bound']:.2e}")
-    c2.metric("mu bound (dmu/mu)", f"{cb['mu_bound']:.2e}")
+    c1.metric("α bound (dα/α)", f"{cb['alpha_bound']:.2e}")
+    c2.metric("μ bound (dμ/μ)", f"{cb['mu_bound']:.2e}")
     c3.metric("G bound (dG/G)", f"{cb['G_bound']:.2e}")
 
     st.markdown(f"""
 <div class="step-card">
-<strong>Predicted dG from alpha bound:</strong> {cb['predicted_dG_from_alpha_bound']:.2e}<br>
+<strong>Predicted dG from α bound:</strong> {cb['predicted_dG_from_alpha_bound']:.2e}<br>
 <strong>Ratio to current G sensitivity:</strong> {cb['ratio_to_current_sensitivity']:.1f}x
 </div>
 """, unsafe_allow_html=True)
@@ -147,16 +108,16 @@ if summary:
     m6 = summary["m6_landscape"]
     sw = m6["survival_window"]
     c1, c2, c3, c4 = st.columns(4)
-    c1.metric("a0 min (um)", f"{sw['a0_min']*1e6:.1f}")
-    c2.metric("a0 max (um)", f"{sw['a0_max']*1e6:.1f}")
-    c3.metric("M6 min (TeV)", f"{sw['M6_min_TeV']:.1f}")
-    c4.metric("M6 max (TeV)", f"{sw['M6_max_TeV']:.1f}")
+    c1.metric("a₀ min (um)", f"{sw['a0_min']*1e6:.1f}")
+    c2.metric("a₀ max (um)", f"{sw['a0_max']*1e6:.1f}")
+    c3.metric("M₆ min (TeV)", f"{sw['M6_min_TeV']:.1f}")
+    c4.metric("M₆ max (TeV)", f"{sw['M6_max_TeV']:.1f}")
 
     st.markdown(f"""
 <div class="theorem-card">
 <strong>Key prediction:</strong><br><br>
-If a_0 is in the survival window [{sw['a0_min']*1e6:.0f}-{sw['a0_max']*1e6:.0f} um],
-then M_6 = {sw['M6_min_TeV']:.0f}-{sw['M6_max_TeV']:.0f} TeV (LHC scale).
+If a₀ is in the survival window [{sw['a0_min']*1e6:.0f}-{sw['a0_max']*1e6:.0f} um],
+then M₆ = {sw['M6_min_TeV']:.0f}-{sw['M6_max_TeV']:.0f} TeV (LHC scale).
 </div>
 """, unsafe_allow_html=True)
 
@@ -173,8 +134,8 @@ then M_6 = {sw['M6_min_TeV']:.0f}-{sw['M6_max_TeV']:.0f} TeV (LHC scale).
             else:
                 status = "Below reach"
             rows.append({
-                "a0 (m)": f"{r['a0_meters']:.2e}",
-                "M_6 (TeV)": f"{r['M_6_TeV']:.2f}",
+                "a₀ (m)": f"{r['a0_meters']:.2e}",
+                "M₆ (TeV)": f"{r['M_6_TeV']:.2f}",
                 "In survival window": "YES" if r.get("in_survival_window") else "",
                 "Status": status,
             })
@@ -197,14 +158,14 @@ if summary:
 
     st.markdown(f"""
 <div class="step-card">
-<strong>QCD coupling R ~ 38:</strong> Nuclear masses depend on alpha_s, which runs with alpha.
-The QCD contribution amplifies the correlated variation by a factor of ~38.
+<strong>QCD coupling R ≈ 38:</strong> Nuclear masses depend on α_s, which runs with α.
+The QCD contribution amplifies the correlated variation by a factor of ≈38.
 </div>
 """, unsafe_allow_html=True)
 
     st.markdown("""
 <div class="formula-card">
-<strong>With QCD coupling:</strong> dG/G = (24 + 2*38) * dalpha/alpha = 100 * dalpha/alpha
+<strong>With QCD coupling:</strong> dG/G = (24 + 2×38) × dα/α = 100 × dα/α
 </div>
 """, unsafe_allow_html=True)
 
@@ -215,14 +176,14 @@ The QCD contribution amplifies the correlated variation by a factor of ~38.
 """, unsafe_allow_html=True)
 
 # --- E. Mu Tension ---
-st.header("E. Bridge vs Mu-Structure Tension")
+st.header("E. Bridge vs μ-Structure Tension")
 
 if summary:
     mt = summary["mu_tension"]
     c1, c2, c3 = st.columns(3)
-    c1.metric("mu measured", f"{mt['mu_measured']:.6f}")
-    c2.metric("mu from bridge", f"{mt['mu_predicted_from_bridge']:.6f}")
-    c3.metric("Tension (sigma)", f"{mt['tension_sigma']:.1f}")
+    c1.metric("μ measured", f"{mt['mu_measured']:.6f}")
+    c2.metric("μ from bridge", f"{mt['mu_predicted_from_bridge']:.6f}")
+    c3.metric("Tension (σ)", f"{mt['tension_sigma']:.1f}")
 
     st.markdown(f"""
 <div class="warning-card">

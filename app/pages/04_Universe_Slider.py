@@ -13,49 +13,6 @@ getcontext().prec = 50
 
 
 # ---------------------------------------------------------------------------
-# Custom CSS
-# ---------------------------------------------------------------------------
-st.markdown(
-    """
-    <style>
-    .viability-card {
-        border-radius: 8px;
-        padding: 1rem;
-        text-align: center;
-        font-weight: bold;
-        font-size: 1.1rem;
-    }
-    .viable-yes {
-        background-color: rgba(52, 211, 153, 0.15);
-        border: 2px solid #34d399;
-        color: #34d399;
-    }
-    .viable-no {
-        background-color: rgba(248, 113, 113, 0.15);
-        border: 2px solid #f87171;
-        color: #f87171;
-    }
-    .notes-box {
-        background-color: #1a1d23;
-        border: 1px solid #2e3440;
-        border-radius: 8px;
-        padding: 1rem;
-        margin: 0.5rem 0;
-    }
-    .comparison-highlight {
-        background-color: #1a1d23;
-        border-left: 4px solid #60a5fa;
-        padding: 1rem;
-        border-radius: 0 8px 8px 0;
-        font-family: 'Fira Mono', Consolas, monospace;
-        font-size: 1.1rem;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
-
-# ---------------------------------------------------------------------------
 # Sidebar
 # ---------------------------------------------------------------------------
 import sys
@@ -154,16 +111,16 @@ if _core_available and constants is not None:
 
     with col1:
         st.metric(
-            "G (phi^2/2 bridge)",
+            "G (φ²/2 bridge)",
             fmt_decimal(physics["G_predicted"], sig_figs=6),
-            help="G from (phi^2/2) * alpha^21 bridge.",
+            help="G from (φ²/2) × α²¹ bridge.",
         )
 
     with col2:
         st.metric(
-            "G (alpha^24 * mu^2)",
+            "G (α²⁴ × μ²)",
             fmt_decimal(physics["G_hierarchy"], sig_figs=6),
-            help="G from alpha^24 * mu^2 (zero free parameters, 688 ppm). Refined: mu*(mu-sqrt(phi)*(1-alpha)) gives -0.31 ppm.",
+            help="G from α²⁴ × μ² (zero free parameters, 688 ppm). Refined: μ×(μ-√φ×(1-α)) gives -0.31 ppm.",
         )
 
     with col3:
@@ -177,16 +134,16 @@ if _core_available and constants is not None:
 
     with col4:
         st.metric(
-            "alpha_G (bridge)",
+            "α_G (bridge)",
             fmt_decimal(physics["alpha_g"], sig_figs=6),
-            help="Gravitational coupling: (phi^2/2) * alpha^21.",
+            help="Gravitational coupling: (φ²/2) × α²¹.",
         )
 
     with col5:
         st.metric(
-            "alpha_G (hierarchy)",
+            "α_G (hierarchy)",
             fmt_decimal(physics["alpha_g_hierarchy"], sig_figs=6),
-            help="Gravitational coupling: alpha^24 * mu^2.",
+            help="Gravitational coupling: α²⁴ × μ².",
         )
 
     with col6:
@@ -270,22 +227,22 @@ if _core_available and constants is not None:
             "Our Universe": f"{float(real_physics['inv_alpha']):.4f}",
         },
         {
-            "Quantity": "G (phi^2/2 bridge)",
+            "Quantity": "G (φ²/2 bridge)",
             "This Universe": fmt_decimal(physics["G_predicted"], sig_figs=8),
             "Our Universe": fmt_decimal(real_physics["G_predicted"], sig_figs=8),
         },
         {
-            "Quantity": "G (alpha^24 * mu^2)",
+            "Quantity": "G (α²⁴ × μ²)",
             "This Universe": fmt_decimal(physics["G_hierarchy"], sig_figs=8),
             "Our Universe": fmt_decimal(real_physics["G_hierarchy"], sig_figs=8),
         },
         {
-            "Quantity": "alpha_G (bridge)",
+            "Quantity": "α_G (bridge)",
             "This Universe": fmt_decimal(physics["alpha_g"], sig_figs=6),
             "Our Universe": fmt_decimal(real_physics["alpha_g"], sig_figs=6),
         },
         {
-            "Quantity": "alpha_G (hierarchy)",
+            "Quantity": "α_G (hierarchy)",
             "This Universe": fmt_decimal(physics["alpha_g_hierarchy"], sig_figs=6),
             "Our Universe": fmt_decimal(real_physics["alpha_g_hierarchy"], sig_figs=6),
         },

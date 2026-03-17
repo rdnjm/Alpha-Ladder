@@ -12,36 +12,6 @@ getcontext().prec = 50
 
 
 # ---------------------------------------------------------------------------
-# Custom CSS
-# ---------------------------------------------------------------------------
-st.markdown(
-    """
-    <style>
-    .const-table {
-        font-family: 'Fira Mono', Consolas, monospace;
-        font-size: 1.05rem;
-    }
-    .geom-verify {
-        background-color: #1a1d23;
-        border: 1px solid #2e3440;
-        border-radius: 8px;
-        padding: 1rem;
-        margin: 0.5rem 0;
-    }
-    .gap-display {
-        background-color: #1a1d23;
-        border-left: 4px solid #f59e0b;
-        padding: 1.2rem;
-        border-radius: 0 8px 8px 0;
-        font-family: 'Fira Mono', monospace;
-        font-size: 1.1rem;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
-
-# ---------------------------------------------------------------------------
 # Sidebar
 # ---------------------------------------------------------------------------
 import sys

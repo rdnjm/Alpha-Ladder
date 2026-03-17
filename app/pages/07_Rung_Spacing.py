@@ -10,33 +10,6 @@ import math
 
 
 # ---------------------------------------------------------------------------
-# Custom CSS
-# ---------------------------------------------------------------------------
-st.markdown(
-    """
-    <style>
-    .best-fit-card {
-        background-color: #1a1d23;
-        border-left: 4px solid #f59e0b;
-        padding: 1.2rem;
-        border-radius: 0 8px 8px 0;
-        font-family: 'Fira Mono', Consolas, monospace;
-        font-size: 1.1rem;
-        margin: 0.5rem 0;
-    }
-    .spacing-highlight {
-        background-color: #1a1d23;
-        border: 1px solid #2e3440;
-        border-radius: 8px;
-        padding: 1rem;
-        margin: 0.5rem 0;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
-
-# ---------------------------------------------------------------------------
 # Sidebar
 # ---------------------------------------------------------------------------
 import sys

@@ -9,45 +9,6 @@ import streamlit as st
 import pandas as pd
 
 
-st.markdown("""
-<style>
-.proof-card {
-    background: #1a1a2e;
-    border-radius: 10px;
-    padding: 20px;
-    margin: 10px 0;
-}
-.formula-card {
-    background: #1a1a2e;
-    border-left: 4px solid #f59e0b;
-    border-radius: 10px;
-    padding: 20px;
-    margin: 10px 0;
-}
-.theorem-card {
-    background: #1a1a2e;
-    border-left: 4px solid #34d399;
-    border-radius: 10px;
-    padding: 20px;
-    margin: 10px 0;
-}
-.step-card {
-    background: #1a1a2e;
-    border-left: 4px solid #60a5fa;
-    border-radius: 10px;
-    padding: 20px;
-    margin: 10px 0;
-}
-.warning-card {
-    background: #1a1a2e;
-    border-left: 4px solid #f87171;
-    border-radius: 10px;
-    padding: 20px;
-    margin: 10px 0;
-}
-</style>
-""", unsafe_allow_html=True)
-
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
 from app.components.sidebar import render_sidebar
 
@@ -86,7 +47,7 @@ def _fmt_ppm(val):
 # ---------------------------------------------------------------------------
 # A. Exponent Constraint
 # ---------------------------------------------------------------------------
-st.header("A. Exponent d*D = 24")
+st.header("A. Exponent d×D = 24")
 
 if summary:
     exp_data = summary.get("exponent_scan", {})
@@ -140,7 +101,7 @@ else:
 # ---------------------------------------------------------------------------
 # B. Volume Cancellation Constraint
 # ---------------------------------------------------------------------------
-st.header("B. S^n Volume Cancellation: Only n=2")
+st.header("B. Sⁿ Volume Cancellation: Only n=2")
 
 if summary:
     vol_data = summary.get("volume_scan", {})
@@ -154,15 +115,15 @@ if summary:
             rows.append({
                 "n": n_val,
                 "Sphere": f"S^{n_val}",
-                "Volume / R^n": f"{row.get('vol_over_rn', 0):.6f}",
-                "Product with 1/(4pi)": f"{product:.6f}",
-                "Gives Bare Alpha": "YES" if abs(product - 1.0) < 1e-10 else "",
+                "Volume / Rⁿ": f"{row.get('vol_over_rn', 0):.6f}",
+                "Product with 1/(4π)": f"{product:.6f}",
+                "Gives Bare α": "YES" if abs(product - 1.0) < 1e-10 else "",
             })
         st.dataframe(pd.DataFrame(rows), use_container_width=True, hide_index=True)
 
     st.markdown("""
 <div class="theorem-card">
-<strong>Only S<sup>2</sup> produces exact volume cancellation. This selects n=2, eliminating (3,5).</strong>
+<strong>Only S² produces exact volume cancellation. This selects n=2, eliminating (3,5).</strong>
 </div>
 """, unsafe_allow_html=True)
 
@@ -179,7 +140,7 @@ else:
 # ---------------------------------------------------------------------------
 # C. Vacuum Polynomial Constraint
 # ---------------------------------------------------------------------------
-st.header("C. Vacuum Polynomial: Only d=4, D=6 Gives phi")
+st.header("C. Vacuum Polynomial: Only d=4, D=6 Gives φ")
 
 if summary:
     poly_data = summary.get("polynomial_scan", {})
@@ -193,14 +154,14 @@ if summary:
                 "n": row.get("n", ""),
                 "D": row.get("D", ""),
                 "Discriminant": row.get("discriminant", ""),
-                "Involves phi": row.get("involves_phi", ""),
+                "Involves φ": row.get("involves_phi", ""),
             })
         st.dataframe(pd.DataFrame(rows), use_container_width=True, hide_index=True)
 
     st.markdown("""
 <div class="theorem-card">
-<strong>x<sup>2</sup>+6x+4=0 gives roots -3+/-sqrt(5), involving the golden ratio.
-x<sup>2</sup>+8x+3=0 gives roots involving sqrt(13), not phi.</strong>
+<strong>x²+6x+4=0 gives roots −3±√5, involving the golden ratio.
+x²+8x+3=0 gives roots involving √13, not φ.</strong>
 </div>
 """, unsafe_allow_html=True)
 
@@ -227,6 +188,7 @@ if summary:
     c2.metric("Volume n", str(proof.get("volume_constraint", "")))
     c3.metric("Polynomial pairs", str(proof.get("polynomial_constraint", "")))
 
+
     unique_pair = proof.get("unique_pair", {})
     st.markdown(f"""
 <div class="proof-card">
@@ -240,26 +202,26 @@ else:
 # ---------------------------------------------------------------------------
 # E. c3 = phi/2
 # ---------------------------------------------------------------------------
-st.header("E. The Third Coefficient: c3 = phi/2")
+st.header("E. The Third Coefficient: c3 = φ/2")
 
 if summary:
     c3_data = summary.get("c3_derivation", {})
 
     c1, c2, c3_col = st.columns(3)
-    c1.metric("c3 (phi/2)", f"{c3_data.get('c3_phi_half', 0):.6f}")
+    c1.metric("c3 (φ/2)", f"{c3_data.get('c3_phi_half', 0):.6f}")
     c2.metric("c3 exact", f"{c3_data.get('c3_exact', 0):.6f}")
     c3_col.metric("Residual (%)", f"{c3_data.get('c3_residual_percent', 0):.4f}")
 
     st.markdown("""
 <div class="formula-card">
-<strong>F = 1 + (d-1)*alpha<sup>2</sup> + (phi/2)*alpha<sup>3</sup>
-= 1 + 3*alpha<sup>2</sup> + 0.809*alpha<sup>3</sup></strong>
+<strong>F = 1 + (d−1)×α² + (φ/2)×α³
+= 1 + 3×α² + 0.809×α³</strong>
 </div>
 """, unsafe_allow_html=True)
 
     st.markdown("""
 <div class="step-card">
-<strong>Both coefficients derive from geometry:</strong> c2 = d-1 = 3, c3 = phi/2.
+<strong>Both coefficients derive from geometry:</strong> c2 = d−1 = 3, c3 = φ/2.
 </div>
 """, unsafe_allow_html=True)
 else:
@@ -268,22 +230,22 @@ else:
 # ---------------------------------------------------------------------------
 # F. Mu Prediction
 # ---------------------------------------------------------------------------
-st.header("F. Second Prediction: mu from alpha and phi")
+st.header("F. Second Prediction: μ from α and φ")
 
 if summary:
     mu_data = summary.get("mu_prediction", {})
 
     c1, c2, c3_col, c4 = st.columns(4)
-    c1.metric("mu predicted", f"{mu_data.get('mu_predicted', 0):.6f}")
-    c2.metric("mu measured", f"{mu_data.get('mu_measured', 0):.6f}")
+    c1.metric("μ predicted", f"{mu_data.get('mu_predicted', 0):.6f}")
+    c2.metric("μ measured", f"{mu_data.get('mu_measured', 0):.6f}")
     residual_ppm = mu_data.get("residual_ppm", 0)
     c3_col.metric("Residual (ppm)", f"{residual_ppm:+.2f}")
     sigma = mu_data.get("sigma_tension", 0)
-    c4.metric("Sigma tension", f"{sigma:.2f}")
+    c4.metric("σ tension", f"{sigma:.2f}")
 
     st.markdown(f"""
 <div class="theorem-card">
-<strong>mu predicted to {residual_ppm:+.2f} ppm ({sigma:.2f} sigma). At measurement precision.</strong>
+<strong>μ predicted to {residual_ppm:+.2f} ppm ({sigma:.2f}σ). At measurement precision.</strong>
 </div>
 """, unsafe_allow_html=True)
 else:
@@ -292,7 +254,7 @@ else:
 # ---------------------------------------------------------------------------
 # G. G Prediction
 # ---------------------------------------------------------------------------
-st.header("G. Primary Prediction: G from alpha, mu, phi")
+st.header("G. Primary Prediction: G from α, μ, φ")
 
 if summary:
     g_data = summary.get("G_prediction", {})
@@ -339,7 +301,7 @@ if summary:
     st.markdown(f"""
 <div class="proof-card">
 <strong>Complete formula:</strong><br><br>
-G = phi<sup>2</sup>/2 * (1 + 3*alpha<sup>2</sup> + (phi/2)*alpha<sup>3</sup>) * alpha<sup>21</sup> * hbar*c / m_e<sup>2</sup><br><br>
+G = φ²/2 × (1 + 3×α² + (φ/2)×α³) × α²¹ × ℏc / mₑ²<br><br>
 G = {g_pred:.6e} ({f_residual:+.2f} ppm from measured)
 </div>
 """, unsafe_allow_html=True)

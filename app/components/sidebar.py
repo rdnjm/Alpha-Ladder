@@ -7,6 +7,8 @@ All pages should call render_sidebar() to get the active constants namespace.
 
 import streamlit as st
 
+from app.components.styles import inject_global_css
+
 # ---------------------------------------------------------------------------
 # Graceful imports from the core library (may not exist yet during
 # concurrent development). Fall back to stub data so the UI remains
@@ -33,104 +35,6 @@ except ImportError:
         return None
 
 
-_GLOBAL_CSS = """
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500&display=swap');
-
-/* Global base font size */
-.stApp, .stMarkdown, .stMarkdown p, .stText,
-div[data-testid="stExpander"] p,
-.stAlert p {
-    font-size: 1.1rem !important;
-    line-height: 1.7 !important;
-}
-
-/* Markdown containers -- body text, lists, spans (NOT headings) */
-div[data-testid="stMarkdownContainer"] p,
-div[data-testid="stMarkdownContainer"] li,
-div[data-testid="stMarkdownContainer"] span:not(h1 span):not(h2 span):not(h3 span),
-div[data-testid="stMarkdownContainer"] b,
-div[data-testid="stMarkdownContainer"] strong,
-div[data-testid="stMarkdownContainer"] em {
-    font-size: 1.15rem !important;
-    line-height: 1.75 !important;
-}
-
-/* Headings -- preserve native sizes */
-h1, div[data-testid="stMarkdownContainer"] h1 { font-size: 2.2rem !important; }
-h2, div[data-testid="stMarkdownContainer"] h2 { font-size: 1.75rem !important; }
-h3, div[data-testid="stMarkdownContainer"] h3 { font-size: 1.4rem !important; }
-h4, div[data-testid="stMarkdownContainer"] h4 { font-size: 1.2rem !important; }
-
-/* Streamlit heading containers */
-div[data-testid="stHeading"] h1 { font-size: 2.2rem !important; }
-div[data-testid="stHeading"] h2 { font-size: 1.75rem !important; }
-div[data-testid="stHeading"] h3 { font-size: 1.4rem !important; }
-
-/* Metric labels (often contain equations with Unicode) */
-div[data-testid="stMetricLabel"],
-div[data-testid="stMetricLabel"] p,
-div[data-testid="stMetricLabel"] label,
-div[data-testid="stMetricLabel"] div {
-    font-size: 1.05rem !important;
-    line-height: 1.5 !important;
-}
-
-.stMetric .metric-container {
-    background-color: #1a1d23;
-    border: 1px solid #2e3440;
-    border-radius: 8px;
-    padding: 1rem;
-}
-.stMetric label {
-    font-family: 'Fira Mono', monospace;
-    font-size: 1.05rem !important;
-}
-div[data-testid="stMetricValue"] {
-    font-family: 'Fira Mono', monospace;
-    font-size: 1.8rem !important;
-}
-
-/* Inline code / equation blocks */
-code, .stCode, pre,
-div[data-testid="stMarkdownContainer"] code {
-    font-size: 1.15rem !important;
-    line-height: 1.6 !important;
-    padding: 0.15em 0.4em !important;
-}
-
-/* Monospace formula displays in custom HTML */
-.formula, .equation, .geom-verify code,
-.target-box code, .best-card code,
-.decomp-card code, .converter-result code {
-    font-size: 1.15rem !important;
-}
-
-/* Superscripts and subscripts in equations */
-sup { font-size: 0.75em !important; }
-sub { font-size: 0.75em !important; }
-
-/* Custom HTML equation/formula containers */
-.target-box, .best-card, .decomp-card,
-.theory-box, .nav-hint, .verdict-box,
-.decomp-card, .connection-card, .gap-display,
-.const-table, .phi-table, .unit-table,
-.rung-table, .spacing-result, .harmonics-summary {
-    font-size: 1.1rem !important;
-    line-height: 1.7 !important;
-}
-
-/* Sidebar text */
-section[data-testid="stSidebar"] div[data-testid="stMarkdownContainer"] p,
-section[data-testid="stSidebar"] div[data-testid="stMarkdownContainer"] span,
-section[data-testid="stSidebar"] .stMarkdown p {
-    font-size: 1.05rem !important;
-    line-height: 1.6 !important;
-}
-</style>
-"""
-
-
 def render_sidebar():
     """Render the shared sidebar and return the selected constants namespace.
 
@@ -141,7 +45,7 @@ def render_sidebar():
         if the core module is not yet available.
     """
     # Inject global styles on every page
-    st.markdown(_GLOBAL_CSS, unsafe_allow_html=True)
+    inject_global_css()
 
     with st.sidebar:
         st.header("Alpha Ladder")

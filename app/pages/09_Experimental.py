@@ -13,28 +13,6 @@ getcontext().prec = 50
 
 
 # ---------------------------------------------------------------------------
-# Custom CSS
-# ---------------------------------------------------------------------------
-st.markdown(
-    """
-    <style>
-    .strategy-header {
-        font-family: 'Fira Mono', Consolas, monospace;
-        font-size: 1rem;
-    }
-    .verdict-box {
-        background-color: #1a1d23;
-        border: 1px solid #2e3440;
-        border-radius: 8px;
-        padding: 1.2rem;
-        margin: 0.5rem 0;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
-
-# ---------------------------------------------------------------------------
 # Sidebar
 # ---------------------------------------------------------------------------
 import sys
@@ -83,7 +61,7 @@ else:
 # ---------------------------------------------------------------------------
 # Strategy 1: Mass Ratios
 # ---------------------------------------------------------------------------
-with st.expander("Strategy 1: Mass Ratios -- Do particle masses fall on α rungs?", expanded=False):
+with st.expander("Strategy 1: Mass Ratios -- Do particle masses fall on α-rungs?", expanded=False):
     st.markdown(
         "If the Alpha Ladder is fundamental, particle mass ratios should "
         "cluster near integer powers of 1/α."
@@ -193,7 +171,7 @@ with st.expander("Strategy 2: Multiple Paths to \u03b1\u1d33 -- Convergence test
                 "n_alpha_G": 2 * n_planck,
             },
             "path_D": {
-                "description": "alpha^24 * mu^2 (zero free parameters)",
+                "description": "α²⁴ × μ² (zero free parameters)",
                 "alpha_G": float(alpha_g_D),
                 "G_predicted": float(G_D),
                 "residual_ppm": float((G_D - G) / G * Decimal('1000000')),
@@ -248,7 +226,7 @@ with st.expander("Strategy 2: Multiple Paths to \u03b1\u1d33 -- Convergence test
 
     with col_d:
         st.markdown("**Path D: Hierarchy Formula**")
-        st.markdown("alpha_G = alpha^24 * mu^2")
+        st.markdown("α_G = α²⁴ × μ²")
         st.metric(
             label="\u03b1_G (Path D)",
             value=fmt_decimal(paths["path_D"]["alpha_G"], sig_figs=6),
@@ -264,9 +242,9 @@ with st.expander("Strategy 2: Multiple Paths to \u03b1\u1d33 -- Convergence test
 
     st.info(
         "All four paths should yield \u03b1_G values consistent with "
-        "the ladder exponent. Path D (alpha^24 * mu^2) uses zero free "
-        "parameters (688 ppm). The refined formula alpha^24 * mu * "
-        "(mu - sqrt(phi)*(1-alpha)) gives -0.31 ppm (see Mu Structure page). "
+        "the ladder exponent. Path D (\u03b1\u00b2\u2074 \u00d7 \u03bc\u00b2) uses zero free "
+        "parameters (688 ppm). The refined formula \u03b1\u00b2\u2074 \u00d7 \u03bc \u00d7 "
+        "(\u03bc - \u221a\u03c6 \u00d7 (1-\u03b1)) gives -0.31 ppm (see Mu Structure page). "
         "Convergence strengthens the hypothesis; divergence "
         "would falsify it."
     )
@@ -507,7 +485,7 @@ with st.expander("Strategy 5: Experimental Approaches to G -- Precision tests", 
 
     with col_e2:
         st.metric(
-            label="G (alpha^24 * mu^2)",
+            label="G (α²⁴ × μ²)",
             value=fmt_decimal(approaches["hierarchy_prediction"], sig_figs=6),
             delta=f"{approaches['hierarchy_difference_ppm']} ppm",
             delta_color="off",
@@ -616,7 +594,7 @@ with col_v4:
         """
         <div class="verdict-box">
         <b>Boldest</b><br><br>
-        Search for dark photon at epsilon = \u03b1\u2075 mixing. Would
+        Search for dark photon at ε = α⁵ mixing. Would
         require next-generation intensity-frontier experiments
         (LDMX, Belle II). Discovery would be transformative.
         </div>

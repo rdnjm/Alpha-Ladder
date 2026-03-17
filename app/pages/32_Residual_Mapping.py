@@ -9,45 +9,6 @@ import streamlit as st
 import pandas as pd
 
 
-st.markdown("""
-<style>
-.proof-card {
-    background: #1a1a2e;
-    border-radius: 10px;
-    padding: 20px;
-    margin: 10px 0;
-}
-.formula-card {
-    background: #1a1a2e;
-    border-left: 4px solid #f59e0b;
-    border-radius: 10px;
-    padding: 20px;
-    margin: 10px 0;
-}
-.theorem-card {
-    background: #1a1a2e;
-    border-left: 4px solid #34d399;
-    border-radius: 10px;
-    padding: 20px;
-    margin: 10px 0;
-}
-.step-card {
-    background: #1a1a2e;
-    border-left: 4px solid #60a5fa;
-    border-radius: 10px;
-    padding: 20px;
-    margin: 10px 0;
-}
-.warning-card {
-    background: #1a1a2e;
-    border-left: 4px solid #f87171;
-    border-radius: 10px;
-    padding: 20px;
-    margin: 10px 0;
-}
-</style>
-""", unsafe_allow_html=True)
-
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
 from app.components.sidebar import render_sidebar
 
@@ -76,7 +37,7 @@ def _get_summary(_constants):
 
 
 st.title("Residual Mapping")
-st.markdown("*Mapping delta = sqrt(phi) - k_exact against Standard Model constants*")
+st.markdown("*Mapping δ = √φ − k_exact against Standard Model constants*")
 
 summary = _get_summary(constants)
 
@@ -87,14 +48,14 @@ if summary:
     di = summary["delta_info"]
     c1, c2, c3 = st.columns(3)
     c1.metric("k_exact", f"{di['k_exact']:.6f}")
-    c2.metric("sqrt(phi)", f"{di['sqrt_phi']:.6f}")
-    c3.metric("delta", f"{di['delta']:.6e}")
+    c2.metric("√φ", f"{di['sqrt_phi']:.6f}")
+    c3.metric("δ", f"{di['delta']:.6e}")
 
     st.markdown(f"""
 <div class="formula-card">
-<strong>The gap:</strong> delta = sqrt(phi) - k_exact = {di['delta']:.6e}<br>
-k_exact is the offset that makes alpha_g = alpha^24 * mu * (mu - k) match G exactly.<br>
-sqrt(phi) = {di['sqrt_phi']:.6f} overshoots by delta, giving the -0.31 ppm residual (with (1-alpha) correction).
+<strong>The gap:</strong> δ = √φ − k_exact = {di['delta']:.6e}<br>
+k_exact is the offset that makes α_g = α²⁴ × μ × (μ − k) match G exactly.<br>
+√φ = {di['sqrt_phi']:.6f} overshoots by δ, giving the -0.31 ppm residual (with (1−α) correction).
 </div>
 """, unsafe_allow_html=True)
 else:
@@ -106,9 +67,9 @@ st.header("B. Delta Structure Analysis")
 if summary:
     ds = summary["delta_structure"]
     c1, c2, c3 = st.columns(3)
-    c1.metric("delta / alpha", f"{ds['delta_over_alpha']:.4f}")
-    c2.metric("alpha power", f"{ds['delta_as_alpha_power']:.2f}")
-    c3.metric("delta * mu", f"{ds['delta_times_mu']:.2f}")
+    c1.metric("δ / α", f"{ds['delta_over_alpha']:.4f}")
+    c2.metric("α power", f"{ds['delta_as_alpha_power']:.2f}")
+    c3.metric("δ × μ", f"{ds['delta_times_mu']:.2f}")
 
     st.markdown(f"""
 <div class="step-card">
@@ -117,12 +78,12 @@ if summary:
 """, unsafe_allow_html=True)
 
     rows = [
-        {"Quantity": "delta / alpha", "Value": f"{ds['delta_over_alpha']:.6f}"},
-        {"Quantity": "delta / alpha^2", "Value": f"{ds['delta_over_alpha_sq']:.2f}"},
-        {"Quantity": "delta * mu", "Value": f"{ds['delta_times_mu']:.4f}"},
-        {"Quantity": "delta / Schwinger", "Value": f"{ds['delta_over_schwinger']:.4f}"},
-        {"Quantity": "delta / sqrt(phi)", "Value": f"{ds['delta_over_sqrt_phi']:.6f}"},
-        {"Quantity": "delta as alpha^n", "Value": f"n = {ds['delta_as_alpha_power']:.4f}"},
+        {"Quantity": "δ / α", "Value": f"{ds['delta_over_alpha']:.6f}"},
+        {"Quantity": "δ / α²", "Value": f"{ds['delta_over_alpha_sq']:.2f}"},
+        {"Quantity": "δ × μ", "Value": f"{ds['delta_times_mu']:.4f}"},
+        {"Quantity": "δ / Schwinger", "Value": f"{ds['delta_over_schwinger']:.4f}"},
+        {"Quantity": "δ / √φ", "Value": f"{ds['delta_over_sqrt_phi']:.6f}"},
+        {"Quantity": "δ as αⁿ", "Value": f"n = {ds['delta_as_alpha_power']:.4f}"},
     ]
     st.dataframe(pd.DataFrame(rows), use_container_width=True, hide_index=True)
 
@@ -142,14 +103,14 @@ if summary:
         rows.append({
             "Expression": c["name"],
             "Value": f"{c['value']:.6e}",
-            "delta / expr": f"{c['ratio']:.4f}",
+            "δ / expr": f"{c['ratio']:.4f}",
             "Nearest int": c.get("nearest_integer", ""),
             "Frac. part": f"{c.get('closeness_to_integer', ''):.4f}" if isinstance(c.get("closeness_to_integer"), (int, float)) and c["closeness_to_integer"] != float("inf") else "N/A",
         })
     st.dataframe(pd.DataFrame(rows), use_container_width=True, hide_index=True)
 
 # --- D. Zeta Function Scan ---
-st.header("D. Zeta Function & Mathematical Constants")
+st.header("D. Zeta Function and Mathematical Constants")
 
 if summary:
     zs = summary["zeta_scan"]
@@ -164,7 +125,7 @@ if summary:
         rows.append({
             "Expression": c["name"],
             "Value": f"{c['value']:.6e}",
-            "delta / expr": f"{c['ratio']:.4f}",
+            "δ / expr": f"{c['ratio']:.4f}",
             "Nearest int": c.get("nearest_integer", ""),
             "Frac. part": f"{c.get('closeness_to_integer', ''):.4f}" if isinstance(c.get("closeness_to_integer"), (int, float)) and c["closeness_to_integer"] != float("inf") else "N/A",
         })

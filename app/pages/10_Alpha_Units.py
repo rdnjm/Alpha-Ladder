@@ -11,28 +11,6 @@ from decimal import Decimal, getcontext
 getcontext().prec = 50
 
 
-# ---------------------------------------------------------------------------
-# Custom CSS
-# ---------------------------------------------------------------------------
-st.markdown(
-    """
-    <style>
-    .unit-table {
-        font-family: 'Fira Mono', Consolas, monospace;
-        font-size: 1.05rem;
-    }
-    .converter-result {
-        background-color: #1a1d23;
-        border-left: 4px solid #34d399;
-        padding: 1.2rem;
-        border-radius: 0 8px 8px 0;
-        font-family: 'Fira Mono', monospace;
-        font-size: 1.1rem;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
 
 # ---------------------------------------------------------------------------
 # Sidebar
@@ -52,7 +30,7 @@ constants = render_sidebar()
 st.title("Alpha Units")
 st.markdown(
     "Natural unit system built on the fine-structure constant α, "
-    "the electron mass, and the speed of light."
+    "the electron mass mₑ, and the speed of light c."
 )
 st.divider()
 
@@ -152,9 +130,9 @@ def _express_powers_safe(si_value, unit_type):
 # ---------------------------------------------------------------------------
 st.subheader("Alpha Unit System")
 st.markdown(
-    "Base units defined in terms of alpha and electron properties. "
-    "Each unit is a combination of the classical electron radius, "
-    "electron mass, and the speed of light."
+    "Base units defined in terms of α and electron properties. "
+    "Each unit is a combination of the classical electron radius rₑ, "
+    "electron mass mₑ, and the speed of light c."
 )
 
 units = _get_units()
@@ -263,7 +241,7 @@ with col_conv2:
                     with col_p1:
                         st.metric(
                             label="Nearest αⁿ",
-                            value=f"α^{powers['nearest_power']}",
+                            value=f"α{powers['nearest_power']}",
                         )
                     with col_p2:
                         st.metric(
@@ -404,7 +382,7 @@ if units is not None:
                 "SI Value": fmt_decimal(item["si_value"], sig_figs=6),
                 "Unit Type": item["unit_type"].capitalize(),
                 "Alpha-Unit Value": fmt_decimal(alpha_val, sig_figs=6),
-                "Nearest αⁿ": f"α^{powers['nearest_power']}" if powers else "N/A",
+                "Nearest αⁿ": f"α{powers['nearest_power']}" if powers else "N/A",
                 "Exact Power": f"{powers['exact_power']:.3f}" if powers else "N/A",
                 "Residual (%)": f"{powers['residual_pct']:.2f}" if powers else "N/A",
             })
@@ -438,7 +416,7 @@ if units is not None:
     st.info(
         "Quantities with low residual percentages sit near exact α-power rungs, "
         "suggesting they may be naturally expressible in the α-unit system. "
-        "The electron mass and charge are exact by construction (residual = 0%)."
+        "The electron mass mₑ and charge e are exact by construction (residual = 0%)."
     )
 else:
     st.warning("Cannot compute notable conversions without the alpha unit system.")

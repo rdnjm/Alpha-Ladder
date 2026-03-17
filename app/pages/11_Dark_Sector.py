@@ -12,34 +12,6 @@ from decimal import Decimal, getcontext
 getcontext().prec = 50
 
 
-# ---------------------------------------------------------------------------
-# Custom CSS
-# ---------------------------------------------------------------------------
-st.markdown(
-    """
-    <style>
-    .dark-header {
-        font-family: 'Fira Mono', Consolas, monospace;
-        font-size: 1rem;
-    }
-    .dark-card {
-        background-color: #1a1d23;
-        border: 1px solid #2e3440;
-        border-radius: 8px;
-        padding: 1.2rem;
-        margin: 0.5rem 0;
-    }
-    .alps-step {
-        background-color: #1a1d23;
-        border-left: 3px solid #a78bfa;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
 
 # ---------------------------------------------------------------------------
 # Sidebar
@@ -219,7 +191,7 @@ with st.expander("Fuzzy Wave Visualizer -- Rung 10 Density Profile", expanded=Tr
                 mode="lines", fill="tozeroy",
                 line=dict(color="#a78bfa", width=2),
                 fillcolor="rgba(167, 139, 250, 0.2)",
-                name="|psi|^2",
+                name="|ψ|²",
             ))
             # Vertical dashed line at Earth-Moon distance
             fig.add_vline(
@@ -230,7 +202,7 @@ with st.expander("Fuzzy Wave Visualizer -- Rung 10 Density Profile", expanded=Tr
             fig.update_layout(
                 title="Fuzzy Dark Matter Wave Envelope",
                 xaxis_title="Distance (km)",
-                yaxis_title="|psi|^2",
+                yaxis_title="|ψ|²",
                 height=450,
             )
             fig = _apply_theme(fig)

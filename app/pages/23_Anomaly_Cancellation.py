@@ -10,52 +10,6 @@ import pandas as pd
 
 
 # ---------------------------------------------------------------------------
-# Custom CSS (matches Pages 16-22)
-# ---------------------------------------------------------------------------
-st.markdown(
-    """
-    <style>
-    .proof-card {
-        background-color: #1a1d23;
-        border: 1px solid #2e3440;
-        border-radius: 8px;
-        padding: 1.2rem;
-        margin: 0.5rem 0;
-    }
-    .formula-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #f59e0b;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    .theorem-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #34d399;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    .step-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #60a5fa;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    .warning-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #f87171;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
-
-# ---------------------------------------------------------------------------
 # Sidebar
 # ---------------------------------------------------------------------------
 import sys
@@ -246,7 +200,7 @@ if summary:
     # Groups table
     table_rows = []
     for g in group_scan["groups"]:
-        chain = " -> ".join(g["sm_embedding_chain"]) if g["sm_embedding_chain"] else "N/A"
+        chain = " \u2192 ".join(g["sm_embedding_chain"]) if g["sm_embedding_chain"] else "N/A"
         table_rows.append({
             "Group": g["name"],
             "Dim": g["dim"],
@@ -281,11 +235,11 @@ else:
         """
         <div class="formula-card">
         <b>Anomaly-free 6D gauge groups containing the SM:</b><br><br>
-        E8 x E8 (dim 496, from heterotic string)<br>
+        E8 × E8 (dim 496, from heterotic string)<br>
         SO(32) (dim 496, from Type I / heterotic)<br>
-        E7 x E7 (dim 266, from 6D SUGRA)<br>
-        E6 x E7 (dim 211, from 6D SUGRA)<br><br>
-        The raw SM group SU(3) x SU(2) x U(1) is NOT anomaly-free in 6D.
+        E7 × E7 (dim 266, from 6D SUGRA)<br>
+        E6 × E7 (dim 211, from 6D SUGRA)<br><br>
+        The raw SM group SU(3) × SU(2) × U(1) is NOT anomaly-free in 6D.
         </div>
         """,
         unsafe_allow_html=True,
@@ -347,8 +301,8 @@ else:
         """
         <div class="proof-card">
         <b>Key result:</b><br><br>
-        The G prediction from the phi^2/2 bridge derives entirely from the
-        gravity sector (EH + GB -> KK -> Brans-Dicke -> G). No gauge fields
+        The G prediction from the φ²/2 bridge derives entirely from the
+        gravity sector (EH + GB → KK → Brans-Dicke → G). No gauge fields
         or chiral matter enter the derivation. Anomaly cancellation constrains
         the matter sector but leaves the gravity sector -- and therefore the
         G prediction -- completely unchanged.

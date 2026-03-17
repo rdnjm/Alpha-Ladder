@@ -12,52 +12,6 @@ import pandas as pd
 
 
 # ---------------------------------------------------------------------------
-# Custom CSS (matches Pages 16-19)
-# ---------------------------------------------------------------------------
-st.markdown(
-    """
-    <style>
-    .proof-card {
-        background-color: #1a1d23;
-        border: 1px solid #2e3440;
-        border-radius: 8px;
-        padding: 1.2rem;
-        margin: 0.5rem 0;
-    }
-    .formula-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #f59e0b;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    .theorem-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #34d399;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    .step-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #60a5fa;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    .warning-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #f87171;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
-
-# ---------------------------------------------------------------------------
 # Sidebar
 # ---------------------------------------------------------------------------
 import sys
@@ -101,9 +55,9 @@ if _core_available:
 # ---------------------------------------------------------------------------
 st.title("Dark Sector Phenomenology")
 st.markdown(
-    "What role does the Alpha Ladder dilaton play in dark sector physics?  "
+    "What role does the Alpha Ladder dilaton play in dark sector physics? "
     "This page evaluates the dilaton against observational constraints on "
-    "dark matter, dark energy, and self-interacting dark matter.  The "
+    "dark matter, dark energy, and self-interacting dark matter. The "
     "honest result: the dilaton is a testable sub-mm fifth force, not a "
     "dark sector component."
 )
@@ -118,9 +72,9 @@ with col_m1:
     if _summary:
         mev = _summary.get("mev_analysis", {})
         m_meV = mev.get("m_phi_meV")
-        st.metric(label="m_phi", value=f"{m_meV:.1f} meV" if m_meV else "~7 meV")
+        st.metric(label="m_φ", value=f"{m_meV:.1f} meV" if m_meV else "~7 meV")
     else:
-        st.metric(label="m_phi", value="~7 meV")
+        st.metric(label="m_φ", value="~7 meV")
 with col_m2:
     st.metric(label="Dark matter", value="NO")
 with col_m3:
@@ -246,7 +200,7 @@ with st.expander("B. Relic Abundance", expanded=True):
 
         with col_b1:
             st.metric(
-                label="Omega_phi h^2",
+                label="Ω_φ h²",
                 value=fmt_decimal(Omega_h2, sig_figs=3) if Omega_h2 is not None else "N/A",
             )
         with col_b2:
@@ -265,9 +219,9 @@ with st.expander("B. Relic Abundance", expanded=True):
         overproduced = relic.get("overproduced", True)
         if overproduced:
             st.warning(
-                "The dilaton with f = M_Pl OVERPRODUCES dark matter.  "
+                "The dilaton with f = M_Pl OVERPRODUCES dark matter. "
                 "The relic abundance exceeds the observed value by many "
-                "orders of magnitude.  The dilaton is not a viable dark "
+                "orders of magnitude. The dilaton is not a viable dark "
                 "matter candidate via the misalignment mechanism unless "
                 "f is severely fine-tuned."
             )
@@ -329,7 +283,7 @@ with st.expander("C. Self-Interaction", expanded=True):
 
         with col_c1:
             st.metric(
-                label="sigma/m (cm^2/g)",
+                label="σ/m (cm²/g)",
                 value=fmt_decimal(sigma_over_m, sig_figs=3) if sigma_over_m is not None else "N/A",
             )
         with col_c2:
@@ -553,8 +507,8 @@ with st.expander("F. Framework Position", expanded=True):
             )
     else:
         st.info(
-            "The Alpha Ladder dilaton at a_0 = 30 um (m ~ 7 meV) is a testable "
-            "sub-mm fifth force, NOT a dark matter candidate.  The dark sector "
+            "The Alpha Ladder dilaton at a₀ = 30 um (m ≈ 7 meV) is a testable "
+            "sub-mm fifth force, NOT a dark matter candidate. The dark sector "
             "remains unexplained by this framework -- and that honesty is part "
             "of the theory's value."
         )

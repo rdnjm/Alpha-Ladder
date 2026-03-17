@@ -13,17 +13,23 @@ import plotly.graph_objects as go
 _DARK_THEME = dict(
     paper_bgcolor="#0e1117",
     plot_bgcolor="#1a1d23",
-    font=dict(family="Fira Mono, Consolas, monospace", color="#e0e0e0", size=12),
-    title_font=dict(size=16, color="#ffffff"),
+    font=dict(family="Source Sans 3, Segoe UI, sans-serif", color="#e0e0e0", size=12),
+    title_font=dict(family="Crimson Pro, Georgia, serif", size=16, color="#ffffff"),
     xaxis=dict(
-        gridcolor="#2e3440",
+        gridcolor="#262b33",
         zerolinecolor="#3b4252",
         tickfont=dict(family="Fira Mono, Consolas, monospace"),
+        showline=True,
+        linecolor="#3b4252",
+        linewidth=1,
     ),
     yaxis=dict(
-        gridcolor="#2e3440",
+        gridcolor="#262b33",
         zerolinecolor="#3b4252",
         tickfont=dict(family="Fira Mono, Consolas, monospace"),
+        showline=True,
+        linecolor="#3b4252",
+        linewidth=1,
     ),
     margin=dict(l=60, r=30, t=50, b=50),
 )
@@ -73,7 +79,7 @@ def ladder_chart(rungs_data):
 
     hover_texts = []
     for p, v, lbl in zip(powers, values, labels):
-        text = f"α^{p} = {v:.6e}"
+        text = f"α<sup>{p}</sup> = {v:.6e}"
         if lbl:
             text += f"<br>{lbl}"
         hover_texts.append(text)
@@ -334,7 +340,7 @@ def g_deadlock_scatter(measurements_data, G_prediction):
     fig.add_vline(
         x=G_prediction, line_dash="solid", line_color=_COLOR_HIGHLIGHT_21,
         line_width=2,
-        annotation_text=f"G_vacuum = {G_prediction:.5e}",
+        annotation_text=f"G_vac = {G_prediction:.5e}",
         annotation_position="top right",
         annotation_font_color=_COLOR_HIGHLIGHT_21,
     )
@@ -404,7 +410,7 @@ def screening_profile_chart(profile_data, G_codata):
     # G_vacuum horizontal reference
     fig.add_hline(
         y=G_vacuum, line_dash="dash", line_color=_COLOR_GREEN, line_width=1.5,
-        annotation_text=f"G_vacuum = {G_vacuum:.5e}",
+        annotation_text=f"G_vac = {G_vacuum:.5e}",
         annotation_position="bottom left",
         annotation_font_color=_COLOR_GREEN,
     )
@@ -564,7 +570,7 @@ def genus_scan_chart(scan_data, omega_target):
             x=labels,
             y=values,
             marker_color=colors,
-            hovertemplate="Genus %{x}<br>|lambda_GB| = %{y:.6f}<extra></extra>",
+            hovertemplate="Genus %{x}<br>|λ_GB| = %{y:.6f}<extra></extra>",
         )
     )
 
@@ -578,7 +584,7 @@ def genus_scan_chart(scan_data, omega_target):
     fig.update_layout(
         title="Required GB Coupling by Genus",
         xaxis_title="Genus",
-        yaxis_title="|lambda_GB|",
+        yaxis_title="|λ_GB|",
         height=400,
     )
 
@@ -621,14 +627,14 @@ def algebraic_chain_chart(chain_data):
     fig.add_hline(
         y=chain_data["omega_target"], line_dash="dash",
         line_color=_COLOR_GREEN, line_width=1,
-        annotation_text=f"omega = {chain_data['omega_target']:.8f}",
+        annotation_text=f"ω = {chain_data['omega_target']:.8f}",
         annotation_position="top right",
         annotation_font_color=_COLOR_GREEN,
     )
 
     fig.update_layout(
-        title="From Baseline omega to Target",
-        yaxis_title="omega",
+        title="From Baseline ω to Target",
+        yaxis_title="ω",
         height=400,
     )
 
@@ -684,13 +690,13 @@ def discriminant_scan_chart(scan_results):
     # Vertical reference line at squarefree_part = 5
     fig.add_vline(
         x=5, line_dash="dash", line_color=_COLOR_HIGHLIGHT_21, line_width=1.5,
-        annotation_text="sqrt(5) field",
+        annotation_text="√5 field",
         annotation_position="top right",
         annotation_font_color=_COLOR_HIGHLIGHT_21,
     )
 
     fig.update_layout(
-        title="Discriminant Scan: Which Dimensions Produce Q(sqrt(5))?",
+        title="Discriminant Scan: Which Dimensions Produce ℚ(√5)?",
         xaxis_title="Squarefree Part of Discriminant",
         yaxis_title="",
         height=400,
@@ -813,7 +819,7 @@ def algebraic_field_chart(closure_data):
                     size=13,
                 ),
                 align="left",
-                line_color="#2e3440",
+                line_color="#262b33",
             ),
             cells=dict(
                 values=[names, exact_forms, min_polys, values],
@@ -829,14 +835,14 @@ def algebraic_field_chart(closure_data):
                     size=12,
                 ),
                 align="left",
-                line_color="#2e3440",
+                line_color="#262b33",
             ),
         )
     )
 
     fig.update_layout(
-        title="Algebraic Closure: All Constants in Q(sqrt(5))",
-        title_font=dict(size=16, color="#ffffff"),
+        title="Algebraic Closure: All Constants in ℚ(√5)",
+        title_font=dict(family="Crimson Pro, Georgia, serif", size=16, color="#ffffff"),
         paper_bgcolor="#0e1117",
         margin=dict(l=20, r=20, t=50, b=20),
         height=350,
@@ -873,8 +879,8 @@ def ppn_profile_chart(ppn_profile_data):
         x=r_meters, y=gamma_dev,
         mode="lines",
         line=dict(color=_COLOR_HIGHLIGHT_21, width=2.5),
-        name="|gamma - 1|",
-        hovertemplate="r = %{x:.2e} m<br>|gamma-1| = %{y:.2e}<extra></extra>",
+        name="|γ − 1|",
+        hovertemplate="r = %{x:.2e} m<br>|γ−1| = %{y:.2e}<extra></extra>",
     ))
 
     # Cassini bound horizontal line
@@ -903,9 +909,9 @@ def ppn_profile_chart(ppn_profile_data):
         )
 
     fig.update_layout(
-        title="PPN Profile: |gamma - 1| vs Distance",
+        title="PPN Profile: |γ − 1| vs Distance",
         xaxis_title="Distance (m)",
-        yaxis_title="|gamma_PPN - 1|",
+        yaxis_title="|γ_PPN − 1|",
         xaxis_type="log",
         yaxis_type="log",
         height=400,
@@ -956,7 +962,7 @@ def fifth_force_exclusion_chart(dilaton_point, bounds):
             fill="tozeroy",
             fillcolor=region_colors[color_idx],
             name=bound["name"],
-            hovertemplate=f"{bound['name']}<br>log10(lambda) = %{{x:.1f}}<br>log10(alpha) = %{{y:.1f}}<extra></extra>",
+            hovertemplate=f"{bound['name']}<br>log₁₀(λ) = %{{x:.1f}}<br>log₁₀(α) = %{{y:.1f}}<extra></extra>",
         ))
 
     # Dilaton point
@@ -972,15 +978,15 @@ def fifth_force_exclusion_chart(dilaton_point, bounds):
             name="Dilaton",
             hovertemplate=(
                 f"Dilaton<br>"
-                f"log10(lambda) = {dilaton_point['log10_lambda_m']:.2f}<br>"
-                f"log10(alpha) = {dilaton_point['log10_alpha']:.2f}<extra></extra>"
+                f"log₁₀(λ) = {dilaton_point['log10_lambda_m']:.2f}<br>"
+                f"log₁₀(α) = {dilaton_point['log10_alpha']:.2f}<extra></extra>"
             ),
         ))
 
     fig.update_layout(
         title="Fifth-Force Exclusion Plot",
-        xaxis_title="log10(lambda / m)",
-        yaxis_title="log10(alpha)",
+        xaxis_title="log₁₀(λ / m)",
+        yaxis_title="log₁₀(α)",
         height=450,
         showlegend=True,
         legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
@@ -1018,7 +1024,7 @@ def screening_discrepancy_chart(discrepancy_data):
         orientation="h",
         marker_color=_COLOR_HIGHLIGHT_21,
         name="Tree-level",
-        hovertemplate=f"alpha_tree = {alpha_tree:.4e}<extra></extra>",
+        hovertemplate=f"α_tree = {alpha_tree:.4e}<extra></extra>",
     ))
 
     fig.add_trace(go.Bar(
@@ -1027,7 +1033,7 @@ def screening_discrepancy_chart(discrepancy_data):
         orientation="h",
         marker_color=_COLOR_GREEN,
         name="Empirical",
-        hovertemplate=f"alpha_empirical = {alpha_empirical:.4e}<extra></extra>",
+        hovertemplate=f"α_empirical = {alpha_empirical:.4e}<extra></extra>",
     ))
 
     fig.add_annotation(
@@ -1040,7 +1046,7 @@ def screening_discrepancy_chart(discrepancy_data):
 
     fig.update_layout(
         title="Screening Amplitude: Tree-level vs Empirical",
-        xaxis_title="log10(alpha)",
+        xaxis_title="log₁₀(α)",
         yaxis_title="",
         height=300,
         showlegend=False,
@@ -1084,14 +1090,14 @@ def literature_comparison_chart(literature_data):
                 fill_color=header_bg,
                 font=dict(family="Fira Mono, Consolas, monospace", color="#ffffff", size=12),
                 align="left",
-                line_color="#2e3440",
+                line_color="#262b33",
             ),
             cells=dict(
                 values=[frameworks, similarities, differences, references],
                 fill_color=cell_bg,
                 font=dict(family="Fira Mono, Consolas, monospace", color="#e0e0e0", size=11),
                 align="left",
-                line_color="#2e3440",
+                line_color="#262b33",
                 height=40,
             ),
         )
@@ -1099,7 +1105,7 @@ def literature_comparison_chart(literature_data):
 
     fig.update_layout(
         title="Literature Comparison",
-        title_font=dict(size=16, color="#ffffff"),
+        title_font=dict(family="Crimson Pro, Georgia, serif", size=16, color="#ffffff"),
         paper_bgcolor="#0e1117",
         margin=dict(l=20, r=20, t=50, b=20),
         height=350,
@@ -1141,7 +1147,7 @@ def casimir_potential_chart(potential_data):
         mode="lines",
         line=dict(color=_COLOR_DEFAULT, width=2, dash="dash"),
         name="V_classical (curvature)",
-        hovertemplate="sigma = %{x:.2f}<br>V_class = %{y:.4e}<extra></extra>",
+        hovertemplate="σ = %{x:.2f}<br>V_class = %{y:.4e}<extra></extra>",
     ))
 
     fig.add_trace(go.Scatter(
@@ -1149,7 +1155,7 @@ def casimir_potential_chart(potential_data):
         mode="lines",
         line=dict(color=_COLOR_HIGHLIGHT_10, width=2, dash="dot"),
         name="V_Casimir (1-loop)",
-        hovertemplate="sigma = %{x:.2f}<br>V_Casimir = %{y:.4e}<extra></extra>",
+        hovertemplate="σ = %{x:.2f}<br>V_Casimir = %{y:.4e}<extra></extra>",
     ))
 
     fig.add_trace(go.Scatter(
@@ -1157,7 +1163,7 @@ def casimir_potential_chart(potential_data):
         mode="lines",
         line=dict(color=_COLOR_HIGHLIGHT_21, width=3),
         name="V_total",
-        hovertemplate="sigma = %{x:.2f}<br>V_total = %{y:.4e}<extra></extra>",
+        hovertemplate="σ = %{x:.2f}<br>V_total = %{y:.4e}<extra></extra>",
     ))
 
     # Zero line
@@ -1165,7 +1171,7 @@ def casimir_potential_chart(potential_data):
 
     fig.update_layout(
         title="Effective Potential: Casimir Stabilization",
-        xaxis_title="sigma (breathing mode)",
+        xaxis_title="σ (breathing mode)",
         yaxis_title="V_eff (Planck units)",
         height=450,
         showlegend=True,
@@ -1219,15 +1225,15 @@ def kk_spectrum_chart(spectrum_data):
             marker_color=colors,
             text=[f"d={d}" for d in deg_show],
             textposition="auto",
-            hovertemplate="l=%{customdata}<br>m^2 = l(l+1) = %{y}<br>degeneracy = %{text}<extra></extra>",
+            hovertemplate="l=%{customdata}<br>m² = l(l+1) = %{y}<br>degeneracy = %{text}<extra></extra>",
             customdata=l_values,
         )
     )
 
     fig.update_layout(
-        title="KK Spectrum on S^2: Eigenvalues and Degeneracies",
+        title="KK Spectrum on S²: Eigenvalues and Degeneracies",
         xaxis_title="Angular momentum l",
-        yaxis_title="m^2 = l(l+1) / a^2",
+        yaxis_title="m² = l(l+1) / a²",
         height=400,
         showlegend=False,
     )
@@ -1272,7 +1278,7 @@ def flux_potential_chart(potential_data, min_location=None):
         mode="lines",
         line=dict(color=_COLOR_DEFAULT, width=2, dash="dash"),
         name="V_Casimir (A e^4s)",
-        hovertemplate="sigma = %{x:.2f}<br>V_Casimir = %{y:.4e}<extra></extra>",
+        hovertemplate="σ = %{x:.2f}<br>V_Casimir = %{y:.4e}<extra></extra>",
     ))
 
     # Curvature term (violet dotted)
@@ -1281,7 +1287,7 @@ def flux_potential_chart(potential_data, min_location=None):
         mode="lines",
         line=dict(color=_COLOR_HIGHLIGHT_10, width=2, dash="dot"),
         name="V_curvature (B e^2s)",
-        hovertemplate="sigma = %{x:.2f}<br>V_curvature = %{y:.4e}<extra></extra>",
+        hovertemplate="σ = %{x:.2f}<br>V_curvature = %{y:.4e}<extra></extra>",
     ))
 
     # Flux term (green dash-dot)
@@ -1290,7 +1296,7 @@ def flux_potential_chart(potential_data, min_location=None):
         mode="lines",
         line=dict(color=_COLOR_GREEN, width=2, dash="dashdot"),
         name="V_flux (C e^6s)",
-        hovertemplate="sigma = %{x:.2f}<br>V_flux = %{y:.4e}<extra></extra>",
+        hovertemplate="σ = %{x:.2f}<br>V_flux = %{y:.4e}<extra></extra>",
     ))
 
     # Total potential (amber solid thick)
@@ -1299,7 +1305,7 @@ def flux_potential_chart(potential_data, min_location=None):
         mode="lines",
         line=dict(color=_COLOR_HIGHLIGHT_21, width=3),
         name="V_total",
-        hovertemplate="sigma = %{x:.2f}<br>V_total = %{y:.4e}<extra></extra>",
+        hovertemplate="σ = %{x:.2f}<br>V_total = %{y:.4e}<extra></extra>",
     ))
 
     # Mark minimum with diamond marker
@@ -1321,7 +1327,7 @@ def flux_potential_chart(potential_data, min_location=None):
             ),
             name="Minimum",
             hovertemplate=(
-                f"sigma_0 = {min_location:.4f}<br>"
+                f"σ₀ = {min_location:.4f}<br>"
                 f"V_min = {V_at_min:.4e}<extra></extra>"
             ),
         ))
@@ -1331,7 +1337,7 @@ def flux_potential_chart(potential_data, min_location=None):
 
     fig.update_layout(
         title="Three-Term Potential: Casimir + Curvature + Flux",
-        xaxis_title="sigma (breathing mode)",
+        xaxis_title="σ (breathing mode)",
         yaxis_title="V_eff (Planck units)",
         height=450,
         showlegend=True,
@@ -1374,8 +1380,8 @@ def radius_mass_chart(mass_data, testable_window=None):
         x=a_0, y=m_phi,
         mode="lines",
         line=dict(color=_COLOR_HIGHLIGHT_21, width=2.5),
-        name="m_phi(a_0)",
-        hovertemplate="a_0 = %{x:.2e} m<br>m_phi = %{y:.2e} eV<extra></extra>",
+        name="m_φ(a₀)",
+        hovertemplate="a₀ = %{x:.2e} m<br>m_φ = %{y:.2e} eV<extra></extra>",
     ))
 
     # Testable window shaded band
@@ -1419,15 +1425,15 @@ def radius_mass_chart(mass_data, testable_window=None):
     # Vertical line: Eot-Wash 30 um bound (green)
     fig.add_vline(
         x=30e-6, line_dash="solid", line_color=_COLOR_GREEN, line_width=1.5,
-        annotation_text="Eot-Wash 30 um",
+        annotation_text="Eot-Wash 30 µm",
         annotation_position="top left",
         annotation_font_color=_COLOR_GREEN,
     )
 
     fig.update_layout(
         title="Dilaton Mass vs Internal Radius",
-        xaxis_title="a_0 (m)",
-        yaxis_title="m_phi (eV)",
+        xaxis_title="a₀ (m)",
+        yaxis_title="m_φ (eV)",
         xaxis_type="log",
         yaxis_type="log",
         height=500,
@@ -1467,7 +1473,7 @@ def flux_scan_chart(scan_data):
             x=[f"N={n}" for n in n_values],
             y=m_values,
             marker_color=_COLOR_HIGHLIGHT_21,
-            hovertemplate="N = %{customdata}<br>m_phi = %{y:.4e} eV<extra></extra>",
+            hovertemplate="N = %{customdata}<br>m_φ = %{y:.4e} eV<extra></extra>",
             customdata=n_values,
         )
     )
@@ -1475,7 +1481,7 @@ def flux_scan_chart(scan_data):
     fig.update_layout(
         title="Dilaton Mass vs Flux Quantum N",
         xaxis_title="Flux Quantum N",
-        yaxis_title="m_phi (eV)",
+        yaxis_title="m_φ (eV)",
         yaxis_type="log",
         height=400,
         showlegend=False,
@@ -1526,17 +1532,17 @@ def chameleon_profile_chart(profile_data):
         x=log_rho, y=log_m,
         mode="lines",
         line=dict(color=_COLOR_RED, width=2.5),
-        name="m_phi(rho)",
+        name="m_φ(ρ)",
         hovertemplate=(
-            "log10(rho) = %{x:.1f} kg/m^3<br>"
-            "log10(m_phi) = %{y:.1f} eV<extra></extra>"
+            "log₁₀(ρ) = %{x:.1f} kg/m³<br>"
+            "log₁₀(m_φ) = %{y:.1f} eV<extra></extra>"
         ),
     ))
 
     fig.update_layout(
         title="Chameleon Profile: Dilaton Mass vs Density",
-        xaxis_title="log10(rho / kg m^-3)",
-        yaxis_title="log10(m_phi / eV)",
+        xaxis_title="log₁₀(ρ / kg m⁻³)",
+        yaxis_title="log₁₀(m_φ / eV)",
         height=400,
         showlegend=True,
     )
@@ -1589,10 +1595,10 @@ def kk_truncation_chart(profile_data):
         x=log_rho, y=log_a,
         mode="lines",
         line=dict(color=_COLOR_DEFAULT, width=2.5),
-        name="a_eff(rho)",
+        name="a_eff(ρ)",
         hovertemplate=(
-            "log10(rho) = %{x:.1f} kg/m^3<br>"
-            "log10(a_eff) = %{y:.2f} m<extra></extra>"
+            "log₁₀(ρ) = %{x:.1f} kg/m³<br>"
+            "log₁₀(a_eff) = %{y:.2f} m<extra></extra>"
         ),
     ))
 
@@ -1603,15 +1609,15 @@ def kk_truncation_chart(profile_data):
         line_dash="dash",
         line_color=_COLOR_RED,
         line_width=2,
-        annotation_text="Eot-Wash 56 um",
+        annotation_text="Eot-Wash 56 µm",
         annotation_position="bottom right",
         annotation_font_color=_COLOR_RED,
     )
 
     fig.update_layout(
         title="Effective Internal Radius vs Density (red: Eot-Wash limit)",
-        xaxis_title="log10(rho / kg m^-3)",
-        yaxis_title="log10(a_eff / m)",
+        xaxis_title="log₁₀(ρ / kg m⁻³)",
+        yaxis_title="log₁₀(a_eff / m)",
         height=400,
         showlegend=True,
     )
@@ -1669,7 +1675,7 @@ def dark_sector_landscape_chart(landscape_data):
             orientation="h",
             marker_color=colors,
             hovertemplate=(
-                "log10(m_phi) = %{x:.0f} eV<br>"
+                "log₁₀(m_φ) = %{x:.0f} eV<br>"
                 "%{y}<extra></extra>"
             ),
         )
@@ -1677,7 +1683,7 @@ def dark_sector_landscape_chart(landscape_data):
 
     fig.update_layout(
         title="Dark Sector Landscape by Mass Scale",
-        xaxis_title="log10(m_phi / eV)",
+        xaxis_title="log₁₀(m_φ / eV)",
         yaxis_title="",
         height=max(300, 40 * len(entries)),
         showlegend=False,
@@ -1714,9 +1720,9 @@ def exclusion_plot_chart(exclusion_data):
         x=[-7, -1],
         y=[log_alpha, log_alpha],
         mode="lines",
-        name=f"Alpha Ladder (alpha = {al_alpha})",
+        name=f"Alpha Ladder (α = {al_alpha})",
         line=dict(color=_COLOR_RED, width=3, dash="solid"),
-        hovertemplate=f"alpha = {al_alpha}<extra></extra>",
+        hovertemplate=f"α = {al_alpha}<extra></extra>",
     ))
 
     # Experiment bounds (approximate regions)
@@ -1745,7 +1751,7 @@ def exclusion_plot_chart(exclusion_data):
                 textfont=dict(size=9),
                 hovertemplate=(
                     f"{exp['name']}<br>"
-                    f"log10(alpha_bound) = {log_ab:.1f}<extra></extra>"
+                    f"log₁₀(α_bound) = {log_ab:.1f}<extra></extra>"
                 ),
             ))
 
@@ -1762,8 +1768,8 @@ def exclusion_plot_chart(exclusion_data):
 
     fig.update_layout(
         title="Exclusion Plot: Alpha Ladder Prediction vs Experimental Bounds",
-        xaxis_title="log10(lambda / m)",
-        yaxis_title="log10(alpha)",
+        xaxis_title="log₁₀(λ / m)",
+        yaxis_title="log₁₀(α)",
         height=500,
         showlegend=True,
         legend=dict(font=dict(size=10)),
@@ -1805,7 +1811,7 @@ def signal_vs_distance_chart(signal_data):
         mode="lines",
         name="Yukawa signal",
         line=dict(color=_COLOR_RED, width=2),
-        hovertemplate="log10(r) = %{x:.2f}<br>signal = %{y:.2f}%<extra></extra>",
+        hovertemplate="log₁₀(r) = %{x:.2f}<br>signal = %{y:.2f}%<extra></extra>",
     ))
 
     # Sensitivity line at 1%
@@ -1831,8 +1837,8 @@ def signal_vs_distance_chart(signal_data):
 
     lambda_um = signal_data.get("lambda_m", 0) * 1e6
     fig.update_layout(
-        title=f"Yukawa Signal vs Distance (lambda = {lambda_um:.0f} um)",
-        xaxis_title="log10(r / m)",
+        title=f"Yukawa Signal vs Distance (λ = {lambda_um:.0f} µm)",
+        xaxis_title="log₁₀(r / m)",
         yaxis_title="Fractional deviation (%)",
         height=400,
         showlegend=True,
@@ -1953,13 +1959,13 @@ def radius_landscape_chart(landscape_data):
         textposition="top center",
         textfont=dict(size=9),
         marker=dict(size=12, color=colors),
-        hovertemplate="N = %{x}<br>log10(a_0/l_Pl) = %{y:.2f}<extra></extra>",
+        hovertemplate="N = %{x}<br>log₁₀(a₀/l_Pl) = %{y:.2f}<extra></extra>",
     ))
 
     fig.update_layout(
         title="Radius Landscape: Flux Quantum vs Stabilized Radius",
         xaxis_title="Flux Quantum N",
-        yaxis_title="log10(a_0 / l_Pl)",
+        yaxis_title="log₁₀(a₀ / l_Pl)",
         height=400,
         showlegend=False,
     )
@@ -2071,16 +2077,16 @@ def cc_scan_chart(scan_data):
         x=ns,
         y=log_vmins,
         mode="lines+markers",
-        name="log10(|V_min|)",
+        name="log₁₀(|V_min|)",
         line=dict(color=_COLOR_DEFAULT, width=2),
         marker=dict(size=8),
-        hovertemplate="N = %{x}<br>log10(|V_min|) = %{y:.2f}<extra></extra>",
+        hovertemplate="N = %{x}<br>log₁₀(|V_min|) = %{y:.2f}<extra></extra>",
     ))
 
     # Observed Lambda line at -122
     fig.add_hline(
         y=-122, line_dash="dash", line_color=_COLOR_RED, line_width=2,
-        annotation_text="Observed Lambda ~ 10^{-122}",
+        annotation_text="Observed Λ ≈ 10⁻¹²²",
         annotation_position="bottom right",
         annotation_font_color=_COLOR_RED,
     )
@@ -2088,7 +2094,7 @@ def cc_scan_chart(scan_data):
     fig.update_layout(
         title="Vacuum Energy vs Flux Quantum",
         xaxis_title="Flux Quantum N",
-        yaxis_title="log10(|V_min| / M_Pl^4)",
+        yaxis_title="log₁₀(|V_min| / M_Pl⁴)",
         height=400,
         showlegend=True,
     )
@@ -2440,7 +2446,7 @@ def sdc_lambda_chart(sdc_data):
         marker_color=colors,
         text=[f"{v:.4f}" for v in values],
         textposition="auto",
-        hovertemplate="%{y}<br>lambda = %{x:.4f}<extra></extra>",
+        hovertemplate="%{y}<br>λ = %{x:.4f}<extra></extra>",
     ))
 
     # SDC bound vertical line
@@ -2452,8 +2458,8 @@ def sdc_lambda_chart(sdc_data):
     )
 
     fig.update_layout(
-        title="Swampland Distance Conjecture: Lambda Rates",
-        xaxis_title="lambda (SDC rate)",
+        title="Swampland Distance Conjecture: λ Rates",
+        xaxis_title="λ (SDC rate)",
         yaxis_title="",
         height=300,
         showlegend=False,
@@ -2500,7 +2506,7 @@ def emergence_R_scan_chart(emergence_data):
         marker_color=colors,
         text=[f"{r:.2e}" for r in ratios],
         textposition="auto",
-        hovertemplate="%{x}<br>M_Pl^2 ratio = %{y:.3e}<extra></extra>",
+        hovertemplate="%{x}<br>M_Pl² ratio = %{y:.3e}<extra></extra>",
     ))
 
     # Match line at y=1
@@ -2512,9 +2518,9 @@ def emergence_R_scan_chart(emergence_data):
     )
 
     fig.update_layout(
-        title="Emergence: M_Pl^2 from KK Tower at Canonical Radii",
+        title="Emergence: M_Pl² from KK Tower at Canonical Radii",
         xaxis_title="",
-        yaxis_title="M_Pl^2 (predicted) / M_Pl^2 (measured)",
+        yaxis_title="M_Pl² (predicted) / M_Pl² (measured)",
         yaxis_type="log",
         height=450,
         showlegend=False,
@@ -2551,7 +2557,7 @@ def correction_series_chart(series_data):
     orders = [c["order"] for c in coefficients]
     coeff_abs = [abs(c["coefficient"]) for c in coefficients]
     residuals = [c["residual_after_ppm"] for c in coefficients]
-    x_labels = [f"alpha^{o}" for o in orders]
+    x_labels = [f"α^{o}" for o in orders]
 
     # Decide whether right axis should be log scale
     r_pos = [r for r in residuals if r > 0]
@@ -2623,7 +2629,7 @@ def correction_series_chart(series_data):
 
     fig.update_layout(
         title="Correction Series: Coefficients and Residual Convergence",
-        xaxis_title="Correction Order (alpha^k)",
+        xaxis_title="Correction Order (αᵏ)",
         height=480,
         showlegend=True,
         legend=dict(x=0.01, y=0.99, xanchor="left", yanchor="top",
@@ -2682,7 +2688,7 @@ def mu_offset_scan_chart(offset_data):
     fig.add_vline(x=-22, line_dash="dash", line_color="gray", line_width=1)
 
     fig.update_layout(
-        title="Residual (ppm) for alpha^24 * mu * (mu - k)",
+        title="Residual (ppm) for α²⁴ · μ · (μ − k)",
         xaxis_title="Residual (ppm)",
         height=400,
         showlegend=False,
@@ -2784,7 +2790,7 @@ def residual_scan_chart(scan_data):
     ))
 
     fig.update_layout(
-        title="Closest Composite Expressions to delta",
+        title="Closest Composite Expressions to δ",
         xaxis_title="Residual (ppm)",
         yaxis_title="",
         height=400,
@@ -2872,7 +2878,7 @@ def cw_potential_chart(scan_data):
         mode="lines",
         line=dict(color=_COLOR_DEFAULT, width=2, dash="dash"),
         name="V_CW",
-        hovertemplate="a_0 = %{x:.4e}<br>V_CW = %{y:.4e}<extra></extra>",
+        hovertemplate="a₀ = %{x:.4e}<br>V_CW = %{y:.4e}<extra></extra>",
     ))
 
     fig.add_trace(go.Scatter(
@@ -2880,7 +2886,7 @@ def cw_potential_chart(scan_data):
         mode="lines",
         line=dict(color=_COLOR_HIGHLIGHT_21, width=2, dash="dot"),
         name="V_flux_min",
-        hovertemplate="a_0 = %{x:.4e}<br>V_flux = %{y:.4e}<extra></extra>",
+        hovertemplate="a₀ = %{x:.4e}<br>V_flux = %{y:.4e}<extra></extra>",
     ))
 
     fig.add_trace(go.Scatter(
@@ -2888,7 +2894,7 @@ def cw_potential_chart(scan_data):
         mode="lines",
         line=dict(color=_COLOR_GREEN, width=3),
         name="V_total",
-        hovertemplate="a_0 = %{x:.4e}<br>V_total = %{y:.4e}<extra></extra>",
+        hovertemplate="a₀ = %{x:.4e}<br>V_total = %{y:.4e}<extra></extra>",
     ))
 
     # Mark minimum of V_total if it exists (not at boundary)
@@ -2905,7 +2911,7 @@ def cw_potential_chart(scan_data):
                 ),
                 name="Minimum",
                 hovertemplate=(
-                    f"a_0 = {a0[min_idx]:.4e}<br>"
+                    f"a₀ = {a0[min_idx]:.4e}<br>"
                     f"V_min = {V_total[min_idx]:.4e}<extra></extra>"
                 ),
             ))
@@ -2914,7 +2920,7 @@ def cw_potential_chart(scan_data):
 
     fig.update_layout(
         title="Coleman-Weinberg + Flux Potential vs Radius",
-        xaxis_title="a_0 (Planck units)",
+        xaxis_title="a₀ (Planck units)",
         yaxis_title="Effective Potential (Planck units)",
         xaxis=dict(type="log"),
         height=400,
@@ -2970,14 +2976,14 @@ def warped_potential_chart(warp_data):
             mode="lines",
             line=dict(color=color, width=2),
             name=f"eps = {eps}",
-            hovertemplate=f"eps = {eps}<br>" + "a_0 = %{x:.4e}<br>V = %{y:.4e}<extra></extra>",
+            hovertemplate=f"eps = {eps}<br>" + "a₀ = %{x:.4e}<br>V = %{y:.4e}<extra></extra>",
         ))
 
     fig.add_hline(y=0, line_dash="solid", line_color="#4c566a", line_width=1)
 
     fig.update_layout(
-        title="Warped S^2 Potential vs Radius",
-        xaxis_title="a_0 (Planck units)",
+        title="Warped S² Potential vs Radius",
+        xaxis_title="a₀ (Planck units)",
         yaxis_title="V_total (Planck units)",
         xaxis=dict(type="log"),
         height=400,
@@ -3023,7 +3029,7 @@ def orbifold_potential_chart(orbifold_data):
         mode="lines",
         line=dict(color=_COLOR_DEFAULT, width=2, dash="dash"),
         name="V_casimir",
-        hovertemplate="a_0 = %{x:.4e}<br>V_casimir = %{y:.4e}<extra></extra>",
+        hovertemplate="a₀ = %{x:.4e}<br>V_casimir = %{y:.4e}<extra></extra>",
     ))
 
     fig.add_trace(go.Scatter(
@@ -3031,7 +3037,7 @@ def orbifold_potential_chart(orbifold_data):
         mode="lines",
         line=dict(color=_COLOR_HIGHLIGHT_21, width=2, dash="dot"),
         name="V_brane",
-        hovertemplate="a_0 = %{x:.4e}<br>V_brane = %{y:.4e}<extra></extra>",
+        hovertemplate="a₀ = %{x:.4e}<br>V_brane = %{y:.4e}<extra></extra>",
     ))
 
     fig.add_trace(go.Scatter(
@@ -3039,7 +3045,7 @@ def orbifold_potential_chart(orbifold_data):
         mode="lines",
         line=dict(color=_COLOR_GREEN, width=3),
         name="V_total",
-        hovertemplate="a_0 = %{x:.4e}<br>V_total = %{y:.4e}<extra></extra>",
+        hovertemplate="a₀ = %{x:.4e}<br>V_total = %{y:.4e}<extra></extra>",
     ))
 
     # Mark minimum of V_total if it exists (not at boundary)
@@ -3056,20 +3062,20 @@ def orbifold_potential_chart(orbifold_data):
                 ),
                 name="Minimum",
                 hovertemplate=(
-                    f"a_0 = {a0[min_idx]:.4e}<br>"
+                    f"a₀ = {a0[min_idx]:.4e}<br>"
                     f"V_min = {V_total[min_idx]:.4e}<extra></extra>"
                 ),
             ))
 
     fig.add_hline(y=0, line_dash="solid", line_color="#4c566a", line_width=1)
 
-    title = "Orbifold S^2/Z_2 Potential vs Radius"
+    title = "Orbifold S²/ℤ₂ Potential vs Radius"
     if T_0 is not None:
         title += f" (T_0 = {T_0:.4e})"
 
     fig.update_layout(
         title=title,
-        xaxis_title="a_0 (Planck units)",
+        xaxis_title="a₀ (Planck units)",
         yaxis_title="Effective Potential (Planck units)",
         xaxis=dict(type="log"),
         height=400,

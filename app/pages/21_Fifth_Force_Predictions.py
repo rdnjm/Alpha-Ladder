@@ -12,52 +12,6 @@ import pandas as pd
 
 
 # ---------------------------------------------------------------------------
-# Custom CSS (matches Pages 16-20)
-# ---------------------------------------------------------------------------
-st.markdown(
-    """
-    <style>
-    .proof-card {
-        background-color: #1a1d23;
-        border: 1px solid #2e3440;
-        border-radius: 8px;
-        padding: 1.2rem;
-        margin: 0.5rem 0;
-    }
-    .formula-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #f59e0b;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    .theorem-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #34d399;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    .step-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #60a5fa;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    .warning-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #f87171;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
-
-# ---------------------------------------------------------------------------
 # Sidebar
 # ---------------------------------------------------------------------------
 import sys
@@ -102,8 +56,8 @@ if _core_available:
 st.title("Fifth Force Predictions")
 st.markdown(
     "Where experimentalists should look for the Alpha Ladder's falsifiable "
-    "prediction: a Yukawa fifth force with coupling alpha = 0.618 "
-    "(fixed by theory) and range lambda = a_0 (internal radius)."
+    "prediction: a Yukawa fifth force with coupling α = 0.618 "
+    "(fixed by theory) and range λ = a₀ (internal radius)."
 )
 st.divider()
 
@@ -122,7 +76,7 @@ if summary:
 
     with col_a1:
         st.metric(
-            label="Coupling alpha",
+            label="Coupling α",
             value="0.618",
             delta="Fixed by theory",
         )
@@ -141,13 +95,13 @@ if summary:
 else:
     st.info(
         "The Alpha Ladder predicts a Yukawa fifth force with coupling "
-        "alpha = 0.618 (fixed by theory).  The range lambda = a_0 is "
-        "the only free parameter.  The surviving window is approximately "
+        "α = 0.618 (fixed by theory). The range λ = a₀ is "
+        "the only free parameter. The surviving window is approximately "
         "30 - 71 um."
     )
     col_a1, col_a2, col_a3 = st.columns(3)
     with col_a1:
-        st.metric(label="Coupling alpha", value="0.618", delta="Fixed by theory")
+        st.metric(label="Coupling α", value="0.618", delta="Fixed by theory")
     with col_a2:
         st.metric(label="Survival Window", value="30 - 71 um")
     with col_a3:
@@ -164,10 +118,10 @@ st.markdown(
     """
     <div class="step-card">
     <b>Interpretation:</b> The Alpha Ladder predicts a horizontal line
-    at alpha = 0.618 in the standard exclusion plot.  Experiments that
-    reach below this line exclude the corresponding lambda range.
-    Any experiment with alpha_bound &lt; 0.618 at some lambda rules out
-    that value of a_0.
+    at α = 0.618 in the standard exclusion plot. Experiments that
+    reach below this line exclude the corresponding λ range.
+    Any experiment with α_bound &lt; 0.618 at some λ rules out
+    that value of a₀.
     </div>
     """,
     unsafe_allow_html=True,
@@ -230,10 +184,10 @@ else:
         """
         <div class="formula-card">
         <b>Exclusion map (summary):</b><br><br>
-        Eot-Wash 2006 excludes a_0 &gt; ~71 um.  Lunar laser ranging and
-        Cassini PPN exclude a_0 at solar-system scales.  Casimir experiments
-        do not reach alpha = 0.618 at any lambda due to their much higher
-        alpha bounds.  The survival window is approximately 30 - 71 um.
+        Eot-Wash 2006 excludes a₀ &gt; ~71 um. Lunar laser ranging and
+        Cassini PPN exclude a₀ at solar-system scales. Casimir experiments
+        do not reach α = 0.618 at any λ due to their much higher
+        α bounds. The survival window is approximately 30 - 71 um.
         </div>
         """,
         unsafe_allow_html=True,
@@ -297,11 +251,11 @@ else:
     st.markdown(
         """
         <div class="theorem-card">
-        <b>Eot-Wash signal (a_0 = 30 um):</b><br><br>
-        At a_0 = 30 um, the predicted Yukawa deviation is ~11% at the
-        52 um gap distance.  Current Eot-Wash sensitivity is ~1%.
-        The signal is ~11x the current sensitivity -- easily detectable
-        if a_0 falls in this range.
+        <b>Eot-Wash signal (a₀ = 30 um):</b><br><br>
+        At a₀ = 30 um, the predicted Yukawa deviation is ≈11% at the
+        52 um gap distance. Current Eot-Wash sensitivity is ≈1%.
+        The signal is ≈11x the current sensitivity -- easily detectable
+        if a₀ falls in this range.
         </div>
         """,
         unsafe_allow_html=True,
@@ -360,7 +314,7 @@ else:
     st.markdown(
         """
         <div class="warning-card">
-        <b>Casimir vs Yukawa (a_0 = 30 um):</b><br><br>
+        <b>Casimir vs Yukawa (a₀ = 30 um):</b><br><br>
         The Casimir pressure dominates the Yukawa pressure by many orders
         of magnitude.  Casimir experiments are NOT the right approach for
         detecting this fifth force.
@@ -424,8 +378,8 @@ else:
         """
         <div class="theorem-card">
         <b>Discovery reach (summary):</b><br><br>
-        The optimal signal for any experiment is alpha * 2/e = 45.5% when
-        lambda = gap distance.  Eot-Wash torsion balance experiments are
+        The optimal signal for any experiment is α × 2/e = 45.5% when
+        λ = gap distance. Eot-Wash torsion balance experiments are
         the most promising because they directly measure gravitational
         forces without Casimir backgrounds and operate at gap distances
         (30-52 um) overlapping the surviving a_0 window.
@@ -457,11 +411,11 @@ else:
         <div class="proof-card">
         <b>Honest assessment:</b><br><br>
         The Alpha Ladder's fifth force prediction is unusually sharp:
-        alpha is fixed at 0.618, not a free parameter.  The only freedom
-        is a_0 (internal radius), which sets lambda.  Current Eot-Wash data
-        already excludes a_0 &gt; ~71 um.  The surviving window [30, 71] um
+        α is fixed at 0.618, not a free parameter. The only freedom
+        is a₀ (internal radius), which sets λ. Current Eot-Wash data
+        already excludes a₀ &gt; ~71 um. The surviving window [30, 71] um
         is accessible to next-generation short-range gravity experiments.
-        If no Yukawa deviation is found at alpha = 0.618 for any lambda
+        If no Yukawa deviation is found at α = 0.618 for any λ
         in this window, the framework is falsified.
         </div>
         """,
@@ -475,9 +429,9 @@ st.markdown(
     <div class="theorem-card">
     <b>Conclusion:</b><br><br>
     The Alpha Ladder framework is falsifiable in a specific, narrow window.
-    The coupling alpha = 0.618 is not a free parameter -- it is derived
-    from the Brans-Dicke parameter omega via the phi-squared bridge.
-    The only undetermined quantity is a_0, which sets the Yukawa range.
+    The coupling α = 0.618 is not a free parameter -- it is derived
+    from the Brans-Dicke parameter ω via the φ-squared bridge.
+    The only undetermined quantity is a₀, which sets the Yukawa range.
     Next-generation Eot-Wash experiments can close the surviving window
     and either confirm or rule out the framework in the sub-mm regime.
     </div>

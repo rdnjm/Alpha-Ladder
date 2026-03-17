@@ -5,52 +5,6 @@ import pandas as pd
 
 
 # ---------------------------------------------------------------------------
-# Custom CSS (matches Pages 16-28)
-# ---------------------------------------------------------------------------
-st.markdown(
-    """
-    <style>
-    .proof-card {
-        background-color: #1a1d23;
-        border: 1px solid #2e3440;
-        border-radius: 8px;
-        padding: 1.2rem;
-        margin: 0.5rem 0;
-    }
-    .formula-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #f59e0b;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    .theorem-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #34d399;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    .step-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #60a5fa;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    .warning-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #f87171;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
-
-# ---------------------------------------------------------------------------
 # Sidebar
 # ---------------------------------------------------------------------------
 import sys
@@ -152,8 +106,8 @@ else:
         <div class="step-card">
         <b>Key finding:</b><br><br>
         Several independent lines of research have explored power-law relationships
-        between coupling constants. The Alpha Ladder's prediction G = alpha^24 * mu^2
-        (or its mu-structure refinement) is consistent with -- but more precise than --
+        between coupling constants. The Alpha Ladder's prediction G = α²⁴ × μ²
+        (or its μ-structure refinement) is consistent with -- but more precise than --
         these earlier observations.
         </div>
         """,
@@ -171,7 +125,7 @@ st.markdown(
     """
     <div class="formula-card">
     <b>Beck's formula:</b><br><br>
-    Lambda = (G^2 / hbar^4) * (m_e / alpha)^6
+    Λ = (G² / ℏ⁴) × (mₑ / α)⁶
     </div>
     """,
     unsafe_allow_html=True,
@@ -187,7 +141,7 @@ if summary:
         lambda_beck = beck.get("lambda_beck")
         st.metric(
             label="Lambda_beck",
-            value=f"{float(lambda_beck):.2e}" if lambda_beck is not None else "~4.4e-66 eV^4",
+            value=f"{float(lambda_beck):.2e}" if lambda_beck is not None else "≈4.4e-66 eV⁴",
         )
 
     with col_b2:
@@ -229,8 +183,8 @@ else:
         <div class="theorem-card">
         <b>Connection to Alpha Ladder:</b><br><br>
         Both Beck and the Alpha Ladder express fundamental constants as power laws
-        of alpha and m_e. Beck's cosmological constant formula uses G^2 and (m_e/alpha)^6,
-        while the Alpha Ladder derives G itself from alpha^24 and mu^2. These are
+        of α and mₑ. Beck's cosmological constant formula uses G² and (mₑ/α)⁶,
+        while the Alpha Ladder derives G itself from α²⁴ and μ². These are
         complementary approaches to the same underlying structure of coupling
         constant relationships.
         </div>
@@ -249,7 +203,7 @@ st.markdown(
     """
     <div class="formula-card">
     <b>Hierarchy bound:</b><br><br>
-    alpha_G / alpha &lt;= 10^{-34}
+    α_G / α &lt;= 10⁻³⁴
     </div>
     """,
     unsafe_allow_html=True,
@@ -264,7 +218,7 @@ if summary:
     with col_c1:
         log_ratio = alex.get("log10_alpha_g_over_alpha")
         st.metric(
-            label="log10(alpha_g / alpha)",
+            label="log₁₀(α_g / α)",
             value=f"{log_ratio:.1f}" if log_ratio is not None else "~-42",
         )
 
@@ -299,7 +253,7 @@ else:
     col_c1, col_c2, col_c3 = st.columns(3)
 
     with col_c1:
-        st.metric(label="log10(alpha_g / alpha)", value="~-42")
+        st.metric(label="log₁₀(α_g / α)", value="≈-42")
 
     with col_c2:
         st.metric(label="Satisfies Bound", value="Yes")
@@ -313,8 +267,8 @@ else:
         """
         <div class="theorem-card">
         <b>Connection to Alpha Ladder:</b><br><br>
-        Our alpha_g / alpha ~ 10^{-42}, well within the 10^{-34} bound. The Alpha
-        Ladder's hierarchy formula alpha_g = alpha^24 * mu^2 automatically satisfies
+        Our α_g / α ≈ 10⁻⁴², well within the 10⁻³⁴ bound. The Alpha
+        Ladder's hierarchy formula α_g = α²⁴ × μ² automatically satisfies
         this bound with a margin of ~8 orders of magnitude, providing a concrete
         realization of the Alexander-Mersini-Houghton inequality.
         </div>
@@ -333,7 +287,7 @@ st.markdown(
     """
     <div class="formula-card">
     <b>Eaves' observation:</b><br><br>
-    ln(V_e / V_P) ~ 1/alpha ~ 137
+    ln(V_e / V_P) ≈ 1/α ≈ 137
     </div>
     """,
     unsafe_allow_html=True,
@@ -355,7 +309,7 @@ if summary:
     with col_d2:
         alpha_inv = eaves.get("alpha_inverse")
         st.metric(
-            label="1/alpha",
+            label="1/α",
             value=f"{alpha_inv:.4f}" if alpha_inv is not None else "~137.036",
         )
 
@@ -386,7 +340,7 @@ else:
         st.metric(label="ln(V_e / V_P)", value="~136.3")
 
     with col_d2:
-        st.metric(label="1/alpha", value="~137.036")
+        st.metric(label="1/α", value="≈137.036")
 
     with col_d3:
         st.metric(label="Fractional Difference", value="~0.005")
@@ -398,10 +352,10 @@ else:
         <div class="step-card">
         <b>Connection to Alpha Ladder:</b><br><br>
         Eaves observes that the logarithm of the electron-to-Planck volume ratio
-        is approximately 1/alpha. The Alpha Ladder provides an algebraic explanation:
-        the hierarchy formula alpha_g = alpha^24 * mu^2 implies that logarithmic
+        is approximately 1/α. The Alpha Ladder provides an algebraic explanation:
+        the hierarchy formula α_g = α²⁴ × μ² implies that logarithmic
         ratios of fundamental scales are naturally expressed as integer multiples
-        of ln(alpha).
+        of ln(α).
         </div>
         """,
         unsafe_allow_html=True,
@@ -419,7 +373,7 @@ st.markdown(
     <div class="step-card">
     <b>Methodological comparison:</b> Blau, Visser, and Wipf use zeta function
     regularization for quantum fields on Kaluza-Klein backgrounds. The Alpha Ladder
-    uses the same spectral zeta method for the graviton tower on S^2.
+    uses the same spectral zeta method for the graviton tower on S².
     </div>
     """,
     unsafe_allow_html=True,
@@ -435,7 +389,7 @@ if summary:
         our_result = bvw.get("our_result", "")
         st.metric(
             label="Our Result",
-            value=str(our_result) if our_result else "zeta_{S^2}(-1/2) = -0.25",
+            value=str(our_result) if our_result else "ζ_{S²}(-1/2) = -0.25",
         )
 
     with col_e2:
@@ -475,7 +429,7 @@ else:
     col_e1, col_e2 = st.columns(2)
 
     with col_e1:
-        st.metric(label="Our Result", value="zeta_{S^2}(-1/2) = -0.25")
+        st.metric(label="Our Result", value="ζ_{S²}(-1/2) = -0.25")
 
     with col_e2:
         st.metric(label="Polynomial Verified", value="Yes")
@@ -486,10 +440,10 @@ else:
         """
         <div class="theorem-card">
         <b>Methodological agreement:</b><br><br>
-        Our spectral zeta calculation zeta_{S^2}(-1) = 0 is consistent with
+        Our spectral zeta calculation ζ_{S²}(-1) = 0 is consistent with
         the Blau-Visser-Wipf framework for zeta function regularization on
         compact internal spaces. Their general formalism validates the specific
-        technique we apply to the S^2 graviton tower.
+        technique we apply to the S² graviton tower.
         </div>
         """,
         unsafe_allow_html=True,
@@ -520,7 +474,7 @@ st.markdown(
     """
     <div class="formula-card">
     <b>Large number:</b><br><br>
-    N_ED = alpha / alpha_g ~ 10^{42}
+    N_ED = α / α_g ≈ 10⁴²
     </div>
     """,
     unsafe_allow_html=True,
@@ -585,9 +539,9 @@ else:
         <div class="theorem-card">
         <b>Alpha Ladder explanation:</b><br><br>
         The Alpha Ladder replaces the large number "coincidence" with a derivable
-        power law. From alpha_g = alpha^24 * mu^2, we get N_ED = alpha / alpha_g
-        = alpha^{-23} / mu^2. The "mysterious" factor of 10^{42} is simply
-        alpha^{-23} / mu^2 -- a direct consequence of the hierarchy formula,
+        power law. From α_g = α²⁴ × μ², we get N_ED = α / α_g
+        = α⁻²³ / μ². The "mysterious" factor of 10⁴² is simply
+        α⁻²³ / μ² -- a direct consequence of the hierarchy formula,
         not a coincidence requiring explanation.
         </div>
         """,
@@ -625,7 +579,7 @@ else:
         methods validated by Blau-Visser-Wipf.<br><br>
         COMPLEMENTARY: Beck's cosmological constant formula and Eaves' logarithmic
         observation both express coupling constant relationships as power laws of
-        alpha, consistent with the Alpha Ladder's approach. These are independent
+        α, consistent with the Alpha Ladder's approach. These are independent
         observations that point toward the same underlying structure.<br><br>
         HONEST LIMITATION: Consistency with published work does not constitute
         proof. The Alpha Ladder makes stronger claims (exact integer exponents,

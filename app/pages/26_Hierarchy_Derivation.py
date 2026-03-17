@@ -11,52 +11,6 @@ import pandas as pd
 
 
 # ---------------------------------------------------------------------------
-# Custom CSS (matches Pages 16-25)
-# ---------------------------------------------------------------------------
-st.markdown(
-    """
-    <style>
-    .proof-card {
-        background-color: #1a1d23;
-        border: 1px solid #2e3440;
-        border-radius: 8px;
-        padding: 1.2rem;
-        margin: 0.5rem 0;
-    }
-    .formula-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #f59e0b;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    .theorem-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #34d399;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    .step-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #60a5fa;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    .warning-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #f87171;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
-
-# ---------------------------------------------------------------------------
 # Sidebar
 # ---------------------------------------------------------------------------
 import sys
@@ -100,9 +54,9 @@ if _core_available:
 # ---------------------------------------------------------------------------
 st.title("Hierarchy Derivation")
 st.markdown(
-    "The formula G = alpha^24 * m_p^2 * hbar*c / m_e^4 reproduces the "
+    "The formula G = α²⁴ × mₚ² × ℏc / mₑ⁴ reproduces the "
     "gravitational constant to 688 ppm with zero fitted parameters. "
-    "The refined formula with sqrt(phi)*(1-alpha) offset gives -0.31 ppm "
+    "The refined formula with √φ×(1-α) offset gives -0.31 ppm "
     "(see Mu Structure page)."
 )
 st.divider()
@@ -119,7 +73,7 @@ if summary:
 
     with col_a1:
         st.metric(
-            label="Exponent (d*D)",
+            label="Exponent (d×D)",
             value=str(basics.get("exponent", 24)),
         )
 
@@ -135,7 +89,7 @@ if summary:
         mu_val = basics.get("mu")
         mu_str = f"{mu_val:.2f}" if mu_val is not None else "~1836"
         st.metric(
-            label="mu = m_p / m_e",
+            label="μ = mₚ / mₑ",
             value=mu_str,
         )
 
@@ -143,7 +97,7 @@ if summary:
 
     formula_text = basics.get(
         "formula_latex",
-        "alpha_g = alpha^{d*D} * mu^n = alpha^24 * mu^2"
+        "α_g = α^(d×D) × μⁿ = α²⁴ × μ²"
     )
     st.markdown(
         f"""
@@ -151,8 +105,8 @@ if summary:
         <b>The hierarchy formula:</b><br><br>
         {formula_text}<br><br>
         With d=4 spacetime dimensions, n=2 extra dimensions, D=6 total dimensions.
-        Zero fitted parameters. Residual ~688 ppm.<br>
-        The refined formula alpha^24 * mu * (mu - sqrt(phi)*(1-alpha)) gives -0.31 ppm.
+        Zero fitted parameters. Residual ≈688 ppm.<br>
+        The refined formula α²⁴ × μ × (μ - √φ×(1-α)) gives -0.31 ppm.
         </div>
         """,
         unsafe_allow_html=True,
@@ -161,13 +115,13 @@ else:
     col_a1, col_a2, col_a3 = st.columns(3)
 
     with col_a1:
-        st.metric(label="Exponent (d*D)", value="24")
+        st.metric(label="Exponent (d×D)", value="24")
 
     with col_a2:
-        st.metric(label="Residual", value="~688 ppm")
+        st.metric(label="Residual", value="≈688 ppm")
 
     with col_a3:
-        st.metric(label="mu = m_p / m_e", value="~1836")
+        st.metric(label="μ = mₚ / mₑ", value="≈1836")
 
     st.markdown("")
 
@@ -175,10 +129,10 @@ else:
         """
         <div class="formula-card">
         <b>The hierarchy formula:</b><br><br>
-        alpha_g = alpha^{d*D} * mu^n = alpha^24 * mu^2<br><br>
+        α_g = α^(d×D) × μⁿ = α²⁴ × μ²<br><br>
         With d=4 spacetime dimensions, n=2 extra dimensions, D=6 total dimensions.
-        Zero fitted parameters. Residual ~688 ppm.<br>
-        The refined formula alpha^24 * mu * (mu - sqrt(phi)*(1-alpha)) gives -0.31 ppm.
+        Zero fitted parameters. Residual ≈688 ppm.<br>
+        The refined formula α²⁴ × μ × (μ - √φ×(1-α)) gives -0.31 ppm.
         </div>
         """,
         unsafe_allow_html=True,
@@ -242,7 +196,7 @@ else:
         <b>Dimension scan:</b><br><br>
         Scanning all integer pairs (d, n) with d in [3..11] and n in [1..7]:<br>
         only (d=4, n=2) yields sub-1000 ppm agreement with G_observed.<br><br>
-        The exponent d*D = 4*6 = 24 is uniquely selected by the data.
+        The exponent d×D = 4×6 = 24 is uniquely selected by the data.
         No fitted parameters are involved -- the integers come from
         spacetime and compactification geometry alone.
         </div>
@@ -300,7 +254,7 @@ else:
         In standard Kaluza-Klein, G_4 ~ G_D / V_n where V_n is the
         volume of the compact space. This gives G ~ (M_Pl^{2-D}) * R^n.
         The volume suppression produces n powers of the compactification
-        radius, not d*D = 24 powers of alpha. The exponent structure
+        radius, not d×D = 24 powers of α. The exponent structure
         does not match.
         </div>
         """,
@@ -564,17 +518,17 @@ else:
         """
         <div class="formula-card">
         <b>Residual analysis:</b><br><br>
-        The 688 ppm residual between alpha^24 * mu^2 and G_observed / G_natural
+        The 688 ppm residual between α²⁴ × μ² and G_observed / G_natural
         is small but nonzero. Possible sources of the residual:<br><br>
         - Radiative corrections (loop effects at the compactification scale)<br>
         - Threshold corrections from massive KK modes<br>
         - Higher-order terms in the alpha expansion<br>
         - Gauss-Bonnet or curvature-squared corrections to the action<br>
-        - Running of alpha and mu between laboratory and compactification scales
+        - Running of α and μ between laboratory and compactification scales
         <br><br>
-        <b>Resolution:</b> The corrected bridge formula phi^2/2 * (1 + 3*alpha^2 + (phi/2)*alpha^3)
-        accounts for the 688 ppm residual, reducing it to -0.33 ppm. The mu-structure
-        formula alpha^24 * mu * (mu - sqrt(phi)*(1-alpha)) gives -0.31 ppm. Both are
+        <b>Resolution:</b> The corrected bridge formula φ²/2 × (1 + 3α² + (φ/2)α³)
+        accounts for the 688 ppm residual, reducing it to -0.33 ppm. The μ-structure
+        formula α²⁴ × μ × (μ - √φ×(1-α)) gives -0.31 ppm. Both are
         proven to be the same identity (see Mu Tension page).
         </div>
         """,
@@ -929,9 +883,9 @@ else:
         """
         <div class="warning-card">
         <b>mu exponent problem:</b><br><br>
-        One-loop power counting produces alpha_g proportional to m_e^2,
-        which gives mu^(-2) rather than the required mu^(+2). The sign
-        of the mu exponent is wrong, indicating that naive one-loop
+        One-loop power counting produces α_g proportional to mₑ²,
+        which gives μ⁻² rather than the required μ⁺². The sign
+        of the μ exponent is wrong, indicating that naive one-loop
         KK power counting cannot reproduce the empirical formula.
         </div>
         """,
@@ -945,9 +899,9 @@ else:
         <div class="warning-card">
         <b>Honest assessment (works = False):</b><br><br>
         One-loop KK power counting gets the parametric scaling wrong:
-        it produces mu^(-2) instead of mu^(+2). No choice of cutoff
+        it produces μ⁻² instead of μ⁺². No choice of cutoff
         or compactification radius fixes this sign. The approach fails
-        to reproduce alpha^24 * mu^2.
+        to reproduce α²⁴ × μ².
         </div>
         """,
         unsafe_allow_html=True,
@@ -977,14 +931,14 @@ else:
         """
         <div class="proof-card">
         <b>Overall assessment:</b><br><br>
-        The formula alpha_g = alpha^24 * mu^2 is a striking numerical fact:
+        The formula α_g = α²⁴ × μ² is a striking numerical fact:
         it reproduces G to 688 ppm with zero fitted parameters, and (d=4, n=2)
         is uniquely selected among all integer dimension pairs.<br><br>
-        UPDATE: The refined formula alpha^24 * mu * (mu - sqrt(phi)*(1-alpha))
+        UPDATE: The refined formula α²⁴ × μ × (μ - √φ×(1-α))
         gives -0.31 ppm (see Mu Structure page). Dimension uniqueness is now proven
         (see Dimension Uniqueness page): d=4, D=6 is the only solution satisfying
         all three constraints (exponent, volume cancellation, vacuum polynomial).
-        The (1-alpha) correction is derived from S^2 volume cancellation and verified
+        The (1-α) correction is derived from S² volume cancellation and verified
         by explicit Feynman diagram (see Feynman Diagram page).<br><br>
         The 688 ppm formula on this page represents the leading-order term;
         the complete formula with radiative corrections achieves sub-ppm precision.

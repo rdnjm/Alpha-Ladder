@@ -5,52 +5,6 @@ import pandas as pd
 
 
 # ---------------------------------------------------------------------------
-# Custom CSS (matches Pages 16-29)
-# ---------------------------------------------------------------------------
-st.markdown(
-    """
-    <style>
-    .proof-card {
-        background-color: #1a1d23;
-        border: 1px solid #2e3440;
-        border-radius: 8px;
-        padding: 1.2rem;
-        margin: 0.5rem 0;
-    }
-    .formula-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #f59e0b;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    .theorem-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #34d399;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    .step-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #60a5fa;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    .warning-card {
-        background-color: #1a1d23;
-        border-left: 3px solid #f87171;
-        padding: 0.8rem 1rem;
-        margin: 0.4rem 0;
-        border-radius: 0 8px 8px 0;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
-
-# ---------------------------------------------------------------------------
 # Sidebar
 # ---------------------------------------------------------------------------
 import sys
@@ -137,25 +91,25 @@ else:
     fallback_predictions = [
         {
             "Prediction": "G to sub-ppb precision",
-            "Value": "6.674298e-11 m^3 kg^-1 s^-2",
+            "Value": "6.674298e-11 m³ kg⁻¹ s⁻²",
             "Status": "Within CODATA uncertainty",
             "Testable By": "Next-generation G measurements (sub-ppm)",
         },
         {
             "Prediction": "Proton-to-electron mass ratio structure",
-            "Value": "mu ~ 1836.157",
-            "Status": "Unified (0.16 ppm via c3=phi/2)",
-            "Testable By": "CODATA mu precision (resolved by unification)",
+            "Value": "μ ≈ 1836.157",
+            "Status": "Unified (0.16 ppm via c3=φ/2)",
+            "Testable By": "CODATA μ precision (resolved by unification)",
         },
         {
             "Prediction": "Cosmological constant from ladder G",
-            "Value": "Lambda ratio ~ 1.23",
-            "Status": "~122 orders discrepancy remains",
+            "Value": "Λ ratio ≈ 1.23",
+            "Status": "≈122 orders discrepancy remains",
             "Testable By": "Cosmological observations",
         },
         {
             "Prediction": "Fifth force signal",
-            "Value": "Dilaton mass ~ Planck scale",
+            "Value": "Dilaton mass ≈ Planck scale",
             "Status": "Unobservable (Planck-mass dilaton)",
             "Testable By": "Eot-Wash torsion balance (if dilaton lighter)",
         },
@@ -171,9 +125,9 @@ else:
         """
         <div class="step-card">
         <b>Key finding:</b><br><br>
-        The Alpha Ladder makes one headline prediction (G to sub-ppb from alpha and mu
-        alone), one unified result (bridge and mu-structure are the same formula via
-        c3 = phi/2, predicting mu to 0.16 ppm), and two predictions that are currently
+        The Alpha Ladder makes one headline prediction (G to sub-ppb from α and μ
+        alone), one unified result (bridge and μ-structure are the same formula via
+        c3 = φ/2, predicting μ to 0.16 ppm), and two predictions that are currently
         beyond experimental reach (cosmological constant, fifth force).
         </div>
         """,
@@ -191,7 +145,7 @@ st.markdown(
     """
     <div class="formula-card">
     <b>Headline formula:</b><br><br>
-    G = alpha^24 * mu * (mu - sqrt(phi)*(1-alpha)) * hbar*c / m_e^2
+    G = α²⁴ × μ × (μ − √φ×(1−α)) × ℏc / mₑ²
     </div>
     """,
     unsafe_allow_html=True,
@@ -236,7 +190,7 @@ if summary:
     st.markdown(
         """
         <div class="theorem-card">
-        <b>If the formula is exact, G is determined to 3.6 ppb from alpha and mu
+        <b>If the formula is exact, G is determined to 3.6 ppb from α and μ
         alone -- 6000x more precise than any measurement.</b>
         </div>
         """,
@@ -276,7 +230,7 @@ else:
     st.markdown(
         """
         <div class="theorem-card">
-        <b>If the formula is exact, G is determined to 3.6 ppb from alpha and mu
+        <b>If the formula is exact, G is determined to 3.6 ppb from α and μ
         alone -- 6000x more precise than any measurement.</b>
         </div>
         """,
@@ -289,10 +243,10 @@ else:
         """
         <div class="step-card">
         <b>Prediction:</b><br><br>
-        G = alpha^24 * mu * (mu - sqrt(phi)*(1-alpha)) * hbar*c / m_e^2 = 6.674298e-11 m^3 kg^-1 s^-2,
-        with a residual of -0.31 ppm relative to CODATA 2018 (within the ~22 ppm measurement
-        uncertainty). If exact, the predicted uncertainty is ~3.6 ppb, set entirely by the
-        uncertainties in alpha and mu.
+        G = α²⁴ × μ × (μ − √φ×(1−α)) × ℏc / mₑ² = 6.674298e-11 m³ kg⁻¹ s⁻²,
+        with a residual of -0.31 ppm relative to CODATA 2018 (within the ≈22 ppm measurement
+        uncertainty). If exact, the predicted uncertainty is ≈3.6 ppb, set entirely by the
+        uncertainties in α and μ.
         </div>
         """,
         unsafe_allow_html=True,
@@ -332,14 +286,14 @@ if summary:
     with col_c1:
         n1 = g_exp.get("n_within_1sigma")
         st.metric(
-            label="Within 1 sigma",
+            label="Within 1σ",
             value=str(n1) if n1 is not None else "N/A",
         )
 
     with col_c2:
         n2 = g_exp.get("n_within_2sigma")
         st.metric(
-            label="Within 2 sigma",
+            label="Within 2σ",
             value=str(n2) if n2 is not None else "N/A",
         )
 
@@ -381,10 +335,10 @@ else:
     col_c1, col_c2 = st.columns(2)
 
     with col_c1:
-        st.metric(label="Within 1 sigma", value="~3")
+        st.metric(label="Within 1σ", value="~3")
 
     with col_c2:
-        st.metric(label="Within 2 sigma", value="~5")
+        st.metric(label="Within 2σ", value="~5")
 
     st.markdown("")
 
@@ -392,9 +346,9 @@ else:
         """
         <div class="step-card">
         <b>Experiment comparison:</b><br><br>
-        Best agreement: CODATA 2018 recommended value (~0.2 sigma).<br>
-        Worst agreement: Quinn et al. 2013 (~1.8 sigma). All comparisons are
-        within 2 sigma of the predicted value given current measurement uncertainties.
+        Best agreement: CODATA 2018 recommended value (≈0.2σ).<br>
+        Worst agreement: Quinn et al. 2013 (≈1.8σ). All comparisons are
+        within 2σ of the predicted value given current measurement uncertainties.
         </div>
         """,
         unsafe_allow_html=True,
@@ -410,8 +364,8 @@ st.header("D. Proton-to-Electron Mass Ratio")
 st.markdown(
     """
     <div class="formula-card">
-    <b>Mu-structure formula:</b><br><br>
-    mu = [sqrt(phi) + sqrt(phi + 2*phi^2*(1+3a^2)/a^3)] / 2
+    <b>μ-structure formula:</b><br><br>
+    μ = [√φ + √(φ + 2×φ²×(1+3a²)/a³)] / 2
     </div>
     """,
     unsafe_allow_html=True,
@@ -426,7 +380,7 @@ if summary:
     with col_d1:
         mu_pred = mu_data.get("mu_predicted")
         st.metric(
-            label="mu Predicted",
+            label="μ Predicted",
             value=f"{mu_pred:.6f}" if mu_pred is not None else "~1836.157000",
         )
 
@@ -440,7 +394,7 @@ if summary:
     with col_d3:
         sigma = mu_data.get("sigma_tension")
         st.metric(
-            label="Sigma Tension",
+            label="σ Tension",
             value=f"{sigma:.0f}" if sigma is not None else "~7900",
         )
 
@@ -451,9 +405,9 @@ if summary:
     st.markdown(
         f"""
         <div class="warning-card">
-        <b>Tension at current precision ({sigma_str} sigma).</b> However, mu_tension.py
-        proves the bridge and mu-structure formulas are the same formula unified by
-        c3 = phi/2 = 0.809, predicting mu from alpha and phi to 0.16 ppm.
+        <b>Tension at current precision ({sigma_str}σ).</b> However, mu_tension.py
+        proves the bridge and μ-structure formulas are the same formula unified by
+        c3 = φ/2 = 0.809, predicting μ from α and φ to 0.16 ppm.
         </div>
         """,
         unsafe_allow_html=True,
@@ -476,22 +430,22 @@ else:
     col_d1, col_d2, col_d3 = st.columns(3)
 
     with col_d1:
-        st.metric(label="mu Predicted", value="~1836.157000")
+        st.metric(label="μ Predicted", value="~1836.157000")
 
     with col_d2:
         st.metric(label="Residual (ppm)", value="~+2.37")
 
     with col_d3:
-        st.metric(label="Sigma Tension", value="~7900")
+        st.metric(label="σ Tension", value="~7900")
 
     st.markdown("")
 
     st.markdown(
         """
         <div class="warning-card">
-        <b>Tension at current precision (~7900 sigma).</b> However, mu_tension.py
-        proves the bridge and mu-structure formulas are the same formula unified by
-        c3 = phi/2 = 0.809, predicting mu from alpha and phi to 0.16 ppm.
+        <b>Tension at current precision (≈7900σ).</b> However, mu_tension.py
+        proves the bridge and μ-structure formulas are the same formula unified by
+        c3 = φ/2 = 0.809, predicting μ from α and φ to 0.16 ppm.
         </div>
         """,
         unsafe_allow_html=True,
@@ -503,11 +457,11 @@ else:
         """
         <div class="step-card">
         <b>Interpretation:</b><br><br>
-        The mu-structure formula predicts mu to ~2.37 ppm, which shows tension at
-        ~7900 sigma given the sub-ppb precision of CODATA mu. However, mu_tension.py
-        proves the bridge and mu-structure formulas are actually the same formula,
-        unified by c3 = phi/2 = 0.809. With this identification, mu is predicted
-        from alpha and phi alone to 0.16 ppm (see Page 36: Mu Tension Resolution).
+        The μ-structure formula predicts μ to ≈2.37 ppm, which shows tension at
+        ≈7900σ given the sub-ppb precision of CODATA μ. However, mu_tension.py
+        proves the bridge and μ-structure formulas are actually the same formula,
+        unified by c3 = φ/2 = 0.809. With this identification, μ is predicted
+        from α and φ alone to 0.16 ppm (see Page 36: Mu Tension Resolution).
         </div>
         """,
         unsafe_allow_html=True,
@@ -524,7 +478,7 @@ st.markdown(
     """
     <div class="formula-card">
     <b>Beck's formula with ladder G:</b><br><br>
-    Lambda = (G^2/hbar^4)*(m_e/alpha)^6
+    Λ = (G²/ℏ⁴)×(mₑ/α)⁶
     </div>
     """,
     unsafe_allow_html=True,
@@ -539,8 +493,8 @@ if summary:
     with col_e1:
         lam_pred = cc_data.get("Lambda_predicted")
         st.metric(
-            label="Lambda Predicted",
-            value=f"{float(lam_pred):.2e}" if lam_pred is not None else "~4.4e-66 eV^4",
+            label="Λ Predicted",
+            value=f"{float(lam_pred):.2e}" if lam_pred is not None else "~4.4e-66 eV⁴",
         )
 
     with col_e2:
@@ -574,7 +528,7 @@ else:
     col_e1, col_e2, col_e3 = st.columns(3)
 
     with col_e1:
-        st.metric(label="Lambda Predicted", value="~4.4e-66 eV^4")
+        st.metric(label="Λ Predicted", value="~4.4e-66 eV⁴")
 
     with col_e2:
         st.metric(label="Ratio to Observed", value="~1.23")
@@ -588,7 +542,7 @@ else:
         """
         <div class="theorem-card">
         <b>Reduces the cosmological constant problem from 122 orders of magnitude
-        to a factor of ~1.23.</b>
+        to a factor of ≈1.23.</b>
         </div>
         """,
         unsafe_allow_html=True,
@@ -634,7 +588,7 @@ if summary:
             """
             <div class="warning-card">
             <b>Planck-mass dilaton makes signal unobservable.</b> The flux-stabilized
-            dilaton mass (~6.3e29 eV) corresponds to a Yukawa range of ~3.1e-37 m,
+            dilaton mass (≈6.3e29 eV) corresponds to a Yukawa range of ≈3.1e-37 m,
             far below any foreseeable experimental sensitivity. The fifth force
             prediction is formally present but physically inaccessible.
             </div>
@@ -705,7 +659,7 @@ else:
         """
         <div class="warning-card">
         <b>Planck-mass dilaton makes signal unobservable.</b> The flux-stabilized
-        dilaton mass (~6.3e29 eV) corresponds to a Yukawa range of ~3.1e-37 m,
+        dilaton mass (≈6.3e29 eV) corresponds to a Yukawa range of ≈3.1e-37 m,
         far below any foreseeable experimental sensitivity. The fifth force
         prediction is formally present but physically inaccessible.
         </div>
@@ -719,11 +673,11 @@ else:
         """
         <div class="step-card">
         <b>Testable window:</b><br><br>
-        Eot-Wash optimal range: ~28 um<br>
-        Eot-Wash optimal mass: ~7 meV<br><br>
+        Eot-Wash optimal range: ≈28 um<br>
+        Eot-Wash optimal mass: ≈7 meV<br><br>
         If a mechanism exists to make the dilaton lighter than Planck scale,
-        the Eot-Wash torsion balance experiment is optimally sensitive at ~28 um
-        (corresponding to ~7 meV dilaton mass).
+        the Eot-Wash torsion balance experiment is optimally sensitive at ≈28 um
+        (corresponding to ≈7 meV dilaton mass).
         </div>
         """,
         unsafe_allow_html=True,
@@ -753,19 +707,19 @@ else:
         """
         <div class="proof-card">
         <b>Honest assessment:</b><br><br>
-        CONFIRMED (within uncertainty): G = alpha^24 * mu * (mu - sqrt(phi)*(1-alpha)) * hbar*c / m_e^2
-        predicts G to -0.31 ppm, within the ~22 ppm CODATA measurement uncertainty. If exact,
+        CONFIRMED (within uncertainty): G = α²⁴ × μ × (μ − √φ×(1−α)) × ℏc / mₑ²
+        predicts G to -0.31 ppm, within the ≈22 ppm CODATA measurement uncertainty. If exact,
         the formula determines G to 3.6 ppb -- 6000x more precise than any measurement. This
         is the headline prediction and will be tested by next-generation G experiments.<br><br>
-        UNIFIED: The bridge and mu-structure formulas are the same formula (proven in
-        mu_tension.py with c3 = phi/2 = 0.809), predicting mu from alpha and phi to 0.16 ppm.
-        The apparent ~7900 sigma tension dissolves under this unification.<br><br>
+        UNIFIED: The bridge and μ-structure formulas are the same formula (proven in
+        mu_tension.py with c3 = φ/2 = 0.809), predicting μ from α and φ to 0.16 ppm.
+        The apparent ≈7900σ tension dissolves under this unification.<br><br>
         BEYOND REACH: The cosmological constant prediction reduces the 122-order discrepancy
-        to a factor of ~1.23 using Beck's formula with ladder G, but this relies on Beck's
+        to a factor of ≈1.23 using Beck's formula with ladder G, but this relies on Beck's
         formula being correct. The fifth force signal is unobservable for a Planck-mass
-        dilaton (range ~3e-37 m).<br><br>
+        dilaton (range ≈3e-37 m).<br><br>
         BOTTOM LINE: The Alpha Ladder makes one genuinely testable prediction (G to sub-ppb),
-        one unified result (bridge = mu-structure via c3 = phi/2), and two predictions currently
+        one unified result (bridge = μ-structure via c3 = φ/2), and two predictions currently
         beyond experimental reach. Honest science requires reporting all four.
         </div>
         """,
