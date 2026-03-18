@@ -6,6 +6,7 @@ dark background, visible grid lines, and monospace fonts for numeric labels.
 """
 
 import plotly.graph_objects as go
+from plotly.subplots import make_subplots
 
 # ---------------------------------------------------------------------------
 # Shared layout configuration
@@ -3081,6 +3082,410 @@ def orbifold_potential_chart(orbifold_data):
         height=400,
         showlegend=True,
         legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
+    )
+
+    return _apply_theme(fig)
+
+
+# ---------------------------------------------------------------------------
+# Chart: Salam-Sezgin Potential V(R)
+# ---------------------------------------------------------------------------
+def ss_potential_chart(potential_data):
+    """Line chart of Salam-Sezgin potential components vs radius.
+
+    Parameters
+    ----------
+    potential_data : dict
+        Keys: R_grid, V_cc, V_curv, V_flux, V_total, Lambda_6, n.
+
+    Returns
+    -------
+    plotly.graph_objects.Figure
+    """
+    if not potential_data or not potential_data.get("R_grid"):
+        fig = go.Figure()
+        fig.add_annotation(text="No data available", showarrow=False,
+                           xref="paper", yref="paper", x=0.5, y=0.5)
+        return _apply_theme(fig)
+
+    R = potential_data["R_grid"]
+    V_cc = potential_data["V_cc"]
+    V_curv = potential_data["V_curv"]
+    V_flux = potential_data["V_flux"]
+    V_total = potential_data["V_total"]
+
+    fig = go.Figure()
+
+    fig.add_trace(go.Scatter(
+        x=R, y=V_cc,
+        mode="lines",
+        line=dict(color=_COLOR_DEFAULT, width=2, dash="dash"),
+        name="V_cc",
+        hovertemplate="R = %{x:.4e}<br>V_cc = %{y:.4e}<extra></extra>",
+    ))
+
+    fig.add_trace(go.Scatter(
+        x=R, y=V_curv,
+        mode="lines",
+        line=dict(color=_COLOR_HIGHLIGHT_21, width=2, dash="dot"),
+        name="V_curv",
+        hovertemplate="R = %{x:.4e}<br>V_curv = %{y:.4e}<extra></extra>",
+    ))
+
+    fig.add_trace(go.Scatter(
+        x=R, y=V_flux,
+        mode="lines",
+        line=dict(color=_COLOR_HIGHLIGHT_10, width=2, dash="dashdot"),
+        name="V_flux",
+        hovertemplate="R = %{x:.4e}<br>V_flux = %{y:.4e}<extra></extra>",
+    ))
+
+    fig.add_trace(go.Scatter(
+        x=R, y=V_total,
+        mode="lines",
+        line=dict(color=_COLOR_GREEN, width=3),
+        name="V_total",
+        hovertemplate="R = %{x:.4e}<br>V_total = %{y:.4e}<extra></extra>",
+    ))
+
+    # Mark minimum of V_total if it exists (not at boundary)
+    if len(V_total) > 2:
+        min_idx = min(range(len(V_total)), key=lambda i: V_total[i])
+        if 0 < min_idx < len(V_total) - 1:
+            fig.add_trace(go.Scatter(
+                x=[R[min_idx]],
+                y=[V_total[min_idx]],
+                mode="markers",
+                marker=dict(
+                    color=_COLOR_RED, size=14,
+                    symbol="star", line=dict(color="#ffffff", width=2),
+                ),
+                name="Minimum",
+                hovertemplate=(
+                    f"R = {R[min_idx]:.4e}<br>"
+                    f"V_min = {V_total[min_idx]:.4e}<extra></extra>"
+                ),
+            ))
+
+    fig.add_hline(y=0, line_dash="solid", line_color="#4c566a", line_width=1)
+
+    title = "Salam-Sezgin Potential V(R)"
+    if potential_data.get("Lambda_6") is not None:
+        title += f" (Lambda_6 = {potential_data['Lambda_6']:.2f})"
+
+    fig.update_layout(
+        title=title,
+        xaxis_title="R (Planck units)",
+        yaxis_title="V(R) (Planck units)",
+        xaxis=dict(type="log"),
+        height=400,
+        showlegend=True,
+        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
+    )
+
+    return _apply_theme(fig)
+
+
+# ---------------------------------------------------------------------------
+# Chart: Stabilized Radius and Dilaton Mass vs Lambda_6
+# ---------------------------------------------------------------------------
+def ss_lambda6_scan_chart(scan_data):
+    """Dual-axis chart of R_0 and m_phi vs Lambda_6.
+
+    Parameters
+    ----------
+    scan_data : dict
+        Key "results": list of dicts with Lambda_6, R_0, m_phi_eV.
+
+    Returns
+    -------
+    plotly.graph_objects.Figure
+    """
+    results = scan_data.get("results", []) if scan_data else []
+    if not results:
+        fig = go.Figure()
+        fig.add_annotation(text="No data available", showarrow=False,
+                           xref="paper", yref="paper", x=0.5, y=0.5)
+        return _apply_theme(fig)
+
+    lambdas = [r["Lambda_6"] for r in results]
+    R_vals = [r["R_0"] for r in results]
+    m_vals = [r["m_phi_eV"] for r in results]
+
+    fig = make_subplots(specs=[[{"secondary_y": True}]])
+
+    fig.add_trace(
+        go.Scatter(
+            x=lambdas, y=R_vals,
+            mode="lines+markers",
+            line=dict(color=_COLOR_DEFAULT, width=2),
+            marker=dict(size=5),
+            name="R_0",
+            hovertemplate="Lambda_6 = %{x:.4e}<br>R_0 = %{y:.4e}<extra></extra>",
+        ),
+        secondary_y=False,
+    )
+
+    fig.add_trace(
+        go.Scatter(
+            x=lambdas, y=m_vals,
+            mode="lines+markers",
+            line=dict(color=_COLOR_GREEN, width=2),
+            marker=dict(size=5),
+            name="m_phi",
+            hovertemplate="Lambda_6 = %{x:.4e}<br>m_phi = %{y:.4e} eV<extra></extra>",
+        ),
+        secondary_y=True,
+    )
+
+    fig.update_layout(
+        title="Stabilized Radius and Dilaton Mass vs Lambda_6",
+        xaxis=dict(title="Lambda_6 (Planck units)", type="log"),
+        height=400,
+        showlegend=True,
+        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
+    )
+
+    fig.update_yaxes(title_text="R_0 (Planck units)", type="log", secondary_y=False)
+    fig.update_yaxes(title_text="m_phi (eV)", type="log", secondary_y=True)
+
+    return _apply_theme(fig)
+
+
+# ---------------------------------------------------------------------------
+# Chart: Spectral Zeta Neutral vs Charged
+# ---------------------------------------------------------------------------
+def zeta_comparison_chart(zeta_data):
+    """Bar chart comparing neutral and charged spectral zeta values.
+
+    Parameters
+    ----------
+    zeta_data : dict
+        Keys: value (charged zeta), comparison_neutral (neutral zeta),
+        charge_q, n_monopole.
+
+    Returns
+    -------
+    plotly.graph_objects.Figure
+    """
+    if not zeta_data or "value" not in zeta_data:
+        fig = go.Figure()
+        fig.add_annotation(text="No data available", showarrow=False,
+                           xref="paper", yref="paper", x=0.5, y=0.5)
+        return _apply_theme(fig)
+
+    neutral_val = zeta_data.get("comparison_neutral", 0.0)
+    charged_val = zeta_data["value"]
+
+    categories = ["Neutral (q=0)", "Charged (q=1)"]
+    values = [neutral_val, charged_val]
+    colors = [_COLOR_DEFAULT, _COLOR_GREEN]
+
+    fig = go.Figure()
+
+    fig.add_trace(go.Bar(
+        x=categories,
+        y=values,
+        marker_color=colors,
+        text=[f"{v:.4f}" for v in values],
+        textposition="outside",
+        hovertemplate="%{x}: %{y:.6f}<extra></extra>",
+    ))
+
+    fig.add_hline(y=0, line_dash="solid", line_color="#4c566a", line_width=1)
+
+    # Annotation for exact fractions
+    fig.add_annotation(
+        x="Neutral (q=0)", y=neutral_val,
+        text="-17/480",
+        showarrow=True, arrowhead=2, arrowcolor="#e0e0e0",
+        ax=0, ay=-30 if neutral_val >= 0 else 30,
+        font=dict(size=12, color="#e0e0e0"),
+    )
+    fig.add_annotation(
+        x="Charged (q=1)", y=charged_val,
+        text="+1/10",
+        showarrow=True, arrowhead=2, arrowcolor="#e0e0e0",
+        ax=0, ay=-30 if charged_val >= 0 else 30,
+        font=dict(size=12, color="#e0e0e0"),
+    )
+
+    fig.update_layout(
+        title="Spectral Zeta zeta_{S^2}(-1): Neutral vs Charged",
+        yaxis_title="zeta(-1)",
+        height=350,
+        showlegend=False,
+    )
+
+    return _apply_theme(fig)
+
+
+# ---------------------------------------------------------------------------
+# Chart: One-Loop G Correction Group Scan
+# ---------------------------------------------------------------------------
+def group_scan_chart(scan_results):
+    """Horizontal bar chart of ratio_to_target per anomaly-free group.
+
+    Parameters
+    ----------
+    scan_results : dict
+        Key "results": list of dicts with "group" (str) and
+        "g_correction" (dict with "ratio_to_target").
+
+    Returns
+    -------
+    plotly.graph_objects.Figure
+    """
+    results = scan_results.get("results", []) if scan_results else []
+    if not results:
+        fig = go.Figure()
+        fig.add_annotation(text="No data available", showarrow=False,
+                           xref="paper", yref="paper", x=0.5, y=0.5)
+        return _apply_theme(fig)
+
+    groups = [r["group"] for r in results]
+    ratios = [r["g_correction"]["ratio_to_target"] for r in results]
+
+    colors = []
+    for ratio in ratios:
+        abs_r = abs(ratio)
+        if 0.9 < abs_r < 1.1:
+            colors.append(_COLOR_GREEN)
+        elif abs_r < 10:
+            colors.append(_COLOR_HIGHLIGHT_21)
+        else:
+            colors.append(_COLOR_RED)
+
+    fig = go.Figure()
+
+    fig.add_trace(go.Bar(
+        y=groups,
+        x=ratios,
+        orientation="h",
+        marker_color=colors,
+        text=[f"{r:.2f}" for r in ratios],
+        textposition="outside",
+        hovertemplate="%{y}: ratio = %{x:.4f}<extra></extra>",
+    ))
+
+    fig.add_vline(x=1, line_dash="dash", line_color="#e0e0e0", line_width=1,
+                  annotation_text="Target", annotation_position="top right")
+
+    fig.update_layout(
+        title="One-Loop G Correction: Ratio to Target (3*alpha^2)",
+        xaxis_title="Ratio to Target",
+        xaxis=dict(type="log"),
+        height=400,
+        margin=dict(l=200),
+        showlegend=False,
+    )
+
+    return _apply_theme(fig)
+
+
+# ---------------------------------------------------------------------------
+# Chart: Geometric Series Coefficients
+# ---------------------------------------------------------------------------
+def geometric_coefficients_chart(coefficients_data):
+    """Bar chart of geometric series coefficient contributions by order.
+
+    Parameters
+    ----------
+    coefficients_data : dict
+        Key "coefficients": list of dicts with "n", "c_n", "contribution".
+
+    Returns
+    -------
+    plotly.graph_objects.Figure
+    """
+    coeffs = coefficients_data.get("coefficients", []) if coefficients_data else []
+    if not coeffs:
+        fig = go.Figure()
+        fig.add_annotation(text="No data available", showarrow=False,
+                           xref="paper", yref="paper", x=0.5, y=0.5)
+        return _apply_theme(fig)
+
+    n_vals = [c["n"] for c in coeffs]
+    contributions = [c["contribution"] for c in coeffs]
+    c_n_vals = [c["c_n"] for c in coeffs]
+
+    fig = go.Figure()
+
+    fig.add_trace(go.Bar(
+        x=n_vals,
+        y=contributions,
+        marker_color=_COLOR_DEFAULT,
+        text=[f"c_{n} = {cn:.3g}" for n, cn in zip(n_vals, c_n_vals)],
+        textposition="outside",
+        hovertemplate="n = %{x}<br>contribution = %{y:.4e}<extra></extra>",
+    ))
+
+    fig.update_layout(
+        title="Geometric Series Coefficients: Contributions by Order",
+        xaxis_title="Order n",
+        yaxis_title="Contribution (c_n * alpha^n)",
+        yaxis=dict(type="log"),
+        height=350,
+        showlegend=False,
+    )
+
+    return _apply_theme(fig)
+
+
+# ---------------------------------------------------------------------------
+# Chart: Mu Prediction Residual Across CODATA Editions
+# ---------------------------------------------------------------------------
+def mu_prediction_chart(mu_data):
+    """Bar chart of mu prediction residual per CODATA edition.
+
+    Parameters
+    ----------
+    mu_data : dict
+        Key "codata_stability": list of dicts with "edition" and "residual_ppm".
+
+    Returns
+    -------
+    plotly.graph_objects.Figure
+    """
+    stability = mu_data.get("codata_stability", []) if mu_data else []
+    if not stability:
+        fig = go.Figure()
+        fig.add_annotation(text="No data available", showarrow=False,
+                           xref="paper", yref="paper", x=0.5, y=0.5)
+        return _apply_theme(fig)
+
+    editions = [s["edition"] for s in stability]
+    residuals = [s["residual_ppm"] for s in stability]
+
+    colors = []
+    for r in residuals:
+        abs_r = abs(r)
+        if abs_r < 0.01:
+            colors.append(_COLOR_GREEN)
+        elif abs_r < 0.1:
+            colors.append(_COLOR_HIGHLIGHT_21)
+        else:
+            colors.append(_COLOR_DEFAULT)
+
+    fig = go.Figure()
+
+    fig.add_trace(go.Bar(
+        x=editions,
+        y=residuals,
+        marker_color=colors,
+        text=[f"{r:.4f}" for r in residuals],
+        textposition="outside",
+        hovertemplate="%{x}: %{y:.6f} ppm<extra></extra>",
+    ))
+
+    fig.add_hline(y=0, line_dash="solid", line_color="#4c566a", line_width=1)
+
+    fig.update_layout(
+        title="Mu Prediction Residual Across CODATA Editions",
+        xaxis_title="CODATA Edition",
+        yaxis_title="Residual (ppm)",
+        height=350,
+        showlegend=False,
     )
 
     return _apply_theme(fig)

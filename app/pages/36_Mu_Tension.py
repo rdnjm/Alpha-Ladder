@@ -286,9 +286,34 @@ This is a genuine second prediction of the framework.
 """, unsafe_allow_html=True)
 
 # ---------------------------------------------------------------------------
-# I. Honest Assessment
+# I. Geometric Resummation
 # ---------------------------------------------------------------------------
-st.header("I. Honest Assessment")
+st.header("I. Geometric Resummation")
+
+st.markdown("""
+<div class="formula-card">
+<strong>UPDATE: Geometric resummation (Page 27, Sections G-H)</strong><br><br>
+F = 1 + 3*alpha^2 + phi^2*alpha^3 / [2*(phi - alpha)]<br><br>
+The NLO and higher coefficients form a geometric series with ratio 1/phi:
+c3 = phi/2, c4 = 1/2, c5 = 1/(2*phi), ... This resummation matches the exact F
+to 0.0001 ppm and predicts mu from alpha and phi alone to 0.001 ppm -- an
+improvement over the c3 = phi/2 truncation (0.16 ppm).
+</div>
+""", unsafe_allow_html=True)
+
+st.markdown("""
+<div class="step-card">
+<strong>This is a mathematical observation, not a derivation.</strong>
+The physical origin of the 1/phi ratio between orders is not established.
+It is testable: future CODATA mu measurements will confirm or falsify.
+The 2014 and 2022 CODATA editions provide independent tests (both match to ~0.001 ppm).
+</div>
+""", unsafe_allow_html=True)
+
+# ---------------------------------------------------------------------------
+# J. Honest Assessment
+# ---------------------------------------------------------------------------
+st.header("J. Honest Assessment")
 
 if summary:
     honest = summary.get("honest_assessment", "")

@@ -61,6 +61,8 @@ pages = {
         _page("20_Dark_Sector_Phenomenology.py", "Dark Sector Phenomenology"),
         _page("22_Radius_Determination.py", "Radius Determination"),
         _page("38_Radius_Fixing.py", "Radius Fixing"),
+        _page("39_Salam_Sezgin_Stabilization.py", "Salam-Sezgin Stabilization"),
+        _page("40_Charged_Matter_Loops.py", "Charged Matter Loops"),
         _page("23_Anomaly_Cancellation.py", "Anomaly Cancellation"),
         _page("24_Cosmological_Constant.py", "Cosmological Constant"),
     ],

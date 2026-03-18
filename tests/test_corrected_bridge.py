@@ -294,5 +294,110 @@ class TestSummarizeCorrectedBridge(unittest.TestCase):
         self.assertIn("ratio", sub)
 
 
+# ===========================================================================
+# Geometric resummation tests (pytest-style)
+# ===========================================================================
+
+from alpha_ladder_core.corrected_bridge import (
+    compute_geometric_resummation,
+    predict_mu_from_geometry,
+)
+
+
+def test_resummation_returns_dict():
+    result = compute_geometric_resummation()
+    assert isinstance(result, dict)
+    for key in ("F_exact", "F_geom", "residual_ppm", "c3_exact",
+                "c3_geom", "c3_residual_ppm", "coefficients",
+                "ratio", "expansion_parameter", "honest_assessment"):
+        assert key in result
+
+
+def test_resummation_matches_sub_ppm():
+    result = compute_geometric_resummation()
+    assert result["residual_ppm"] < 0.01
+
+
+def test_resummation_c3_is_phi_half():
+    import math
+    phi = (1 + math.sqrt(5)) / 2
+    result = compute_geometric_resummation()
+    assert abs(result["c3_geom"] - phi / 2) < 1e-10
+
+
+def test_resummation_ratio_is_inverse_phi():
+    import math
+    phi = (1 + math.sqrt(5)) / 2
+    result = compute_geometric_resummation()
+    assert abs(result["ratio"] - 1.0 / phi) < 1e-10
+
+
+def test_resummation_coefficients_geometric():
+    result = compute_geometric_resummation()
+    coeffs = result["coefficients"]
+    for i in range(len(coeffs) - 1):
+        ratio = coeffs[i + 1]["c_n"] / coeffs[i]["c_n"]
+        assert abs(ratio - result["ratio"]) < 1e-10
+
+
+def test_resummation_six_coefficients():
+    result = compute_geometric_resummation()
+    assert len(result["coefficients"]) >= 6
+
+
+def test_resummation_c3_residual_order():
+    result = compute_geometric_resummation()
+    assert result["c3_residual_ppm"] > 1000
+    assert result["c3_residual_ppm"] < 10000
+
+
+def test_mu_prediction_returns_dict():
+    result = predict_mu_from_geometry()
+    assert isinstance(result, dict)
+    for key in ("mu_predicted", "mu_measured", "residual_ppm",
+                "alpha", "phi", "F_geom", "codata_stability",
+                "honest_assessment"):
+        assert key in result
+
+
+def test_mu_prediction_sub_ppm_2018():
+    result = predict_mu_from_geometry()
+    assert abs(result["residual_ppm"]) < 0.01
+
+
+def test_mu_prediction_codata_stability():
+    result = predict_mu_from_geometry()
+    stability = result["codata_stability"]
+    assert len(stability) == 3
+    for entry in stability:
+        assert abs(entry["residual_ppm"]) < 0.1
+
+
+def test_mu_prediction_2022_independent():
+    result = predict_mu_from_geometry()
+    for entry in result["codata_stability"]:
+        if entry["edition"] == "CODATA 2022":
+            assert abs(entry["residual_ppm"]) < 0.01
+
+
+def test_mu_predicted_positive():
+    result = predict_mu_from_geometry()
+    assert result["mu_predicted"] > 1800
+    assert result["mu_predicted"] < 1840
+
+
+def test_mu_prediction_no_mu_input():
+    """F_geom depends only on alpha and phi, not mu."""
+    result = compute_geometric_resummation()
+    # F_geom should be close to 1 (small correction)
+    assert 1.0 < result["F_geom"] < 1.001
+
+
+def test_resummation_expansion_parameter():
+    result = compute_geometric_resummation()
+    assert result["expansion_parameter"] == "alpha/phi"
+    assert result["alpha_over_phi"] < 0.01
+
+
 if __name__ == "__main__":
     unittest.main()

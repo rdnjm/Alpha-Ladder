@@ -448,6 +448,35 @@ else:
     st.info("Core module not available. Install alpha_ladder_core.")
 
 # ---------------------------------------------------------------------------
+# Section 5: What DID Fix a_0 (Forward Reference)
+# ---------------------------------------------------------------------------
+st.header("5. What DID Fix a\u2080")
+
+st.markdown("""
+<div class="theorem-card">
+<strong>UPDATE: Salam-Sezgin Stabilization (Page 39)</strong><br><br>
+While all three mechanisms above FAIL to fix a\u2080, the Salam-Sezgin mechanism
+(adding a positive 6D cosmological constant Lambda_6 > 0 to the action) SUCCEEDS.
+For the gauge-matched radius R = 0.550 l_Pl, the required Lambda_6 = 14.2 is O(1)
+in Planck units (natural, no fine-tuning). The dilaton acquires a Planck-scale mass,
+trivially resolving the screening gap. See Page 39 for full analysis.
+</div>
+""", unsafe_allow_html=True)
+
+st.markdown("")
+
+st.markdown("""
+<div class="step-card">
+<strong>UPDATE: Charged Matter Loops (Page 40)</strong><br><br>
+The spectral zeta function used in the orbifold analysis above assumes neutral fields.
+For charged fields in a Dirac monopole background, the spectral zeta FLIPS SIGN:
+zeta_neutral(-1) = -17/480 (negative) vs zeta_charged(-1) = +1/10 (positive).
+This sign flip modifies the Casimir energy and could affect future stabilization
+attempts. See Page 40 for the monopole spectrum and anomaly-free group scan.
+</div>
+""", unsafe_allow_html=True)
+
+# ---------------------------------------------------------------------------
 # Footer
 # ---------------------------------------------------------------------------
 st.divider()

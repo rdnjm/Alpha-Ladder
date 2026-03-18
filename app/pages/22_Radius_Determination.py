@@ -312,6 +312,28 @@ else:
     )
 
 # ---------------------------------------------------------------------------
+# F. Resolution: Salam-Sezgin Mechanism
+# ---------------------------------------------------------------------------
+st.header("F. Resolution: Salam-Sezgin Mechanism")
+
+st.markdown("""
+<div class="theorem-card">
+<strong>UPDATE: Gap 1 conditionally closed.</strong><br><br>
+The Salam-Sezgin mechanism (Page 39) adds a positive 6D cosmological constant
+Lambda_6 > 0 to the action, providing a repulsive large-R term that creates a
+genuine minimum in the radial potential. For the gauge-matched radius
+R = 0.550 l_Pl with n=1 monopole flux, the required Lambda_6 = 14.2 is O(1)
+in Planck units -- natural, requiring no fine-tuning.<br><br>
+The stabilized dilaton has Planck-scale mass (~10^29 eV), making the fifth force
+unobservable at all experimental scales. The 3854x screening gap identified in
+screening.py becomes irrelevant.<br><br>
+<strong>Caveat:</strong> This trades the radius determination problem for the question
+"what sets Lambda_6?" In a UV-complete theory, Lambda_6 would be determined by
+fundamental dynamics. In the minimal framework, it is a free O(1) parameter.
+</div>
+""", unsafe_allow_html=True)
+
+# ---------------------------------------------------------------------------
 # Footer
 # ---------------------------------------------------------------------------
 st.divider()
