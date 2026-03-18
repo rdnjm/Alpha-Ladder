@@ -637,208 +637,28 @@ else:
     )
 
 # ---------------------------------------------------------------------------
-# G. Geometric Resummation
+# G. Retracted: Geometric Resummation and Mu Prediction
 # ---------------------------------------------------------------------------
-st.header("G. Geometric Resummation")
+st.header("G. Retracted: Geometric Resummation")
 
-if geom_data:
-    st.markdown(
-        """
-        <div class="formula-card">
-        <b>Closed-form resummation:</b><br><br>
-        F = 1 + 3&alpha;&sup2; + &phi;&sup2;&alpha;&sup3; / [2(&phi; - &alpha;)]<br><br>
-        The NLO and higher coefficients form a geometric series with ratio
-        1/&phi;: c&#8323; = &phi;/2, c&#8324; = 1/2, c&#8325; = 1/(2&phi;), ...
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-
-    st.markdown("")
-
-    col_g1, col_g2, col_g3, col_g4 = st.columns(4)
-
-    with col_g1:
-        st.metric(
-            label="F_exact",
-            value=f"{geom_data['F_exact']:.10f}",
-        )
-
-    with col_g2:
-        st.metric(
-            label="F_geom",
-            value=f"{geom_data['F_geom']:.10f}",
-        )
-
-    with col_g3:
-        st.metric(
-            label="Residual",
-            value=f"{geom_data['residual_ppm']:.4f} ppm",
-        )
-
-    with col_g4:
-        st.metric(
-            label="Ratio c_{n+1}/c_n",
-            value=f"1/phi = {geom_data['ratio']:.6f}",
-        )
-
-    st.markdown("")
-
-    # Coefficients table
-    coefficients = geom_data.get("coefficients", [])
-    if coefficients:
-        table_rows = []
-        for entry in coefficients:
-            table_rows.append({
-                "Order n": entry["n"],
-                "c_n": f"{entry['c_n']:.8f}",
-                "Contribution (c_n * alpha^n)": f"{entry['contribution']:.4e}",
-            })
-        st.dataframe(
-            pd.DataFrame(table_rows),
-            use_container_width=True,
-            hide_index=True,
-        )
-
-    st.markdown("")
-
-    # Chart
-    if _charts_available:
-        try:
-            fig = geometric_coefficients_chart(geom_data)
-            st.plotly_chart(fig, use_container_width=True)
-        except Exception as exc:
-            st.warning(f"Geometric coefficients chart error: {exc}")
-
-    st.markdown("")
-
-    honest_g = geom_data.get("honest_assessment", "")
-    if honest_g:
-        st.markdown(
-            f"""
-            <div class="theorem-card">
-            <b>Assessment:</b><br><br>
-            {honest_g}
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-else:
-    st.markdown(
-        """
-        <div class="formula-card">
-        <b>Closed-form resummation:</b><br><br>
-        F = 1 + 3&alpha;&sup2; + &phi;&sup2;&alpha;&sup3; / [2(&phi; - &alpha;)]<br><br>
-        The NLO and higher coefficients form a geometric series with ratio
-        1/&phi;. The resummation matches F_exact to sub-ppm accuracy.
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-
-    st.markdown("")
-
-    col_g1, col_g2, col_g3 = st.columns(3)
-    with col_g1:
-        st.metric(label="F_exact", value="(requires core module)")
-    with col_g2:
-        st.metric(label="F_geom", value="(requires core module)")
-    with col_g3:
-        st.metric(label="Residual", value="~0.0001 ppm")
-
-st.markdown("")
-
-# ---------------------------------------------------------------------------
-# H. Mu Prediction from Geometry
-# ---------------------------------------------------------------------------
-st.header("H. Mu Prediction from Geometry")
-
-if mu_data:
-    col_h1, col_h2, col_h3 = st.columns(3)
-
-    with col_h1:
-        st.metric(
-            label="mu predicted",
-            value=f"{mu_data['mu_predicted']:.8f}",
-        )
-
-    with col_h2:
-        st.metric(
-            label="mu measured",
-            value=f"{mu_data['mu_measured']:.8f}",
-        )
-
-    with col_h3:
-        st.metric(
-            label="Residual",
-            value=f"{mu_data['residual_ppm']:.4f} ppm",
-        )
-
-    st.markdown("")
-
-    # CODATA stability table
-    stability = mu_data.get("codata_stability", [])
-    if stability:
-        table_rows = []
-        for entry in stability:
-            table_rows.append({
-                "Edition": entry["edition"],
-                "mu predicted": f"{entry['mu_predicted']:.8f}",
-                "mu measured": f"{entry['mu_measured']:.8f}",
-                "Residual (ppm)": f"{entry['residual_ppm']:.4f}",
-            })
-        st.dataframe(
-            pd.DataFrame(table_rows),
-            use_container_width=True,
-            hide_index=True,
-        )
-
-    st.markdown("")
-
-    # Chart
-    if _charts_available:
-        try:
-            fig = mu_prediction_chart(mu_data)
-            st.plotly_chart(fig, use_container_width=True)
-        except Exception as exc:
-            st.warning(f"Mu prediction chart error: {exc}")
-
-    st.markdown("")
-
-    honest_h = mu_data.get("honest_assessment", "")
-    if honest_h:
-        st.markdown(
-            f"""
-            <div class="proof-card">
-            <b>Assessment:</b><br><br>
-            {honest_h}
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-else:
-    col_h1, col_h2, col_h3 = st.columns(3)
-    with col_h1:
-        st.metric(label="mu predicted", value="(requires core module)")
-    with col_h2:
-        st.metric(label="mu measured", value="~1836.15267")
-    with col_h3:
-        st.metric(label="Residual", value="~0.001 ppm")
-
-    st.markdown("")
-
-    st.markdown(
-        """
-        <div class="proof-card">
-        <b>Assessment:</b><br><br>
-        The geometric resummation predicts mu from alpha and phi alone,
-        with zero free parameters. If the geometric structure is fundamental,
-        the proton-to-electron mass ratio is determined by the compactification
-        geometry. This is testable by future CODATA measurements.
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
+st.markdown(
+    """
+    <div class="warning-card">
+    <b>REMOVED (2026-03-19):</b> The geometric resummation
+    F = 1 + 3&alpha;&sup2; + &phi;&sup2;&alpha;&sup3; / [2(&phi; - &alpha;)]
+    and derived &mu; prediction (formerly Sections G-H) are inconsistent with
+    2025 H&#8322;&#8314; spectroscopy (Alighanbari et al., Nature 644, 69)
+    at &gt;14&sigma; and with CODATA 2022 at &gt;20&sigma;.
+    They have been removed.<br><br>
+    The assumed 1/&phi; geometric ratio between higher-order coefficients was
+    an artifact of overfitting to CODATA 2018 data. The "c&#8323;" coefficient
+    depends on &mu; (shifts 5000 ppm between CODATA editions), making the
+    prediction circular. The functions remain in corrected_bridge.py for
+    reproducibility but should not be cited as predictions.
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
 
 st.markdown("")
 

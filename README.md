@@ -43,14 +43,18 @@ The complete bridge form is equivalent:
 G = phi^2/2 * (1 + 3*alpha^2 + (phi/2)*alpha^3) * alpha^21 * hbar * c / m_e^2
 ```
 
-Both formulas give -0.33 ppm with zero fitted parameters. They are the same identity, factored differently (proven in mu_tension.py).
+Both formulas give -0.31 ppm with zero fitted parameters. They are the same identity, factored differently (proven in mu_tension.py).
+
+### Retraction note (v5, March 18 2026)
+
+Version 4 of the preprint proposed a geometric resummation of the correction series and a derived prediction of mu to 0.001 ppm. This claim has been retracted: it is inconsistent with Alighanbari et al. (2025) H2+ spectroscopy (Nature 644, 69) at >14 sigma and with CODATA 2022 at >20 sigma. The assumed 1/phi geometric ratio was an artifact of overfitting to CODATA 2018 data. The G prediction (-0.31 ppm) is unaffected. The framework makes one testable prediction (G to sub-ppm), not two.
 
 ## Project Structure
 
 ```
-alpha_ladder_core/   # 43 computation modules (pure Python, Decimal precision)
-app/                 # Streamlit dashboard (37 pages)
-tests/               # 2002 unit tests
+alpha_ladder_core/   # 46 computation modules (pure Python, Decimal precision)
+app/                 # Streamlit dashboard (40 pages)
+tests/               # 2249 unit tests
 legacy/              # Original standalone scripts
 ```
 
@@ -86,7 +90,9 @@ streamlit run app/Home.py
 | `one_alpha_derivation.py` | Derives (1-alpha) from S^2 volume cancellation |
 | `feynman_diagram.py` | Explicit sigma -> KK photon loop -> sigma verification |
 | `predict_g.py` | G predictions from bridge, hierarchy, and mu-structure formulas |
-| `corrected_bridge.py` | Radiative correction phi^2/2*(1+3*alpha^2+(phi/2)*alpha^3) |
+| `corrected_bridge.py` | Radiative correction phi^2/2*(1+3*alpha^2+(phi/2)*alpha^3); geometric resummation retracted |
+| `salam_sezgin_stabilization.py` | Salam-Sezgin radius stabilization (Lambda_6 > 0, Gap 1 conditional) |
+| `charged_matter_loops.py` | Monopole spectral zeta sign flip (+1/10), anomaly-free group scan |
 | `vacuum_polynomial.py` | Why phi: the polynomial x^2+Dx+d=0 at d=4, D=6 |
 | `kk_reduction.py` | Kaluza-Klein reduction from 6D to 4D |
 | `casimir_stabilization.py` | Casimir energy on S^2 including matter loop corrections |
@@ -136,6 +142,9 @@ streamlit run app/Home.py
 | Chameleon Screening | Density-dependent mass, KK truncation check |
 | Dark Sector Phenomenology | Relic abundance, self-interaction, fuzzy DM |
 | Radius Determination | Scaling symmetry proof, mechanism catalog |
+| Radius Fixing | CW, warped S^2, orbifold -- all fail |
+| Salam-Sezgin Stabilization | Lambda_6 > 0 fixes radius (Gap 1 conditional) |
+| Charged Matter Loops | Monopole spectral zeta sign flip |
 | Anomaly Cancellation | Pure gravity safe, SM embedding, G unaffected |
 | Cosmological Constant | V_min ~ O(1) Planck, 122-order discrepancy |
 
@@ -160,7 +169,7 @@ streamlit run app/Home.py
 
 ## Status
 
-This is active research. The numerical result is robust (verified against CODATA 2014, 2018, and 2022) with 2002 tests passing. The theoretical derivation chain is complete: dimension uniqueness (d=4, D=6) -> vacuum polynomial -> KK reduction -> corrected bridge -> G prediction at -0.33 ppm with zero fitted parameters. See the [live dashboard](https://alphaladder.streamlit.app/) for detailed analysis of each step.
+This is active research. The numerical result is robust (verified against CODATA 2014, 2018, and 2022) with 2249 tests passing. The theoretical derivation chain is complete: dimension uniqueness (d=4, D=6) -> vacuum polynomial -> KK reduction -> corrected bridge -> G prediction at -0.31 ppm with zero fitted parameters. A geometric resummation claiming to predict mu to 0.001 ppm was proposed and subsequently retracted after falsification by Alighanbari et al. (2025) at >14 sigma. See the [live dashboard](https://alphaladder.streamlit.app/) for detailed analysis of each step.
 
 ## License
 

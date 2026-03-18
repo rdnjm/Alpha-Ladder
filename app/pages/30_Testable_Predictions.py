@@ -688,40 +688,10 @@ st.markdown("")
 # ---------------------------------------------------------------------------
 # G. Geometric Resummation: mu from alpha and phi
 # ---------------------------------------------------------------------------
-st.header("G. Geometric Resummation: mu from alpha and phi")
-
-st.markdown(
-    """
-    <div class="formula-card">
-    <b>Geometric resummation (discovered 2026-03-18):</b><br><br>
-    F = 1 + 3&alpha;&sup2; + &phi;&sup2;&alpha;&sup3; / [2(&phi; - &alpha;)]<br><br>
-    The correction series admits a closed-form with geometric ratio 1/&phi;.
-    Setting F_geom = F_exact and solving for &mu; gives the proton-to-electron
-    mass ratio as a function of &alpha; and &phi; alone.
-    </div>
-    """,
-    unsafe_allow_html=True,
-)
-st.markdown("")
-
-st.markdown(
-    """
-    <div class="theorem-card">
-    <b>Prediction:</b> &mu; predicted to 0.001 ppm from &alpha; and &phi; alone,
-    with zero free parameters. Stable across CODATA 2014, 2018, and 2022
-    editions. If the geometric structure is fundamental, &mu; is not an
-    independent constant but is determined by the compactification geometry.
-    See Page 27 (Corrected Bridge, Sections G-H) for full analysis.
-    </div>
-    """,
-    unsafe_allow_html=True,
-)
-st.markdown("")
-
 # ---------------------------------------------------------------------------
-# H. Honest Assessment
+# G. Honest Assessment
 # ---------------------------------------------------------------------------
-st.header("H. Honest Assessment")
+st.header("G. Honest Assessment")
 
 if summary:
     honest = summary.get("honest_assessment", "")

@@ -311,24 +311,10 @@ else:
 # ---------------------------------------------------------------------------
 # I. Geometric Resummation (Forward Reference)
 # ---------------------------------------------------------------------------
-st.header("I. Geometric Resummation")
-
-st.markdown("""
-<div class="step-card">
-<strong>UPDATE: The correction series admits a closed-form geometric resummation
-(Page 27, Sections G-H):</strong><br><br>
-F = 1 + 3*alpha^2 + phi^2*alpha^3 / [2*(phi - alpha)]<br><br>
-The higher coefficients form a geometric series with ratio 1/phi, suggesting the
-complete correction factor is determined by alpha and phi alone (no mu dependence).
-This improves the mu prediction from 0.16 ppm (c3 = phi/2 truncation) to 0.001 ppm
-(geometric resummation). The physical origin of the 1/phi ratio is not yet established.
-</div>
-""", unsafe_allow_html=True)
-
 # ---------------------------------------------------------------------------
-# J. Honest Assessment
+# I. Honest Assessment
 # ---------------------------------------------------------------------------
-st.header("J. Honest Assessment")
+st.header("I. Honest Assessment")
 
 if summary:
     honest = summary.get("honest_assessment", "")

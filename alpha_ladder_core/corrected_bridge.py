@@ -31,30 +31,20 @@ What is derived vs empirical
   all three happen to coincide for d=4, n=2.
 - Higher-order coefficients (c_3, c_4, ...) are purely fitted.
 
-Geometric resummation (discovered 2026-03-18)
+Geometric resummation (RETRACTED 2026-03-19)
 ---------------------------------------------
-The correction series F = 1 + c2*alpha^2 + c3*alpha^3 + ... admits a
-closed-form geometric resummation:
+The geometric resummation F = 1 + 3*alpha^2 + phi^2*alpha^3/[2*(phi-alpha)]
+and derived mu prediction have been retracted.  They are inconsistent with
+Alighanbari et al. 2025 (H2+ spectroscopy, Nature 644, 69, 26 ppt) at
+>14 sigma and with CODATA 2022 at >20 sigma.
 
-    F = 1 + 3*alpha^2 + phi^2*alpha^3 / [2*(phi - alpha)]
+The assumed 1/phi ratio between higher-order coefficients was an artifact
+of overfitting to CODATA 2018 data.  The "c3" coefficient extracted by
+forcing c2=3 (integer) depends on mu and shifts 5000 ppm between CODATA
+editions, making the prediction circular.
 
-The NLO and higher coefficients form a geometric series with ratio 1/phi:
-
-    c3 = phi/2, c4 = 1/2, c5 = 1/(2*phi), ...
-
-This matches the exact F (from equating bridge and mu-structure formulas)
-to 0.0001 ppm (CODATA 2018).  Setting F_geom = F_exact and solving for mu
-gives mu as a function of alpha and phi alone:
-
-    mu_predicted(CODATA 2022) = 1836.15267538  (0.001 ppm from measured)
-
-If the geometric structure is fundamental, the proton-to-electron mass
-ratio is not an independent constant -- it is determined by the
-compactification geometry through alpha and phi.
-
-This is a mathematical observation, not a derivation.  The physical
-origin of the 1/phi ratio between orders is not established.  It is
-testable: future CODATA mu measurements will confirm or falsify.
+The functions compute_geometric_resummation() and predict_mu_from_geometry()
+are retained for reproducibility but should not be cited as predictions.
 """
 
 from decimal import Decimal, getcontext
@@ -705,14 +695,16 @@ def compute_geometric_resummation(constants=None):
     alpha_over_phi = float(alpha / phi)
 
     honest = (
-        "The correction series admits a geometric resummation with "
-        f"expansion parameter alpha/phi = {alpha_over_phi:.6e}.  "
-        f"F_geom matches F_exact to {residual_ppm:.4f} ppm.  "
-        f"Individual c3 is {c3_residual_ppm:.0f} ppm from phi/2, but "
-        "the c3 error and geometric tail nearly cancel.  "
-        "The resummation depends only on alpha and phi (no mu).  "
-        "This is a mathematical observation from the data, not a "
-        "derivation.  The physical origin of the 1/phi ratio is unknown."
+        "FALSIFIED (2026-03-19): The geometric resummation assumed a "
+        "1/phi ratio between higher-order coefficients.  Cross-checked "
+        "against CODATA 2022 and Alighanbari et al. 2025 (H2+, Nature "
+        "644, 69, 26 ppt), it shows 4.7 sigma tension.  The correction "
+        "series is exactly one term: F = 1 + c2*alpha^2 where c2 depends "
+        "on mu.  Splitting c2 into 3 + c3*alpha makes c3 mu-dependent "
+        f"(c3 = {float(c3_exact):.6f} here, but shifts 5000 ppm between "
+        "CODATA editions).  The 1/phi ratio was a numerical artifact from "
+        "overfitting to CODATA 2018 data.  The c3 = phi/2 truncation "
+        "(mu to 0.16 ppm) remains the best honest prediction."
     )
 
     return {
