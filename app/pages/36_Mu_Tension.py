@@ -267,21 +267,22 @@ The series converges rapidly.
 # ---------------------------------------------------------------------------
 # H. The Second Prediction: mu from alpha and phi
 # ---------------------------------------------------------------------------
-st.header("H. The Second Prediction: μ from α and φ")
+st.header("H. Mu from Alpha and Phi (c3 = phi/2 truncation)")
 
 if summary:
     mp = summary.get("mu_prediction", {})
     c1, c2 = st.columns(2)
-    c1.metric("μ predicted", f"{mp.get('mu_predicted', 0):.6f}")
+    c1.metric("mu predicted", f"{mp.get('mu_predicted', 0):.6f}")
     c2.metric("Residual (ppm)", f"{mp.get('residual_ppm', 0):+.2f}")
 
     res_ppm = mp.get("residual_ppm", 0)
     st.markdown(f"""
-<div class="theorem-card">
-<strong>Second prediction:</strong><br><br>
-The proton-to-electron mass ratio is predicted from α and φ alone
-to <strong>{res_ppm:+.2f} ppm</strong> with zero fitted parameters.
-This is a genuine second prediction of the framework.
+<div class="step-card">
+<strong>Mu from the bridge with c3 = phi/2:</strong><br><br>
+The proton-to-electron mass ratio can be extracted from the bridge formula
+with c3 = phi/2 to <strong>{res_ppm:+.2f} ppm</strong>.  This is a
+consistency check (inverting the G formula), not an independent prediction.
+The framework predicts G from alpha and mu, not mu from alpha alone.
 </div>
 """, unsafe_allow_html=True)
 

@@ -65,6 +65,7 @@ pages = {
         _page("40_Charged_Matter_Loops.py", "Charged Matter Loops"),
         _page("23_Anomaly_Cancellation.py", "Anomaly Cancellation"),
         _page("24_Cosmological_Constant.py", "Cosmological Constant"),
+        _page("41_Coefficient_Derivation.py", "Coefficient Derivation"),
     ],
     "Legacy Dashboard": [
         _page("01_Constant_Core.py", "Constant Core"),

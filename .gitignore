@@ -1,5 +1,9 @@
-# Preprint
+# Research working files (preprints, derivations, compilation)
 preprint/
+zeta/
+flux/
+lambda/
+alpha_ladder_compilation.md
 
 __pycache__/
 *.pyc

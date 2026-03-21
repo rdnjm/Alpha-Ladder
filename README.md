@@ -52,9 +52,9 @@ Version 4 of the preprint proposed a geometric resummation of the correction ser
 ## Project Structure
 
 ```
-alpha_ladder_core/   # 46 computation modules (pure Python, Decimal precision)
-app/                 # Streamlit dashboard (40 pages)
-tests/               # 2249 unit tests
+alpha_ladder_core/   # 49 computation modules (pure Python, Decimal precision)
+app/                 # Streamlit dashboard (41 pages)
+tests/               # 2376 unit tests
 legacy/              # Original standalone scripts
 ```
 
@@ -93,6 +93,7 @@ streamlit run app/Home.py
 | `corrected_bridge.py` | Radiative correction phi^2/2*(1+3*alpha^2+(phi/2)*alpha^3); geometric resummation retracted |
 | `salam_sezgin_stabilization.py` | Salam-Sezgin radius stabilization (Lambda_6 > 0, Gap 1 conditional) |
 | `charged_matter_loops.py` | Monopole spectral zeta sign flip (+1/10), anomaly-free group scan |
+| `c2_derivation.py` | Systematic derivation attempts for c_2=3 (chi(T_{S^2}), heat kernel) and c_3=phi/2 (vacuum polynomial) |
 | `vacuum_polynomial.py` | Why phi: the polynomial x^2+Dx+d=0 at d=4, D=6 |
 | `kk_reduction.py` | Kaluza-Klein reduction from 6D to 4D |
 | `casimir_stabilization.py` | Casimir energy on S^2 including matter loop corrections |
@@ -147,6 +148,7 @@ streamlit run app/Home.py
 | Charged Matter Loops | Monopole spectral zeta sign flip |
 | Anomaly Cancellation | Pure gravity safe, SM embedding, G unaffected |
 | Cosmological Constant | V_min ~ O(1) Planck, 122-order discrepancy |
+| Coefficient Derivation | c_2=3 (chi(T_{S^2}), heat kernel) and c_3=phi/2 (vacuum polynomial) |
 
 **Legacy Dashboard** (pages 1-11): Constant Core, Geometric Ladder, Bridge Lab, Universe Slider, Phi Scanner, Particle Harmonics, Rung Spacing, Dilaton Lab, Experimental, Alpha Units, Dark Sector.
 
@@ -169,7 +171,7 @@ streamlit run app/Home.py
 
 ## Status
 
-This is active research. The numerical result is robust (verified against CODATA 2014, 2018, and 2022) with 2249 tests passing. The theoretical derivation chain is complete: dimension uniqueness (d=4, D=6) -> vacuum polynomial -> KK reduction -> corrected bridge -> G prediction at -0.31 ppm with zero fitted parameters. A geometric resummation claiming to predict mu to 0.001 ppm was proposed and subsequently retracted after falsification by Alighanbari et al. (2025) at >14 sigma. See the [live dashboard](https://alphaladder.streamlit.app/) for detailed analysis of each step.
+This is active research. The numerical result is robust (verified against CODATA 2014, 2018, and 2022) with 2376 tests passing. The theoretical derivation chain is complete: dimension uniqueness (d=4, D=6) -> vacuum polynomial -> KK reduction -> corrected bridge -> G prediction at -0.31 ppm with zero fitted parameters. A geometric resummation claiming to predict mu to 0.001 ppm was proposed and subsequently retracted after falsification by Alighanbari et al. (2025) at >14 sigma. See the [live dashboard](https://alphaladder.streamlit.app/) for detailed analysis of each step.
 
 ## License
 
