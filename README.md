@@ -52,9 +52,9 @@ Version 4 of the preprint proposed a geometric resummation of the correction ser
 ## Project Structure
 
 ```
-alpha_ladder_core/   # 49 computation modules (pure Python, Decimal precision)
-app/                 # Streamlit dashboard (41 pages)
-tests/               # 2376 unit tests
+alpha_ladder_core/   # 61 computation modules (pure Python, Decimal precision)
+app/                 # Streamlit dashboard (46 pages)
+tests/               # 3073 unit tests
 legacy/              # Original standalone scripts
 ```
 
@@ -94,6 +94,18 @@ streamlit run app/Home.py
 | `salam_sezgin_stabilization.py` | Salam-Sezgin radius stabilization (Lambda_6 > 0, Gap 1 conditional) |
 | `charged_matter_loops.py` | Monopole spectral zeta sign flip (+1/10), anomaly-free group scan |
 | `c2_derivation.py` | Systematic derivation attempts for c_2=3 (chi(T_{S^2}), heat kernel) and c_3=phi/2 (vacuum polynomial) |
+| `gauge_kk_gauge_matching.py` | Tree-level KK gauge coupling matching to alpha_EM |
+| `gauge_braneworld_s2.py` | Braneworld physics on S^2, brane potential, deficit angle |
+| `gauge_escape_routes.py` | Four escape routes for KK gauge matching vs alpha running conflict |
+| `gauge_kk_spectrum_matched.py` | Full KK spectrum with dilaton vev matched to alpha_EM |
+| `gauge_lhc_kk_comparison.py` | LHC KK graviton cross-section: S^2 vs ADD |
+| `gauge_coupling_splitting.py` | SO(3)/SO(2) gauge coupling splitting analysis |
+| `gauge_m6_parameter_space.py` | 1D parameter space: a_0 free, M_6 = f(a_0) |
+| `gauge_alpha_running.py` | Alpha running with KK thresholds |
+| `gauge_two_brane_physics.py` | Two-brane phenomenology on S^2 |
+| `gauge_mu_vev_relation.py` | Search for dilaton vev vs mu relation |
+| `gauge_phi_vev_golden_ratio.py` | Search for dilaton vev vs golden ratio relation |
+| `vacuum_polynomial_derivation.py` | Systematic search for vacuum polynomial derivation (all approaches failed) |
 | `vacuum_polynomial.py` | Why phi: the polynomial x^2+Dx+d=0 at d=4, D=6 |
 | `kk_reduction.py` | Kaluza-Klein reduction from 6D to 4D |
 | `casimir_stabilization.py` | Casimir energy on S^2 including matter loop corrections |
@@ -149,6 +161,15 @@ streamlit run app/Home.py
 | Anomaly Cancellation | Pure gravity safe, SM embedding, G unaffected |
 | Cosmological Constant | V_min ~ O(1) Planck, 122-order discrepancy |
 | Coefficient Derivation | c_2=3 (chi(T_{S^2}), heat kernel) and c_3=phi/2 (vacuum polynomial) |
+| Vacuum Polynomial | Can x^2+6x+4=0 be derived? (3 approaches, all failed -- honest negative) |
+
+**Gauge Physics**
+| Page | Description |
+|------|-------------|
+| KK Gauge Matching | Tree-level matching alpha_KK = alpha_EM, CW potential |
+| Braneworld | Why SM must be on a 4D brane (charged KK tower excluded) |
+| KK Spectrum | Full matched spectrum (scalar, vector, graviton, fermion) |
+| LHC KK Comparison | S^2 vs ADD at LHC, exclusion rescaling |
 
 **Legacy Dashboard** (pages 1-11): Constant Core, Geometric Ladder, Bridge Lab, Universe Slider, Phi Scanner, Particle Harmonics, Rung Spacing, Dilaton Lab, Experimental, Alpha Units, Dark Sector.
 
@@ -171,7 +192,7 @@ streamlit run app/Home.py
 
 ## Status
 
-This is active research. The numerical result is robust (verified against CODATA 2014, 2018, and 2022) with 2376 tests passing. The theoretical derivation chain is complete: dimension uniqueness (d=4, D=6) -> vacuum polynomial -> KK reduction -> corrected bridge -> G prediction at -0.31 ppm with zero fitted parameters. A geometric resummation claiming to predict mu to 0.001 ppm was proposed and subsequently retracted after falsification by Alighanbari et al. (2025) at >14 sigma. See the [live dashboard](https://alphaladder.streamlit.app/) for detailed analysis of each step.
+This is active research. The numerical result is robust (verified against CODATA 2014, 2018, and 2022) with 3073 tests passing. The theoretical derivation chain is complete: dimension uniqueness (d=4, D=6) -> vacuum polynomial -> KK reduction -> corrected bridge -> G prediction at -0.31 ppm with zero fitted parameters. A geometric resummation claiming to predict mu to 0.001 ppm was proposed and subsequently retracted after falsification by Alighanbari et al. (2025) at >14 sigma. See the [live dashboard](https://alphaladder.streamlit.app/) for detailed analysis of each step.
 
 ## License
 

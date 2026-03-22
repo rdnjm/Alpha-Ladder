@@ -66,6 +66,13 @@ pages = {
         _page("23_Anomaly_Cancellation.py", "Anomaly Cancellation"),
         _page("24_Cosmological_Constant.py", "Cosmological Constant"),
         _page("41_Coefficient_Derivation.py", "Coefficient Derivation"),
+        _page("46_Vacuum_Polynomial_Derivation.py", "Vacuum Polynomial"),
+    ],
+    "Gauge Physics": [
+        _page("42_KK_Gauge_Matching.py", "KK Gauge Matching"),
+        _page("43_Braneworld.py", "Braneworld"),
+        _page("44_KK_Spectrum.py", "KK Spectrum"),
+        _page("45_LHC_KK_Comparison.py", "LHC KK Comparison"),
     ],
     "Legacy Dashboard": [
         _page("01_Constant_Core.py", "Constant Core"),
