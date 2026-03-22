@@ -161,19 +161,32 @@ We scan for coincidence between phi_CW_min and phi_alpha_match.
     if n_scan:
         results = n_scan.get("results", [])
         if results:
+            # Check if any entry has a minimum
+            any_minimum = any(r.get("phi_min") is not None for r in results)
             st.subheader("n_charged Scan")
-            rows = []
-            for r in results:
-                phi_str = f"{r['phi_min']:.6f}" if r.get("phi_min") is not None else "N/A"
-                ratio_str = f"{r['ratio_to_vev']:.4f}" if r.get("ratio_to_vev") is not None else "N/A"
-                dev_str = f"{r['deviation_percent']:.2f}%" if r.get("deviation_percent") is not None else "N/A"
-                rows.append({
-                    "n_charged": r.get("n_charged", ""),
-                    "phi_min": phi_str,
-                    "ratio_to_vev": ratio_str,
-                    "deviation": dev_str,
-                })
-            st.dataframe(pd.DataFrame(rows), use_container_width=True, hide_index=True)
+            if any_minimum:
+                rows = []
+                for r in results:
+                    phi_str = f"{r['phi_min']:.6f}" if r.get("phi_min") is not None else "No min"
+                    ratio_str = f"{r['ratio_to_vev']:.4f}" if r.get("ratio_to_vev") is not None else "--"
+                    dev_str = f"{r['deviation_percent']:.2f}%" if r.get("deviation_percent") is not None else "--"
+                    rows.append({
+                        "n_charged": r.get("n_charged", ""),
+                        "phi_min": phi_str,
+                        "ratio_to_vev": ratio_str,
+                        "deviation": dev_str,
+                    })
+                st.dataframe(pd.DataFrame(rows), use_container_width=True, hide_index=True)
+            else:
+                st.markdown("""
+<div class="warning-card">
+<strong>Result:</strong> The Coleman-Weinberg potential has NO minimum for any
+n_charged value tested (1 to 100). The one-loop CW potential does not
+dynamically determine phi_vev. The tree-level gauge matching
+phi_vev = (1/4)*ln(4*pi*alpha) remains the only mechanism that fixes
+the dilaton vev.  This is an honest negative result.
+</div>
+""", unsafe_allow_html=True)
 elif _core_available:
     st.info("No CW data returned.")
 else:

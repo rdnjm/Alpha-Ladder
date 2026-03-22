@@ -232,15 +232,15 @@ with st.expander("**C. Screening Amplitude Discrepancy**", expanded=True):
             unsafe_allow_html=True,
         )
 
-    # Amber warning
+    # Salam-Sezgin resolution
     st.markdown(
-        '<div class="warn-card">'
-        "<b>Status:</b> The ≈3800x ratio is a <i>conditional</i> discrepancy. "
-        "IF the dilaton is light (Compton wavelength > 0.1 mm), the tree-level "
-     "coupling is 3854× too strong. IF the dilaton is heavy (wavelength &lt; 0.1 mm), "
-        "no discrepancy exists -- the Yukawa force is undetectable at all lab scales, "
-        "and the sub-ppm G residual (corrected bridge) is well within experimental scatter. "
-        "The dilaton mass origin remains an open problem."
+        '<div class="pass-card">'
+        "<b>UPDATE (Page 39):</b> The Salam-Sezgin mechanism stabilizes the "
+        "S&sup2; radius with &Lambda;_6 = 14.2, giving the dilaton a Planck-scale "
+        "mass (m_&phi; ~ 2 &times; 10&sup2;&sup9; eV). The Yukawa force vanishes "
+        "at ALL laboratory scales. The 3854&times; screening discrepancy dissolves "
+        "trivially: it only arises for a light dilaton, and the Salam-Sezgin "
+        "dilaton is Planck-mass. Gap 2 (dilaton screening) is CLOSED."
         "</div>",
         unsafe_allow_html=True,
     )

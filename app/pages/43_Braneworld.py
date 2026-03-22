@@ -252,9 +252,11 @@ if summary:
     st.markdown("""
 <div class="warning-card">
 <strong>Bottom line:</strong> The braneworld interpretation is the ONLY option that
-preserves all three requirements: alpha matching, safe running, and the Eot-Wash window.
-This is the standard approach in extra-dimension physics and is not ad hoc.
-Paper 3 should adopt the braneworld interpretation.
+preserves all three requirements: alpha matching, safe running, and consistent
+KK phenomenology. This is the standard approach in extra-dimension physics.<br><br>
+<strong>Note:</strong> The Salam-Sezgin mechanism (Page 39) gives the dilaton a
+Planck-scale mass, making the fifth force unobservable. The Eot-Wash window
+analysis applies only if an alternative stabilization produces a lighter dilaton.
 </div>
 """, unsafe_allow_html=True)
 elif _core_available:

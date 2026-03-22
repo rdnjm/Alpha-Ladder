@@ -186,9 +186,12 @@ The S&sup2; KK spectrum is sparser than ADD for light modes
 Total mode count scales as R&sup2; E&sup2; for both, but S&sup2; has a smaller
 prefactor: N_S2/N_ADD ~ (R_S2/R_ADD)&sup2;/pi ~ 0.26.
 The LHC exclusion for S&sup2; is WEAKER than ADD, meaning
-the Eot-Wash window remains open (marginally).
-The phase-space weighted ratio equals the mode count ratio
-in the continuum limit (both give the same 1/2 suppression for n=2).
+the Eot-Wash window remains open (marginally) for a light dilaton.<br><br>
+<strong>Note:</strong> The Salam-Sezgin mechanism (Page 39) gives the dilaton a
+Planck-scale mass (~10^29 eV), making the fifth force unobservable.
+The Eot-Wash and LHC analyses above apply only if an alternative
+stabilization produces a lighter dilaton. The framework's primary
+testable prediction is G to -0.31 ppm, not fifth force or collider signals.
 </div>
 """, unsafe_allow_html=True)
 elif _core_available:

@@ -147,6 +147,16 @@ then M₆ = {sw['M6_min_TeV']:.0f}-{sw['M6_max_TeV']:.0f} TeV (LHC scale).
 </div>
 """, unsafe_allow_html=True)
 
+st.markdown("""
+<div class="warning-card">
+<strong>UPDATE (Page 39):</strong> The Salam-Sezgin mechanism gives the dilaton
+a Planck-scale mass (~10^29 eV). The survival window and M_6 predictions above
+apply only if an alternative stabilization produces a lighter dilaton. With
+Salam-Sezgin, the fifth force is unobservable and M_6 is unconstrained by
+short-range gravity experiments.
+</div>
+""", unsafe_allow_html=True)
+
 # --- D. Correlated Variations ---
 st.header("D. Correlated Constant Variations")
 
@@ -204,6 +214,16 @@ if summary:
     st.markdown(f"""
 <div class="step-card">
 {mt['assessment']}
+</div>
+""", unsafe_allow_html=True)
+
+st.markdown("""
+<div class="step-card">
+<strong>UPDATE (Page 36):</strong> The bridge and mu-structure formulas are the
+same identity (proven via c3 = phi/2). The tension dissolves under this
+unification. The mu value shown above is a consistency check of the formula,
+not an independent prediction. The geometric resummation that claimed to
+predict mu to 0.001 ppm has been retracted (>14 sigma vs Alighanbari 2025).
 </div>
 """, unsafe_allow_html=True)
 

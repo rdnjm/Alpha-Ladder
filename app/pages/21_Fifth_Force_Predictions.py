@@ -391,9 +391,33 @@ else:
 st.markdown("")
 
 # ---------------------------------------------------------------------------
-# F. The Bottom Line
+# F. Salam-Sezgin Update
 # ---------------------------------------------------------------------------
-st.header("F. The Bottom Line")
+st.header("F. Salam-Sezgin Update")
+
+st.markdown(
+    """
+    <div class="warning-card">
+    <b>UPDATE (Page 39):</b> The Salam-Sezgin mechanism stabilizes the
+    S^2 radius with Lambda_6 = 14.2 (O(1) in Planck units). The dilaton
+    acquires a Planck-scale mass m_phi ~ 2 x 10^29 eV, giving a Yukawa
+    range of ~3 x 10^-37 m -- far below any foreseeable experiment.<br><br>
+    With the Salam-Sezgin stabilization, the fifth force is
+    <b>unobservable at all experimental scales</b>. The 3854x screening
+    gap dissolves trivially (Planck-mass dilaton decouples identically).
+    The analysis above (Eot-Wash window, survival region) applies only
+    if an alternative stabilization mechanism produces a lighter dilaton.
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
+
+st.markdown("")
+
+# ---------------------------------------------------------------------------
+# G. The Bottom Line
+# ---------------------------------------------------------------------------
+st.header("G. The Bottom Line")
 
 if summary:
     st.markdown(
@@ -410,13 +434,13 @@ else:
         """
         <div class="proof-card">
         <b>Honest assessment:</b><br><br>
-        The Alpha Ladder's fifth force prediction is unusually sharp:
-        α is fixed at 0.618, not a free parameter. The only freedom
-        is a₀ (internal radius), which sets λ. Current Eot-Wash data
-        already excludes a₀ &gt; ~71 um. The surviving window [30, 71] um
-        is accessible to next-generation short-range gravity experiments.
-        If no Yukawa deviation is found at α = 0.618 for any λ
-        in this window, the framework is falsified.
+        The fifth force prediction depends on the dilaton mass, which
+        depends on the stabilization mechanism. With the Salam-Sezgin
+        mechanism (Lambda_6 = 14.2), the dilaton is Planck-mass and the
+        fifth force is unobservable. If a different mechanism produces a
+        lighter dilaton, the Eot-Wash window [30, 71] um becomes relevant.
+        The framework's primary testable prediction is G to -0.31 ppm,
+        not the fifth force.
         </div>
         """,
         unsafe_allow_html=True,
@@ -428,12 +452,11 @@ st.markdown(
     """
     <div class="theorem-card">
     <b>Conclusion:</b><br><br>
-    The Alpha Ladder framework is falsifiable in a specific, narrow window.
-    The coupling α = 0.618 is not a free parameter -- it is derived
-    from the Brans-Dicke parameter ω via the φ-squared bridge.
-    The only undetermined quantity is a₀, which sets the Yukawa range.
-    Next-generation Eot-Wash experiments can close the surviving window
-    and either confirm or rule out the framework in the sub-mm regime.
+    The fifth force coupling alpha = 0.618 is fixed by the framework, but
+    the Yukawa range depends on the dilaton mass. The Salam-Sezgin
+    stabilization gives a Planck-mass dilaton, making the fifth force
+    unobservable. The framework's falsifiable prediction is G to sub-ppm
+    precision, not a fifth force signal.
     </div>
     """,
     unsafe_allow_html=True,

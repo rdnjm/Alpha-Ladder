@@ -125,10 +125,11 @@ else:
         """
         <div class="step-card">
         <b>Key finding:</b><br><br>
-        The Alpha Ladder makes one headline prediction (G to sub-ppb from α and μ
-        alone), one unified result (bridge and μ-structure are the same formula via
-        c3 = φ/2, predicting μ to 0.16 ppm), and two predictions that are currently
-        beyond experimental reach (cosmological constant, fifth force).
+        The Alpha Ladder makes one headline prediction: G to -0.31 ppm from α
+        and μ with zero fitted parameters. The bridge and μ-structure formulas are
+        the same identity (via c3 = φ/2). The one-loop calculation gives 43/15,
+        corroborating c_2=3 (7.1 ppm testable difference). The fifth force is
+        unobservable (Planck-mass dilaton from Salam-Sezgin).
         </div>
         """,
         unsafe_allow_html=True,
@@ -686,9 +687,6 @@ else:
 st.markdown("")
 
 # ---------------------------------------------------------------------------
-# G. Geometric Resummation: mu from alpha and phi
-# ---------------------------------------------------------------------------
-# ---------------------------------------------------------------------------
 # G. Honest Assessment
 # ---------------------------------------------------------------------------
 st.header("G. Honest Assessment")
@@ -714,16 +712,20 @@ else:
         predicts G to -0.31 ppm, within the ≈22 ppm CODATA measurement uncertainty. If exact,
         the formula determines G to 3.6 ppb -- 6000x more precise than any measurement. This
         is the headline prediction and will be tested by next-generation G experiments.<br><br>
-        UNIFIED: The bridge and μ-structure formulas are the same formula (proven in
-        mu_tension.py with c3 = φ/2 = 0.809), predicting μ from α and φ to 0.16 ppm.
-        The apparent ≈7900σ tension dissolves under this unification.<br><br>
+        ONE-LOOP CORROBORATION: A full 13-sector spectral zeta calculation gives
+        Δ_tot = 43/15 ≈ 2.867, corroborating c₂ = 3 (7.1 ppm difference in G,
+        testable by next-gen experiments at 1-10 ppm). A SUSY no-go theorem proves
+        the 2/15 residual cannot be closed perturbatively.<br><br>
+        RETRACTED: The geometric resummation and μ prediction from v4 have been
+        removed (inconsistent with Alighanbari et al. 2025 at >14σ). The framework
+        predicts G from α and μ, not μ from α alone.<br><br>
         BEYOND REACH: The cosmological constant prediction reduces the 122-order discrepancy
         to a factor of ≈1.23 using Beck's formula with ladder G, but this relies on Beck's
         formula being correct. The fifth force signal is unobservable for a Planck-mass
-        dilaton (range ≈3e-37 m).<br><br>
-        BOTTOM LINE: The Alpha Ladder makes one genuinely testable prediction (G to sub-ppb),
-        one unified result (bridge = μ-structure via c3 = φ/2), and two predictions currently
-        beyond experimental reach. Honest science requires reporting all four.
+        dilaton (Salam-Sezgin stabilization, range ≈3e-37 m).<br><br>
+        BOTTOM LINE: The Alpha Ladder makes one testable prediction: G to -0.31 ppm
+        (sub-ppm measurement confirms or falsifies). A sub-10 ppm measurement would
+        additionally distinguish c₂ = 3 (topological) from 43/15 (one-loop).
         </div>
         """,
         unsafe_allow_html=True,
